@@ -166,6 +166,7 @@ td .who .rk.top{background:var(--accent);border-color:var(--accent);color:var(--
 /* bitácora */
 .bit-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
 .bit-form .full{grid-column:1/-1}
+.bit-form .hint{font-size:10.5px;color:var(--accent);margin-top:3px;min-height:13px;font-variant-numeric:tabular-nums}
 .bit-form label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);font-weight:700;display:block;margin-bottom:4px}
 .btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:12.5px;font-weight:700;background:var(--accent);color:var(--accent-ink);transition:.15s}
 .btn:hover{filter:brightness(1.08)}
@@ -233,7 +234,7 @@ td .who .rk.top{background:var(--accent);border-color:var(--accent);color:var(--
     <button class="navbtn" data-view="alertas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9.5 16.5H2.5L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Alertas<span class="pill" id="alertN" style="display:none">0</span></button>
     <button class="navbtn" data-view="captura"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Captura de resultados</button>
     <button class="navbtn" data-view="bitacora"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h13a1 1 0 0 1 1 1v15l-3-2-3 2-3-2-3 2-3-2V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 13h5"/></svg>Bitácora de acciones</button>
-        <div class="side-user" id="sideUser"><b id="suNombre"></b><button id="suSalir">Salir</button></div>
+        <div class="side-user" id="sideUser"><div style="flex:1;min-width:0"><b id="suNombre" style="display:block"></b><div id="suRol" style="font-size:9.5px;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px;margin-top:2px"></div></div><button id="suSalir">Salir</button></div>
   </aside>
   <div id="scrim"></div>
   <div id="toasts"></div>
@@ -1520,14 +1521,14 @@ function vCaptura(){
    <div><label>% Asistencia (real)</label><input id="tAsist" type="number" step="0.1" min="0" max="100" value="${gv("asist",100)}" placeholder="%"></div>
    <div><label>HC autorizado</label><input id="tHcAut" type="number" min="0" value="${reg.hcAut??""}" placeholder="plantilla autorizada"></div>
    <div><label>HC operando</label><input id="tHcOper" type="number" min="0" value="${reg.hcOper??""}" placeholder="personal activo"></div>
-   <div><label>% Faltas (real)</label><input id="tFaltas" type="number" step="0.1" min="0" max="100" value="${gv("faltas",100)}" placeholder="%"></div>
+   <div><label># Faltas (número)</label><input id="tFaltasN" type="number" step="1" min="0" value="${(reg.faltas!=null&&reg.hcOper)?Math.round(reg.faltas*reg.hcOper*(DIAS_HABILES[wk]||7)):""}" placeholder="faltas de la semana"><div class="hint" id="hFaltas"></div></div>
    <div><label>% Entrada a tiempo</label><input id="tEnt" type="number" step="0.1" min="0" max="100" value="${gv("entrada",100)}" placeholder="%"></div>
    <div><label>% Salida a tiempo</label><input id="tSal" type="number" step="0.1" min="0" max="100" value="${gv("salida",100)}" placeholder="%"></div>
    <div><label>% Avance capacitación</label><input id="tCapac" type="number" step="0.1" min="0" max="100" value="${gv("capac",100)}" placeholder="%"></div>
    <div><label>% Apertura a tiempo</label><input id="tAp" type="number" step="0.1" min="0" max="100" value="${gv("adtAp",100)}" placeholder="%"></div>
    <div><label>% Cierre a tiempo</label><input id="tCi" type="number" step="0.1" min="0" max="100" value="${gv("adtCi",100)}" placeholder="%"></div>
-   <div><label>% Tiendas KO</label><input id="tTko" type="number" step="0.1" min="0" max="100" value="${gv("tko",100)}" placeholder="%"></div>
-   <div><label>% Reincidentes</label><input id="tReinc" type="number" step="0.1" min="0" max="100" value="${gv("reinc",100)}" placeholder="%"></div>
+   <div><label># Tiendas KO</label><input id="tTkoN" type="number" step="1" min="0" value="${reg.tko!=null?Math.round(reg.tko*numTiendas(dirSel)):""}" placeholder="de ${numTiendas(dirSel)} tiendas"><div class="hint" id="hTko"></div></div>
+   <div><label># Reincidentes</label><input id="tReincN" type="number" step="1" min="0" value="${reg.reinc!=null?Math.round(reg.reinc*numTiendas(dirSel)):""}" placeholder="tiendas KO repetidas"><div class="hint" id="hReinc"></div></div>
    <div><label>Calificación Google</label><input id="tGoogle" type="number" step="0.01" min="0" max="5" value="${reg.google??""}" placeholder="0–5"></div>
    <div><label>% Reviews negativos</label><input id="tRevneg" type="number" step="0.1" min="0" max="100" value="${gv("revneg",100)}" placeholder="%"></div>
    <div><label>Prospectos · meta</label><input id="tProspM" type="number" min="0" value="${reg.prospMeta??""}"></div>
@@ -1576,6 +1577,16 @@ function render(){
  window.scrollTo({top:0});
 }
 /* delegación de eventos */
+document.addEventListener("input",e=>{
+ if(!["tFaltasN","tHcOper","tTkoN","tReincN"].includes(e.target.id))return;
+ const dirN=findNode(MI_ROL.dir); if(!dirN)return;
+ const dias=DIAS_HABILES[S.wk]||7, nT=numTiendas(dirN)||1;
+ const v=id=>{const el2=$("#"+id); const n=el2?+el2.value:NaN; return el2&&el2.value.trim()!==""&&!isNaN(n)?n:null};
+ const hF=$("#hFaltas"), hK=$("#hTko"), hR=$("#hReinc");
+ if(hF){const f=v("tFaltasN"),hc=v("tHcOper"); hF.textContent=f==null?"":hc?("= "+(f/(hc*dias)*100).toFixed(2)+"% (sobre "+hc+" HC × "+dias+" días)"):"captura HC operando para calcular el %";}
+ if(hK){const n=v("tTkoN"); hK.textContent=n==null?"":"= "+(n/nT*100).toFixed(1)+"% de "+nT+" tiendas";}
+ if(hR){const n=v("tReincN"); hR.textContent=n==null?"":"= "+(n/nT*100).toFixed(1)+"% de "+nT+" tiendas";}
+});
 document.addEventListener("keydown",e=>{
  if(e.key==="Enter"&&e.target.id==="lPass"){const b=$("#lGo");if(b)b.click();return}
  if(e.key==="Enter"||e.key===" "){
@@ -1632,7 +1643,14 @@ document.addEventListener("click",e=>{
    const wk=S.wk, rid=MI_ROL.dir; if(!rid)return;
    const P=id=>{const v=$("#"+id).value.trim(); if(v==="")return null; const n=+v; return isNaN(n)?null:Math.max(0,n)};
    const pc=id=>{const v=P(id); return v==null?null:Math.min(v,100)/100};
-   const o={asist:pc("tAsist"),hcAut:P("tHcAut"),hcOper:P("tHcOper"),faltas:pc("tFaltas"),entrada:pc("tEnt"),salida:pc("tSal"),capac:pc("tCapac"),adtAp:pc("tAp"),adtCi:pc("tCi"),tko:pc("tTko"),reinc:pc("tReinc"),google:(()=>{const g=P("tGoogle");return g==null?null:Math.min(g,5)})(),revneg:pc("tRevneg"),prospMeta:P("tProspM"),prospReal:P("tProspR"),leadsMeta:P("tLeadsM"),leadsReal:P("tLeadsR")};
+   const hcOp=P("tHcOper"), dias=DIAS_HABILES[wk]||7, nT=numTiendas(findNode(rid))||1;
+   const fN=P("tFaltasN");
+   let faltasFrac=null;
+   if(fN!=null){ if(hcOp){faltasFrac=fN/(hcOp*dias)} else notifica("Para convertir las faltas a % captura primero el HC operando","warn"); }
+   const o={asist:pc("tAsist"),hcAut:P("tHcAut"),hcOper:hcOp,faltas:faltasFrac,entrada:pc("tEnt"),salida:pc("tSal"),capac:pc("tCapac"),adtAp:pc("tAp"),adtCi:pc("tCi"),
+     tko:(()=>{const n=P("tTkoN");return n==null?null:Math.min(n,nT)/nT})(),
+     reinc:(()=>{const n=P("tReincN");return n==null?null:Math.min(n,nT)/nT})(),
+     google:(()=>{const g=P("tGoogle");return g==null?null:Math.min(g,5)})(),revneg:pc("tRevneg"),prospMeta:P("tProspM"),prospReal:P("tProspR"),leadsMeta:P("tLeadsM"),leadsReal:P("tLeadsR")};
    for(const k2 in o)if(o[k2]==null)delete o[k2];
    CAPTURA_SEM[wk]=CAPTURA_SEM[wk]||{};
    if(Object.keys(o).length)CAPTURA_SEM[wk][rid]=o; else delete CAPTURA_SEM[wk][rid];
@@ -1716,6 +1734,7 @@ async function syncInit(){
        if(!u||u.isAnonymous){
          USUARIO=null; SYNC.on=false;
          SYNC.subs.forEach(fn=>fn()); SYNC.subs=[]; if(SYNC.subBit){SYNC.subBit();SYNC.subBit=null}
+         aplicarRol(); render();
          $("#login").classList.add("on"); tickSync(); return;
        }
        try{
@@ -1740,8 +1759,18 @@ async function syncInit(){
 }
 let USUARIO=null; /* {nombre,rid,ger,admin} cuando REQUIERE_LOGIN */
 function aplicarRol(){
- if(!USUARIO)return;
+ if(!USUARIO){ MI_ROL={dir:"",ger:""}; S.path=[ORG]; return; }
  if(!USUARIO.admin){ MI_ROL.dir=USUARIO.rid||""; MI_ROL.ger=USUARIO.ger||""; try{localStorage.setItem("cic_rol",JSON.stringify(MI_ROL))}catch(e){} }
+ /* cada rol aterriza en su propio nodo */
+ const propio=USUARIO.admin?null:(USUARIO.ger||USUARIO.rid);
+ S.path=propio&&findNode(propio)?pathTo(propio):[ORG];
+ S.view="resumen";
+ /* identidad visible en el menú */
+ const su=$("#suRol");
+ if(su){
+   const reg=USUARIO.rid?(findNode(USUARIO.rid)||{}).nombre||USUARIO.rid:"";
+   su.textContent=USUARIO.admin?"VPGM · Nacional":USUARIO.ger?"Gerente Regional · "+reg:"Director · "+reg;
+ }
 }
 function syncSubscribe(wk){
  if(!SYNC.on)return;
