@@ -1,0 +1,1829 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Centro de Inteligencia Comercial · Julio 2026</title>
+<meta name="theme-color" content="#0A1120" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F1F4F9" media="(prefers-color-scheme: light)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%234DA3FF'/%3E%3Cstop offset='1' stop-color='%237C5CFF'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial,sans-serif' font-size='28' font-weight='800' fill='white' text-anchor='middle'%3ECI%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1120; --surface:#101A2E; --surface2:#0D1626; --line:#1E2A44; --line2:#28365A;
+  --ink:#E8EEF8; --muted:#8DA0BC; --muted2:#74889F;
+  --accent:#4DA3FF; --accent-ink:#0A1120; --accent-soft:rgba(77,163,255,.12);
+  --verde:#22C186; --ambar:#F2B33D; --rojo:#F0564F; --gris:#5F7492;
+  --verde-soft:rgba(34,193,134,.13); --ambar-soft:rgba(242,179,61,.14); --rojo-soft:rgba(240,86,79,.14); --gris-soft:rgba(95,116,146,.15);
+  --shadow:0 10px 30px rgba(2,8,20,.45);
+  --r:14px; --r-sm:9px;
+  --font-d:'Archivo',system-ui,-apple-system,sans-serif;
+  --font-b:'Inter',system-ui,-apple-system,sans-serif;
+}
+[data-theme="light"]{
+  --bg:#F1F4F9; --surface:#FFFFFF; --surface2:#F7F9FC; --line:#E2E8F2; --line2:#CBD6E6;
+  --ink:#0C1B2E; --muted:#5B6B84; --muted2:#6F819C;
+  --accent:#0057C8; --accent-ink:#FFFFFF; --accent-soft:rgba(0,87,200,.09);
+  --verde:#0E9F6E; --ambar:#C77E08; --rojo:#DC3B33; --gris:#8494AC;
+  --verde-soft:rgba(14,159,110,.10); --ambar-soft:rgba(199,126,8,.12); --rojo-soft:rgba(220,59,51,.10); --gris-soft:rgba(132,148,172,.14);
+  --shadow:0 8px 24px rgba(12,27,46,.08);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-b);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+button{font-family:inherit;color:inherit;background:none;border:none;cursor:pointer}
+input,select,textarea{font-family:inherit;font-size:13px;color:var(--ink);background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-sm);padding:8px 10px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+.num{font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+::-webkit-scrollbar{height:9px;width:9px}::-webkit-scrollbar-thumb{background:var(--line2);border-radius:9px}::-webkit-scrollbar-track{background:transparent}
+
+/* ===== Layout ===== */
+#app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+aside{background:var(--surface);border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:6px;position:sticky;top:0;height:100vh}
+.brand{display:flex;align-items:center;gap:10px;padding:4px 8px 16px}
+.brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7C5CFF);display:grid;place-items:center;font-family:var(--font-d);font-weight:800;font-size:15px;color:#fff;letter-spacing:-.5px}
+.brand b{font-family:var(--font-d);font-size:14.5px;font-weight:700;letter-spacing:.2px;display:block;line-height:1.15}
+.brand span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px}
+.navlbl{font-size:10px;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted2);padding:12px 10px 5px}
+.navbtn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:10px;font-size:13.2px;font-weight:500;color:var(--muted);text-align:left;transition:all .15s}
+.navbtn svg{width:17px;height:17px;flex:none}
+.navbtn:hover{background:var(--surface2);color:var(--ink)}
+.navbtn.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.navbtn .pill{margin-left:auto;font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:99px;background:var(--rojo);color:#fff}
+.side-foot{margin-top:auto;padding:10px;border-top:1px solid var(--line);font-size:10.5px;color:var(--muted2);line-height:1.5}
+
+main{min-width:0;padding:0 26px 60px}
+header.top{position:sticky;top:0;z-index:30;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);display:flex;align-items:center;gap:14px;padding:14px 0 12px;border-bottom:1px solid var(--line);margin-bottom:18px;flex-wrap:wrap}
+.live{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--verde);background:var(--verde-soft);padding:5px 11px;border-radius:99px}
+.live .dot{width:7px;height:7px;border-radius:50%;background:var(--verde);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(34,193,134,.55)}70%{box-shadow:0 0 0 7px rgba(34,193,134,0)}100%{box-shadow:0 0 0 0 rgba(34,193,134,0)}}
+.sync{font-size:11.5px;color:var(--muted)}
+.sync b{color:var(--ink);font-weight:600}
+.top .sp{flex:1}
+.wksel{display:flex;gap:4px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:3px}
+.wksel button{padding:5px 11px;border-radius:8px;font-size:12px;font-weight:600;color:var(--muted)}
+.wksel button.on{background:var(--accent);color:var(--accent-ink)}
+.icobtn{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--muted)}
+.icobtn:hover{color:var(--ink);border-color:var(--line2)}
+.demo-toggle{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;color:var(--muted);background:var(--surface);border:1px solid var(--line);border-radius:99px;padding:5px 12px 5px 6px}
+.demo-toggle .sw{width:30px;height:17px;border-radius:99px;background:var(--line2);position:relative;transition:.2s}
+.demo-toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:13px;height:13px;border-radius:50%;background:#fff;transition:.2s}
+.demo-toggle.on .sw{background:var(--ambar)}
+.demo-toggle.on .sw::after{left:15px}
+.demo-toggle.on{color:var(--ambar)}
+
+/* breadcrumb tipo línea */
+.crumbs{display:flex;align-items:center;flex-wrap:wrap;gap:0;margin:2px 0 18px}
+.crumb{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--muted);padding:6px 12px;border-radius:99px;transition:.15s}
+.crumb:not(.here):hover{color:var(--accent);background:var(--accent-soft)}
+.crumb.here{color:var(--ink);background:var(--surface);border:1px solid var(--line);pointer-events:none}
+.crumb .lvl{font-size:9.5px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);font-weight:700}
+.crumb-sep{width:22px;height:2px;background:var(--line2);margin:0 2px;flex:none}
+
+/* hero */
+.hero{display:grid;grid-template-columns:auto 1fr auto;gap:26px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:22px 26px;box-shadow:var(--shadow);margin-bottom:20px}
+.ring{position:relative;width:128px;height:128px;flex:none}
+.ring svg{transform:rotate(-90deg)}
+.ring .val{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:2px}
+.ring .val b{font-family:var(--font-d);font-size:26px;font-weight:800;letter-spacing:-1px;line-height:1}
+.ring .val span{font-size:8px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);max-width:80px;line-height:1.25}
+.hero h1{font-family:var(--font-d);font-size:21px;font-weight:700;letter-spacing:-.3px;margin-bottom:2px}
+.hero .sub{font-size:12.5px;color:var(--muted);margin-bottom:14px}
+.chips{display:flex;gap:14px;flex-wrap:wrap}
+.chip{display:flex;align-items:center;gap:7px;font-size:12px;font-weight:500;color:var(--muted)}
+.chip i{width:8px;height:8px;border-radius:50%;flex:none}
+.chip .num{font-family:var(--font-d);font-weight:800;font-size:13.5px;color:var(--ink)}
+.dist{max-width:460px}
+.distbar{display:flex;height:8px;border-radius:8px;overflow:hidden;background:var(--gris-soft);margin-bottom:9px}
+.distbar i{height:100%}
+.distleg{display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;color:var(--muted)}
+.distleg b{font-family:var(--font-d);font-weight:800;color:var(--ink);font-variant-numeric:tabular-nums}
+.distleg .dld{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px}
+.hero .proj{min-width:190px;text-align:right;border-left:1px solid var(--line);padding-left:24px}
+.proj .lbl{font-size:10px;text-transform:uppercase;letter-spacing:1.3px;color:var(--muted2);font-weight:700}
+.proj b{font-family:var(--font-d);font-size:30px;font-weight:800;letter-spacing:-1px;display:block;margin:3px 0 1px}
+.proj .det{font-size:11px;color:var(--muted)}
+
+/* KPI cards */
+.grid-kpi{display:grid;grid-template-columns:repeat(auto-fill,minmax(215px,1fr));gap:12px;margin-bottom:22px}
+.kcard{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:15px 16px 13px 20px;overflow:hidden}
+.kcard .bar{position:absolute;left:0;top:0;bottom:0;width:5px}
+.kcard .name{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.6px;min-height:28px;line-height:1.3}
+.kcard .big{font-family:var(--font-d);font-size:29px;font-weight:800;letter-spacing:-1.2px;line-height:1.05;margin:5px 0 2px}
+.kcard .big small{font-size:15px;font-weight:700;letter-spacing:0;color:var(--muted)}
+.kcard .mr{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:7px;border-top:1px dashed var(--line);padding-top:7px}
+.kcard .mr b{color:var(--ink);font-weight:600}
+.kcard .spark{margin-top:8px;height:26px}
+.kcard.sinc .big{color:var(--muted2)}
+.tag{display:inline-flex;align-items:center;font-size:9.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:2px 7px;border-radius:5px}
+.tag.v{color:var(--verde);background:var(--verde-soft)} .tag.a{color:var(--ambar);background:var(--ambar-soft)}
+.tag.r{color:var(--rojo);background:var(--rojo-soft)} .tag.g{color:var(--muted);background:var(--gris-soft)}
+.tag.info{color:var(--accent);background:var(--accent-soft)}
+
+/* secciones y tablas */
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden}
+.sec>.hd{display:flex;align-items:center;gap:12px;padding:15px 20px;border-bottom:1px solid var(--line)}
+.sec>.hd h2{font-family:var(--font-d);font-size:15px;font-weight:700;letter-spacing:-.2px}
+.sec>.hd .sub{font-size:11.5px;color:var(--muted)}
+.sec>.hd .sp{flex:1}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{font-size:10px;text-transform:uppercase;letter-spacing:.9px;color:var(--muted2);font-weight:700;text-align:right;padding:9px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:var(--surface2)}
+th:first-child,td:first-child{text-align:left;position:sticky;left:0;background:var(--surface);z-index:2}
+th:first-child{background:var(--surface2)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:none}
+tr.click{cursor:pointer}
+tr.click:hover td{background:var(--accent-soft)}
+tr.click:focus{outline:2px solid var(--accent);outline-offset:-2px}
+tr.click:focus td{background:var(--accent-soft)}
+tr.click:hover td:first-child{background:color-mix(in srgb,var(--surface) 60%,var(--accent-soft))}
+td .who{display:flex;align-items:center;gap:9px;font-weight:600}
+td .who .rk{width:20px;height:20px;border-radius:6px;display:grid;place-items:center;font-size:10.5px;font-weight:800;background:var(--surface2);border:1px solid var(--line);color:var(--muted)}
+td .who .rk.top{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.cell{display:inline-flex;align-items:center;gap:7px;justify-content:flex-end}
+.dotc{width:8px;height:8px;border-radius:50%;flex:none}
+.barcell{display:flex;align-items:center;gap:8px;justify-content:flex-end;min-width:120px}
+.bartrack{width:64px;height:6px;border-radius:6px;background:var(--gris-soft);overflow:hidden;flex:none}
+.bartrack i{display:block;height:100%;border-radius:6px}
+.pilarhd td{background:var(--surface2)!important;font-size:10px;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted2);font-weight:800;text-align:left;padding:7px 12px}
+
+/* alertas */
+.al{display:flex;gap:14px;align-items:flex-start;padding:14px 20px;border-bottom:1px solid var(--line)}
+.al:last-child{border-bottom:none}
+.al .sev{flex:none;width:74px;text-align:center;font-size:9.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;padding:4px 0;border-radius:6px;margin-top:2px}
+.al .sev.critica{background:var(--rojo);color:#fff}
+.al .sev.alta{background:var(--rojo-soft);color:var(--rojo)}
+.al .sev.media{background:var(--ambar-soft);color:var(--ambar)}
+.al .sev.baja{background:var(--gris-soft);color:var(--muted)}
+.al .tx b{font-weight:600}
+.al .tx .d{font-size:11.5px;color:var(--muted);margin-top:1px}
+.al .go{margin-left:auto;flex:none;font-size:11.5px;font-weight:600;color:var(--accent);padding:5px 10px;border-radius:8px}
+.al .go:hover{background:var(--accent-soft)}
+
+/* bitácora */
+.bit-form{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.bit-form .full{grid-column:1/-1}
+.bit-form label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);font-weight:700;display:block;margin-bottom:4px}
+.btn{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:10px;font-size:12.5px;font-weight:700;background:var(--accent);color:var(--accent-ink);transition:.15s}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:var(--surface2);color:var(--ink);border:1px solid var(--line)}
+.est{font-size:10.5px;font-weight:700;padding:3px 9px;border-radius:99px}
+.est.Abierto{background:var(--rojo-soft);color:var(--rojo)} .est.Proceso{background:var(--ambar-soft);color:var(--ambar)} .est.Cerrado{background:var(--verde-soft);color:var(--verde)}
+
+/* diccionario */
+.dic-note{padding:12px 20px;font-size:12px;color:var(--muted);background:var(--accent-soft);border-bottom:1px solid var(--line)}
+.dic-note b{color:var(--accent)}
+
+.empty{padding:34px 20px;text-align:center;color:var(--muted)}
+.empty b{display:block;font-family:var(--font-d);font-size:15px;color:var(--ink);margin-bottom:4px}
+.foot-note{font-size:11px;color:var(--muted2);padding:10px 20px;border-top:1px dashed var(--line)}
+.demo-badge{font-size:9px;font-weight:800;letter-spacing:1px;color:var(--ambar);background:var(--ambar-soft);border:1px solid color-mix(in srgb,var(--ambar) 35%,transparent);padding:2px 6px;border-radius:5px;vertical-align:2px;margin-left:6px}
+
+/* responsive */
+.menubtn{display:none}
+@media(max-width:1080px){
+  #app{grid-template-columns:1fr}
+  aside{position:fixed;left:0;top:0;bottom:0;width:246px;z-index:60;transform:translateX(-100%);transition:transform .25s;box-shadow:var(--shadow)}
+  aside.open{transform:none}
+  .menubtn{display:grid}
+  main{padding:0 14px 50px}
+  .hero{grid-template-columns:1fr;text-align:center}
+  .ring{margin:0 auto}
+  .hero .proj{border-left:none;border-top:1px solid var(--line);padding:14px 0 0;text-align:center;min-width:0}
+  .chips{justify-content:center}
+  .bit-form{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){ .grid-kpi{grid-template-columns:1fr 1fr} .wksel button{padding:5px 8px} .bit-form{grid-template-columns:1fr} .sync{display:none} .demo-toggle span:last-child{display:none} }
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+#login{display:none;position:fixed;inset:0;z-index:80;background:var(--bg);align-items:center;justify-content:center;padding:20px}
+#login.on{display:flex}
+.lbox{width:min(360px,100%);background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:28px}
+.lbox .logo{width:44px;height:44px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#7C5CFF);display:grid;place-items:center;font-family:var(--font-d);font-weight:800;font-size:18px;color:#fff;margin:0 auto 14px}
+.lbox h2{font-family:var(--font-d);font-size:17px;font-weight:700;text-align:center;margin-bottom:2px}
+.lbox .s{font-size:12px;color:var(--muted);text-align:center;margin-bottom:18px}
+.lbox label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted2);font-weight:700;display:block;margin:10px 0 4px}
+.lbox input{width:100%}
+.lbox .btn{width:100%;justify-content:center;margin-top:16px}
+.lerr{font-size:12px;color:var(--rojo);margin-top:10px;text-align:center;min-height:16px}
+.side-user{margin-top:auto;padding:12px 10px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);display:none;align-items:center;gap:8px}
+.side-user b{color:var(--ink);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.side-user button{font-size:11px;font-weight:700;color:var(--rojo)}
+#toasts{position:fixed;top:14px;right:14px;z-index:90;display:flex;flex-direction:column;gap:8px;max-width:320px}
+.toast{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;box-shadow:var(--shadow);padding:10px 14px;font-size:12.5px;animation:tin .2s ease}
+.toast.ok{border-left-color:var(--verde)} .toast.err{border-left-color:var(--rojo)} .toast.warn{border-left-color:var(--ambar)}
+@keyframes tin{from{transform:translateX(12px);opacity:0}}
+#scrim{display:none;position:fixed;inset:0;background:rgba(4,10,22,.5);z-index:55}
+#scrim.on{display:block}
+</style>
+</head>
+<body>
+<div id="app">
+  <aside id="side">
+    <div class="brand">
+      <div class="logo">CI</div>
+      <div><b>Centro de Inteligencia<br>Comercial</b><span>Julio 2026 · Retail</span></div>
+    </div>
+    <div class="navlbl">Módulos</div>
+    <button class="navbtn on" data-view="resumen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>Resumen ejecutivo</button>
+    <button class="navbtn" data-view="negocio"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>KPIs Negocio</button>
+    <button class="navbtn" data-view="tacticos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/></svg>KPIs Tácticos</button>
+    <button class="navbtn" data-view="alertas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l9.5 16.5H2.5L12 3z"/><path d="M12 10v4"/><circle cx="12" cy="17" r=".6" fill="currentColor"/></svg>Alertas<span class="pill" id="alertN" style="display:none">0</span></button>
+    <button class="navbtn" data-view="captura"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>Captura de resultados</button>
+    <button class="navbtn" data-view="bitacora"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h13a1 1 0 0 1 1 1v15l-3-2-3 2-3-2-3 2-3-2V5a1 1 0 0 1 1-1z"/><path d="M8 9h8M8 13h5"/></svg>Bitácora de acciones</button>
+        <div class="side-user" id="sideUser"><b id="suNombre"></b><button id="suSalir">Salir</button></div>
+  </aside>
+  <div id="scrim"></div>
+  <div id="toasts"></div>
+  <div id="login" role="dialog" aria-label="Iniciar sesión">
+   <div class="lbox">
+    <div class="logo">CI</div>
+    <h2>Centro de Inteligencia Comercial</h2>
+    <div class="s">Acceso por usuario · Julio 2026</div>
+    <label>Correo</label><input id="lEmail" type="email" autocomplete="username">
+    <label>Contraseña</label><input id="lPass" type="password" autocomplete="current-password">
+    <button class="btn" id="lGo">Entrar</button>
+    <div class="lerr" id="lErr"></div>
+   </div>
+  </div>
+  <main>
+    <header class="top">
+      <button class="icobtn menubtn" id="menuBtn" aria-label="Menú"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+      <div class="live" id="liveBadge"><span class="dot"></span>EN VIVO</div>
+      <div class="sync">Última actualización <b id="lastSync">—</b> · <span id="clock" class="num">—</span></div>
+      <div class="sp"></div>
+      <div class="wksel" id="wksel"></div>
+      <button class="demo-toggle" id="demoBtn" title="Rellena con datos simulados las mediciones aún no capturadas en la cédula"><span class="sw"></span>Modo demo</button>
+      <button class="icobtn" id="themeBtn" aria-label="Cambiar tema"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+    </header>
+    <nav class="crumbs" id="crumbs" aria-label="Jerarquía"></nav>
+    <div id="content"></div>
+  </main>
+</div>
+<script>
+"use strict";
+/* ╔══════════════════════════════════════════════════════════╗
+   ║  CONEXIÓN CENTRAL (Fase 2)                                 ║
+   ║  Pega aquí el firebaseConfig del proyecto (Consola         ║
+   ║  Firebase → Configuración → Tus apps → SDK → Config).      ║
+   ║  Con null, la app opera 100% local en este navegador.      ║
+   ╚══════════════════════════════════════════════════════════╝ */
+const FIREBASE_CONFIG={
+  apiKey: "AIzaSyBTzEspfqO8Mo0mOoppc9p6iYCBfHS5QI4",
+  authDomain: "inteligencia-comercial-28e23.firebaseapp.com",
+  projectId: "inteligencia-comercial-28e23",
+  storageBucket: "inteligencia-comercial-28e23.firebasestorage.app",
+  messagingSenderId: "848994385074",
+  appId: "1:848994385074:web:216d898dae6d9fb66fddab"
+};
+const SYNC_ROOT="cic_julio26";
+/* Poner en true DESPUÉS de: (1) correr seed_usuarios.py y (2) publicar reglas v3.
+   En false, la app usa acceso anónimo (modo piloto). */
+const REQUIERE_LOGIN=true;
+/* ============================================================
+   CAPA DE DATOS — Single Source of Truth
+   Origen: CEDULA_SEGUIMIENTO_REGIONES_JULIO_26.xlsx (actualizada)
+   Ningún KPI, fórmula, meta ni regla de semáforo se define aquí
+   fuera de lo capturado en el Diccionario Oficial.
+   ============================================================ */
+const DICCIONARIO=[
+ {id:"pospago",   pilar:"RESULTADO DE VENTA", kpi:"% Alcance Pospago (vs cuota)",      tipo:"NEGOCIO", dir:"up",   def:"Venta de Pospago realizada ÷ cuota del periodo", frec:"Semanal", fuente:"SO", meta:"100%", sem:true,  fmt:"pct"},
+ {id:"renov",     pilar:"RESULTADO DE VENTA", kpi:"% Alcance Renovaciones (vs cuota)", tipo:"NEGOCIO", dir:"up",   def:"Renovaciones realizadas ÷ cuota del periodo", frec:"Semanal", fuente:"SO", meta:"100%", sem:true,  fmt:"pct"},
+ {id:"acces",     pilar:"RESULTADO DE VENTA", kpi:"% Alcance Accesorios (vs cuota)",   tipo:"NEGOCIO", dir:"up",   def:"Venta de accesorios realizada ÷ cuota del periodo", frec:"Semanal", fuente:"SO", meta:"100%", sem:true, fmt:"pct"},
+ {id:"seguros",   pilar:"RESULTADO DE VENTA", kpi:"% Alcance Seguros (vs cuota)",      tipo:"NEGOCIO", dir:"up",   def:"Venta de seguros realizada ÷ cuota del periodo", frec:"Semanal", fuente:"SO", meta:"100%", sem:true,  fmt:"pct"},
+ {id:"arpu",      pilar:"RESULTADO DE VENTA", kpi:"ARPU Pospago",                      tipo:"NEGOCIO", dir:"up",   def:"Ingreso promedio por usuario (ARPU) de Pospago ÷ meta del periodo", frec:"Semanal", fuente:"SO", meta:"1", sem:true, fmt:"pct"},
+ {id:"dap",       pilar:"PRODUCTIVIDAD",      kpi:"Venta diaria por tienda (DAP)",     tipo:"NEGOCIO", dir:"up",   def:"Promedio de unidades vendidas por tienda por día hábil", frec:"Diaria", fuente:"SO", meta:"Definir por región", sem:true, fmt:"num"},
+ {id:"vhc",       pilar:"PRODUCTIVIDAD",      kpi:"Venta por HC",                      tipo:"NEGOCIO", dir:"up",   def:"Unidades vendidas ÷ headcount activo del periodo (productividad por persona)", frec:"Semanal", fuente:"SO", meta:"Definir por región", sem:true, fmt:"num"},
+ {id:"prepago",   pilar:"RESULTADO DE VENTA", kpi:"% Alcance Prepago (vs cuota)",      tipo:"TACTICO", dir:"up",   def:"Venta de Prepago realizada ÷ cuota del periodo", frec:"Semanal", fuente:"SO", meta:"100%", sem:true, fmt:"pct"},
+ {id:"top3",      pilar:"RESULTADO DE VENTA", kpi:"Top 3 planes",                      tipo:"TACTICO", dir:"info", def:"Los 3 planes con mayor volumen de venta del periodo", frec:"Semanal", fuente:"SO", meta:"N/A", sem:false, fmt:"txt", enCedula:false},
+ {id:"asist",     pilar:"PERSONAL",           kpi:"% Asistencia (prom diario)",        tipo:"TACTICO", dir:"up",   def:"Personal presente ÷ personal asignado evaluable (excluye vacaciones/incapacidad/permiso con goce). Promedio diario semanal.", frec:"Diaria", fuente:"Checador", meta:"95%", sem:true, fmt:"pct"},
+ {id:"cobhc",     pilar:"PERSONAL",           kpi:"% Cobertura HC",                    tipo:"TACTICO", dir:"up",   def:"HC autorizado − vacantes ÷ HC autorizado", frec:"Semanal", fuente:"RH", meta:"97%", sem:true, fmt:"pct", cols:"hc"},
+ {id:"entsal",    pilar:"PERSONAL",           kpi:"% Entrada/Salida a tiempo (prom diario)", tipo:"TACTICO", dir:"up", def:"Promedio diario de registros de entrada y salida dentro de horario ÷ registros esperados.", frec:"Diaria", fuente:"Checador", meta:"95%", sem:true, fmt:"pct", cols:"es"},
+ {id:"faltas",    pilar:"PERSONAL",           kpi:"# Faltas",                          tipo:"TACTICO", dir:"down", def:"Conteo de faltas sin justificar en el periodo", frec:"Semanal", fuente:"Checador", meta:"≤5%", sem:true, fmt:"pct"},
+ {id:"justif",    pilar:"PERSONAL",           kpi:"% Justificaciones vs registros",    tipo:"TACTICO", dir:"down", def:"Justificaciones ÷ total de registros del periodo", frec:"Semanal", fuente:"RH", meta:"≤10%", sem:true, fmt:"pct", enCedula:false},
+ {id:"capac",     pilar:"PERSONAL",           kpi:"% Avance Capacitación (streaming)", tipo:"TACTICO", dir:"up",   def:"Contenidos de capacitación completados ÷ asignados", frec:"Semanal", fuente:"RH", meta:"85%", sem:true, fmt:"pct"},
+ {id:"adt",       pilar:"CUMPLIMIENTO OPERATIVO", kpi:"% Aperturas y Cierres (ADT)",   tipo:"TACTICO", dir:"up",   def:"Tiendas que abrieron Y cerraron a tiempo ÷ días evaluados", frec:"Diaria", fuente:"IT", meta:"95%", sem:true, fmt:"pct", cols:"ac"},
+ {id:"tko",       pilar:"PERFORMANCE TIENDA", kpi:"% Tiendas KO por KPI",              tipo:"TACTICO", dir:"down", def:"Tiendas que no alcanzan su KPI mínimo ÷ total de tiendas", frec:"Semanal", fuente:"SO", meta:"≤20%", sem:true, fmt:"pct"},
+ {id:"reinc",     pilar:"PERFORMANCE TIENDA", kpi:"Reincidentes (tiendas KO)",         tipo:"TACTICO", dir:"down", def:"Tiendas que repiten como KO por KPI dos o más semanas seguidas", frec:"Semanal", fuente:"SO", meta:"0", sem:true, fmt:"pct"},
+ {id:"esqab",     pilar:"PERFORMANCE TIENDA", kpi:"% Tiendas esquema A vs B",          tipo:"TACTICO", dir:"info", def:"Distribución de tiendas operando bajo esquema comercial A vs esquema B", frec:"Semanal", fuente:"SO", meta:"N/A", sem:false, fmt:"txt", enCedula:false},
+ {id:"prosp",     pilar:"ACTIVIDAD COMERCIAL",kpi:"Total prospectos",                  tipo:"TACTICO", dir:"up",   def:"Clientes potenciales contactados en el periodo", frec:"Semanal", fuente:"CRM", meta:"Definir por región", sem:true, fmt:"num"},
+ {id:"citas",     pilar:"ACTIVIDAD COMERCIAL",kpi:"Total citas",                       tipo:"TACTICO", dir:"up",   def:"Citas agendadas y efectivas con prospectos", frec:"Semanal", fuente:"CRM", meta:"Definir por región", sem:true, fmt:"num", enCedula:false},
+ {id:"leads",     pilar:"ACTIVIDAD COMERCIAL",kpi:"Leads (por base: ATT/Prime/Migraciones/Trade In)", tipo:"TACTICO", dir:"up", def:"Leads recibidos, desglosados por base de origen", frec:"Semanal", fuente:"CRM", meta:"Definir por región", sem:true, fmt:"num"},
+ {id:"wos",       pilar:"ACTIVIDAD COMERCIAL",kpi:"WOS equipo/accesorios (inventario)",tipo:"TACTICO", dir:"info", def:"Semanas de inventario disponible (Weeks of Supply); se monitorea como rango, no como umbral único", frec:"Semanal", fuente:"Logística", meta:"Rango objetivo", sem:false, fmt:"num", enCedula:false},
+ {id:"aracc",     pilar:"ACTIVIDAD COMERCIAL",kpi:"AR Accesorios (attach rate)",       tipo:"TACTICO", dir:"up",   def:"Unidades de accesorios vendidas ÷ unidades de equipo vendidas", frec:"Semanal", fuente:"SO", meta:"Definir por región", sem:true, fmt:"num", enCedula:false},
+ {id:"google",    pilar:"EXPERIENCIA CLIENTE",kpi:"Calificación Google (prom. ponderado)", tipo:"TACTICO", dir:"up", def:"Promedio ponderado por # de reseñas, por región", frec:"Semanal", fuente:"MKT", meta:"4.5", sem:true, fmt:"num1"},
+ {id:"revneg",    pilar:"EXPERIENCIA CLIENTE",kpi:"# Reviews negativos",               tipo:"TACTICO", dir:"down", def:"Reseñas de Google con calificación baja (≤2★) en el periodo", frec:"Semanal", fuente:"MKT", meta:"≤5", sem:true, fmt:"pct"},
+ {id:"motrev",    pilar:"EXPERIENCIA CLIENTE",kpi:"Motivos de reviews negativos",      tipo:"TACTICO", dir:"info", def:"Clasificación cualitativa de las causas de las reseñas negativas", frec:"Semanal", fuente:"MKT", meta:"N/A", sem:false, fmt:"txt", enCedula:false}
+];
+const K=Object.fromEntries(DICCIONARIO.map(k=>[k.id,k]));
+const NEG_IDS=["pospago","dap","vhc","arpu","renov","acces","seguros"];
+const RANK_IDS=["pospago","renov","acces","seguros","arpu"]; // para promedios: DAP y VHC derivan de Pospago y duplicarían el peso
+const TAC_IDS=["prepago","asist","cobhc","entsal","faltas","capac","adt","tko","reinc","prosp","leads","google","revneg"];
+
+const SEMANAS=[
+ {n:27,rango:"29 jun – 05 jul"},{n:28,rango:"06 – 12 jul"},{n:29,rango:"13 – 19 jul"},
+ {n:30,rango:"20 – 26 jul"},{n:31,rango:"27 – 31 jul"}
+];
+
+/* Regiones (direcciones) según la cédula. hcAut/oper: captura real Semana 27–31. */
+const REGIONES=[
+ {id:"BN2", nombre:"BAJIO-NORTE 2",  hcAut:770, oper:752, tacticos:true},
+ {id:"CEN", nombre:"CENTRO",         hcAut:636, oper:613, tacticos:true},
+ {id:"NT1", nombre:"NORTE 1",        hcAut:464, oper:451, tacticos:true},
+ {id:"PAC", nombre:"PACIFICO",       hcAut:533, oper:506, tacticos:true},
+ {id:"NOR", nombre:"NOROESTE",       hcAut:401, oper:390, tacticos:true},
+ {id:"SUR", nombre:"SUR PENINSULA",  hcAut:310, oper:304, tacticos:true},
+ {id:"COM", nombre:"COMISIONISTAS",  hcAut:null,oper:null,tacticos:false}
+];
+const NACIONAL={id:"PRIME", nombre:"PRIME", hcAut:3114, oper:3016};
+
+/* Captura real de la cédula (idéntica S27–S31 en el archivo).
+   metas negocio: pospago/renov/acces = 100%. Reales de negocio: sin capturar. */
+/* Solo METAS (de la cédula). Ningún Real viene precargado: los valores de
+   ejemplo que traía la plantilla fueron descartados; todo Real nace de la
+   captura de directores y gerentes en la app. */
+const CAPTURA={
+ negocioMeta:{pospago:1, renov:1, acces:1},
+ tactico:{
+  asist:{meta:.80},
+  entsal:{},
+  faltas:{meta:.05},
+  capac:{meta:.85},
+  adt:{meta:{BN2:.95,CEN:.95,NT1:.95,PAC:.95,NOR:.95,SUR:.95,PRIME:.96}},
+  tko:{meta:.06},
+  reinc:{meta:.02},
+  prosp:{},
+  leads:{},
+  google:{meta:4.95},
+  revneg:{meta:.01}
+ }
+};
+
+/* ============================================================
+   JERARQUÍA REAL  VPGM → Dirección → Gerente Regional → Tienda
+   Fuente: Cuota_x_Semana_Jul_26.xlsx · 621 tiendas · 57 gerentes
+   Cuotas semanales S27–S31 por modalidad (unidades).
+   TIENDAS: [cve, nombre, gerente, región, POSPAGO[5], RENOV[5], ACCES[5], SEGUROS[5], PREPAGO[5]]
+   ============================================================ */
+const CUOTA_MODS=["POSPAGO", "RENOVACIONES", "ACCESORIOS", "SEGUROS", "PREPAGO"];
+const TIENDAS=[
+["PRMDTSSLP003","BENITO JUAREZ","DANIELA RIVERA CALDERON","BN2",[17,21,22,21,19],[11,14,15,14,12],[11,14,14,14,12],[11,13,15,13,12],[7,8,9,8,7]],
+["PRMDTSSLP007","CHAPULTEPEC JARDIN SLP","DANIELA RIVERA CALDERON","BN2",[13,16,15,16,14],[9,11,11,11,9],[9,11,10,11,9],[10,12,12,12,10],[5,7,6,7,6]],
+["PRMDTSSLP009","CHEDRAUI EL DORADO SLP","DANIELA RIVERA CALDERON","BN2",[13,16,19,16,14],[8,10,9,10,9],[8,10,10,10,9],[8,10,12,10,9],[6,8,7,8,7]],
+["PRMDTSSLP005","HOTEL PANORAMA","DANIELA RIVERA CALDERON","BN2",[15,19,20,19,16],[10,13,14,13,11],[9,11,13,11,10],[7,9,9,9,8],[7,8,9,8,7]],
+["PRMDTSSLP004","PLAZA DEL PARQUE","DANIELA RIVERA CALDERON","BN2",[7,8,10,8,7],[4,5,5,5,4],[3,4,5,4,4],[5,7,7,7,6],[2,3,3,3,2]],
+["PRMDTSSLP012","POZOS SLP","DANIELA RIVERA CALDERON","BN2",[9,11,11,11,10],[4,5,6,5,5],[5,7,6,7,6],[6,8,8,8,7],[2,3,3,3,2]],
+["PRMDTSSLP008","SAN LUIS POTOSI ARMAS II","DANIELA RIVERA CALDERON","BN2",[12,14,15,14,13],[6,8,9,8,7],[8,10,10,10,9],[9,12,12,12,10],[3,4,4,4,4]],
+["PRMDTSSLP001","SAN LUIS POTOSI HIMALAYA","DANIELA RIVERA CALDERON","BN2",[14,17,17,17,15],[11,14,15,14,12],[7,9,8,9,8],[8,10,10,10,9],[5,6,6,6,5]],
+["PRMDTSSLP002","SAN LUIS POTOSI ORIENTE","DANIELA RIVERA CALDERON","BN2",[16,20,20,20,17],[11,14,15,14,12],[11,13,14,13,11],[10,13,13,13,11],[6,8,7,8,7]],
+["PRMDTSSLP011","SORIANA EL PASEO SLP","DANIELA RIVERA CALDERON","BN2",[21,26,30,26,23],[13,16,16,16,14],[12,15,17,15,14],[12,15,16,15,13],[9,11,11,11,9]],
+["PRMDTSSLP006","SORIANA MUÑOZ","DANIELA RIVERA CALDERON","BN2",[8,10,12,10,9],[6,8,8,8,7],[5,6,7,6,6],[8,10,9,10,9],[4,5,7,5,5]],
+["PRMDTSSLP010","THE PARK SAN LUIS POTOSI","DANIELA RIVERA CALDERON","BN2",[14,18,19,18,16],[9,11,11,11,10],[9,11,11,11,9],[12,15,17,15,14],[6,8,7,8,7]],
+["PRMDTSGLA011","LAGOS DE MORENO","DIEGO CHAVEZ COLIN","BN2",[9,11,11,11,9],[6,7,7,7,6],[5,6,6,6,5],[5,7,7,7,6],[4,5,5,5,4]],
+["PRMDTSLEN020","LEON ALTACIA","DIEGO CHAVEZ COLIN","BN2",[27,33,36,33,29],[26,32,35,32,28],[19,23,25,23,21],[24,30,32,30,26],[9,11,11,11,9]],
+["PRMDTSLEN005","LEON CENTRO","DIEGO CHAVEZ COLIN","BN2",[18,22,23,22,19],[12,15,15,15,13],[12,15,15,15,13],[7,9,10,9,8],[5,7,7,7,6]],
+["PRMDTSLEN014","LEON FLAGSHIP","DIEGO CHAVEZ COLIN","BN2",[8,10,9,10,9],[4,5,5,5,4],[5,6,5,6,5],[5,6,5,6,5],[3,3,4,3,3]],
+["PRMDTSLEN006","MARIANO ESCOBEDO","DIEGO CHAVEZ COLIN","BN2",[10,12,13,12,11],[5,7,7,7,6],[4,5,6,5,5],[5,6,5,6,5],[4,5,4,5,4]],
+["PRMDTSLEN024","PASEO DEL MORAL","DIEGO CHAVEZ COLIN","BN2",[9,12,12,12,10],[6,8,8,8,7],[5,7,7,7,6],[6,7,8,7,6],[4,5,6,5,5]],
+["PRMDTSGLA010","PLAZA ARGANIA","DIEGO CHAVEZ COLIN","BN2",[9,12,12,12,10],[6,7,7,7,6],[6,8,9,8,7],[7,9,8,9,8],[4,5,5,5,4]],
+["PRMDTSLEN021","PLAZA MANDARINAS","DIEGO CHAVEZ COLIN","BN2",[12,14,15,14,13],[8,10,10,10,9],[6,8,8,8,7],[5,6,5,6,5],[5,6,7,6,5]],
+["PRMDTSLEN018","PLAZA ROSSINI","DIEGO CHAVEZ COLIN","BN2",[9,12,12,12,10],[5,6,6,6,5],[4,5,6,5,5],[6,7,7,7,6],[4,4,5,4,4]],
+["PRMDTSGLA027","PORTAL LAGOS DE MORENO","DIEGO CHAVEZ COLIN","BN2",[9,12,12,12,10],[6,8,8,8,7],[5,7,7,7,6],[9,11,12,11,10],[4,5,6,5,5]],
+["PRMDTSLEN004","PUERTA BAJIO","DIEGO CHAVEZ COLIN","BN2",[8,10,12,10,9],[4,5,5,5,4],[4,5,4,5,4],[3,4,3,4,3],[4,5,6,5,5]],
+["PRMDTSDGO009","ALSUPER FILADELFIA DGO","ERIK GABRIEL SANCHEZ GARCIA","BN2",[6,8,9,8,8],[3,4,5,4,3],[3,4,4,4,5],[5,6,8,6,8],[2,3,3,3,4]],
+["PRMDTSTOR006","COLON TORREON","ERIK GABRIEL SANCHEZ GARCIA","BN2",[10,15,16,14,13],[7,9,10,9,6],[6,7,8,7,9],[10,11,16,11,15],[9,9,13,9,12]],
+["PRMDTSTOR004","HEB REVOLUCION","ERIK GABRIEL SANCHEZ GARCIA","BN2",[6,10,10,10,8],[2,3,2,3,2],[2,2,2,2,2],[3,4,5,4,5],[3,3,3,3,4]],
+["PRMDTSTOR007","PLAZA ALMANARA","ERIK GABRIEL SANCHEZ GARCIA","BN2",[7,10,11,11,9],[5,6,7,6,4],[4,4,5,4,5],[5,5,7,5,7],[4,4,6,4,5]],
+["PRMDTSDGO007","PLAZA PALMAS HAMBURGO DGO","ERIK GABRIEL SANCHEZ GARCIA","BN2",[6,9,10,8,8],[4,4,5,5,4],[4,4,5,4,5],[6,7,8,7,9],[3,4,4,4,5]],
+["PRMDTSCOA006","PLAZA VIA FRANCISCO I MADERO COAH","ERIK GABRIEL SANCHEZ GARCIA","BN2",[6,8,10,8,7],[2,2,3,2,1],[2,2,2,2,3],[4,4,5,4,5],[5,5,7,5,7]],
+["PRMDTSTOR005","SORIANA ORIENTE","ERIK GABRIEL SANCHEZ GARCIA","BN2",[8,10,12,10,8],[3,3,6,3,3],[4,4,6,4,6],[7,8,11,8,11],[4,5,6,5,6]],
+["PRMDTSTOR001","TORREON","ERIK GABRIEL SANCHEZ GARCIA","BN2",[12,18,19,19,17],[9,12,13,12,9],[11,12,18,12,16],[14,15,20,15,20],[6,7,9,7,9]],
+["PRMDTSTOR009","TORREON GOMEZ PALACIO LAS ROSA","ERIK GABRIEL SANCHEZ GARCIA","BN2",[10,15,16,15,13],[7,9,10,9,7],[5,6,7,6,8],[10,10,15,10,14],[7,8,10,8,10]],
+["PRMDTSTOR002","TORREON PLAZA 4 CAMINOS","ERIK GABRIEL SANCHEZ GARCIA","BN2",[12,20,20,20,18],[9,11,12,11,9],[7,8,11,8,11],[13,14,18,14,19],[6,7,9,7,9]],
+["PRMDTSTOR003","TORREON PLAZA TRIANA","ERIK GABRIEL SANCHEZ GARCIA","BN2",[10,14,16,14,13],[6,7,8,7,6],[7,8,10,8,10],[6,7,10,7,9],[5,6,8,6,8]],
+["PRMDTSTOR008","TORREON SORIANA FUNDADORES","ERIK GABRIEL SANCHEZ GARCIA","BN2",[8,12,13,12,9],[4,6,6,6,4],[4,4,7,4,6],[8,9,12,9,12],[5,5,8,5,7]],
+["PRMDTSCHI030","ALSUPER ROBINSON CHIH","ESTEFANIA MACIAS FLORES","BN2",[10,12,14,12,12],[4,6,6,6,4],[4,5,7,5,6],[6,6,9,6,8],[4,4,7,4,6]],
+["PRMDTSCHI004","CHIHUAHUA PLAZA BELLA DELICIAS","ESTEFANIA MACIAS FLORES","BN2",[15,17,18,17,18],[7,9,9,9,9],[7,9,9,9,9],[13,14,18,14,18],[5,5,8,5,7]],
+["PRMDTSCHI022","CHIHUAHUA PLAZA TRES VIAS","ESTEFANIA MACIAS FLORES","BN2",[8,8,10,8,7],[3,2,5,2,2],[3,4,5,4,2],[4,5,8,5,4],[2,3,4,3,2]],
+["PRMDTSCHI020","CHIHUAHUA PLAZA VICTORIA","ESTEFANIA MACIAS FLORES","BN2",[17,24,26,24,21],[11,12,14,12,14],[9,12,13,12,10],[15,21,21,21,19],[11,15,15,15,13]],
+["PRMDTSCHI006","CHIHUAHUA PLAZA VILLAS CAMARGO","ESTEFANIA MACIAS FLORES","BN2",[8,9,10,8,7],[4,5,5,5,3],[6,8,9,8,6],[7,7,9,7,6],[4,5,7,5,4]],
+["PRMDTSCHI024","DELICIAS","ESTEFANIA MACIAS FLORES","BN2",[12,16,18,16,12],[6,8,10,8,6],[6,7,9,7,6],[14,16,19,16,12],[4,4,5,4,4]],
+["PRMDTSCHI031","ESPACIO 629 CHIHUAHUA","ESTEFANIA MACIAS FLORES","BN2",[5,6,8,6,8],[1,2,2,2,2],[2,3,3,3,4],[1,1,2,1,2],[1,1,3,1,2]],
+["PRMDTSCHI007","NUEVA ESPAÑA","ESTEFANIA MACIAS FLORES","BN2",[17,22,25,22,19],[9,11,14,11,11],[10,12,14,12,10],[14,17,20,17,16],[11,12,16,12,13]],
+["PRMDTSCHI017","PLAZA LA FUENTE","ESTEFANIA MACIAS FLORES","BN2",[6,9,11,9,7],[3,2,4,2,2],[3,4,5,5,4],[5,5,7,5,6],[4,3,3,3,2]],
+["PRMDTSCHI035","PLAZA R ALMADA CHIHUAHUA","ESTEFANIA MACIAS FLORES","BN2",[7,7,10,8,8],[2,3,4,3,2],[4,3,4,3,3],[5,5,7,5,7],[2,3,3,3,4]],
+["PRMDTSCHI013","PROVIDENCIA CUU CHIHUAHUA","ESTEFANIA MACIAS FLORES","BN2",[13,17,20,17,13],[5,6,7,6,4],[7,9,9,9,6],[7,10,11,10,6],[5,7,8,7,4]],
+["PRMDTSCHI034","ALSUPER CAROLINAS CHIH","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[11,14,16,14,10],[6,7,8,7,5],[6,6,9,6,8],[7,7,10,7,10],[7,8,11,9,7]],
+["PRMDTSCHI025","CD CUAUHTEMOC PLAZA SIERRA MAD","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[12,17,18,17,13],[9,10,12,10,8],[7,7,10,7,10],[13,13,19,13,18],[8,9,13,10,8]],
+["PRMDTSCHI019","CHIHUAHUA","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[15,22,26,25,19],[9,10,14,13,10],[10,11,14,11,14],[9,9,13,9,12],[3,3,5,4,3]],
+["PRMDTSCHI018","CHIHUAHUA PLAZA FASHION MALL","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[23,34,36,34,30],[13,16,17,16,12],[11,12,17,12,16],[12,12,17,12,17],[9,10,13,11,9]],
+["PRMDTSCHI005","CHIHUAHUA PLAZA GALERIAS","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[11,14,17,14,12],[5,6,7,6,8],[8,8,12,8,11],[7,7,11,7,10],[4,4,5,4,3]],
+["PRMDTSCHI023","CHIHUAHUA PLAZA SAUCITO","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[8,11,12,11,6],[5,6,8,7,6],[5,5,6,5,7],[3,3,4,3,4],[3,4,5,5,4]],
+["PRMDTSCHI021","CHIHUAHUA PLAZA VALLARTA","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[11,14,16,14,9],[7,9,11,9,8],[9,10,14,10,13],[9,10,12,10,13],[6,7,8,7,6]],
+["PRMDTSCHI029","EL PARRAL CHIHUAHUA","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[10,13,15,12,9],[3,3,5,3,2],[4,4,7,4,6],[6,7,9,7,9],[4,4,7,6,4]],
+["PRMDTSCHI036","MI PLAZA CHIHUAHUA I","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[10,14,16,15,12],[8,10,12,9,7],[9,10,14,10,13],[5,5,9,5,7],[7,7,9,7,5]],
+["PRMDTSCHI037","PLAZA MANITOBA","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[5,9,10,9,7],[2,2,2,2,2],[4,4,7,4,6],[6,6,9,6,8],[2,2,4,3,2]],
+["PRMDTSCHI009","SAN CRISTOBAL","FERNANDO ALBERTO GONZALEZ CRUZ","BN2",[11,15,18,15,18],[7,8,10,9,7],[8,8,13,8,11],[7,8,11,8,11],[6,7,8,7,6]],
+["PRMDTSLEN028","ARBOLEDAS CELAYA","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[8,9,11,9,8],[6,7,9,7,6],[7,8,9,8,7],[8,10,12,10,9],[4,5,5,5,4]],
+["PRMDTSLEN029","GALERIAS SALAMANCA GTO","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[9,11,10,11,9],[4,5,6,5,5],[4,5,7,5,5],[6,8,8,8,7],[3,4,4,4,4]],
+["PRMDTSLEN026","IRAPUATO BERRIOZABAL CENTRO","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[13,16,16,16,14],[6,8,8,8,7],[6,8,9,8,7],[5,6,6,6,5],[5,7,7,7,6]],
+["PRMDTSLEN019","IRAPUATO PLAZA CIBELES","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[21,26,30,26,23],[11,13,14,13,11],[9,11,12,11,10],[7,9,9,9,8],[7,8,9,8,7]],
+["PRMDTSLEN009","PABELLON TECNOLOGICO","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[10,12,12,12,11],[5,7,6,7,6],[5,7,6,7,6],[8,10,11,10,9],[5,6,6,6,5]],
+["PRMDTSLEN013","PARQUE CELAYA","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[22,28,29,28,24],[10,12,13,12,11],[11,14,14,14,12],[11,14,14,14,12],[5,7,6,7,6]],
+["PRMDTSQRO015","PATIO QUERETARO I","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[43,53,56,53,46],[25,31,32,31,27],[24,30,32,30,26],[27,33,34,33,29],[12,15,16,15,13]],
+["PRMDTSLEN015","PLAZA CIBELES IRA","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[9,12,12,12,10],[6,7,8,7,6],[6,7,9,7,6],[5,6,7,6,6],[4,5,6,5,4]],
+["PRMDTSQRO007","PLAZA CITADINA QUERETARO","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[18,22,24,22,20],[10,13,14,13,11],[10,12,13,12,11],[12,15,16,15,13],[6,8,7,8,7]],
+["PRMDTSQRO024","PLAZA DEL PARQUE QRO","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[8,10,11,10,9],[5,7,7,7,6],[5,6,6,6,5],[7,9,9,9,8],[4,4,5,4,4]],
+["PRMDTSLEN010","PRM PLAZA FRAGARIA","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[10,12,13,12,11],[6,7,8,7,6],[5,6,7,6,5],[7,9,10,9,8],[4,5,7,5,5]],
+["PRMDTSQRO010","QUERETARO CONSTITUYENTES 2","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[16,20,21,20,18],[10,12,12,12,11],[8,10,11,10,9],[8,10,11,10,9],[7,8,9,8,7]],
+["PRMDTSLEN007","WALMART SAN ROQUE","IGNACIO GUADALUPE SALAZAR HERNANDEZ","BN2",[12,14,15,14,13],[7,8,9,8,7],[6,7,7,7,6],[5,6,5,6,5],[5,6,6,6,5]],
+["PRMDTSAGS010","AGUASCALIENTES 515","ISRAEL GALLO MUNOZ","BN2",[12,14,15,14,13],[5,6,6,6,5],[5,6,7,6,5],[5,6,7,6,6],[3,4,5,4,4]],
+["PRMDTSAGS015","AGUASCALIENTES ALTARIA","ISRAEL GALLO MUNOZ","BN2",[24,29,32,29,26],[15,19,20,19,17],[11,13,15,13,12],[11,13,15,13,12],[6,8,8,8,7]],
+["PRMDTSAGS009","AGUASCALIENTES CENTRO","ISRAEL GALLO MUNOZ","BN2",[14,17,19,17,15],[6,7,7,7,6],[7,9,9,9,8],[4,5,7,5,5],[5,6,6,6,5]],
+["PRMDTSAGS016","AGUASCALIENTES EL DORADO II","ISRAEL GALLO MUNOZ","BN2",[10,13,13,13,11],[5,7,6,7,6],[4,4,5,4,4],[4,5,6,5,4],[4,5,6,5,4]],
+["PRMDTSAGS005","AGUASCALIENTES FAHO ACUEDUCTO","ISRAEL GALLO MUNOZ","BN2",[10,12,13,12,11],[5,7,7,7,6],[7,8,9,8,7],[6,8,8,8,7],[5,7,6,7,6]],
+["PRMDTSAGS019","AGUASCALIENTES PLAZA GUADALUPE","ISRAEL GALLO MUNOZ","BN2",[19,24,24,24,21],[10,12,13,12,11],[10,13,13,13,11],[9,11,10,11,9],[5,7,6,7,6]],
+["PRMDTSAGS003","AGUASCALIENTES VELARIA MALL","ISRAEL GALLO MUNOZ","BN2",[26,32,36,32,28],[16,19,21,19,17],[13,16,18,16,14],[11,13,14,13,12],[7,9,11,9,8]],
+["PRMDTSAGS008","CHEDRAUI COLOSIO","ISRAEL GALLO MUNOZ","BN2",[7,8,10,8,7],[3,3,4,3,3],[5,6,6,6,5],[5,6,7,6,6],[2,3,3,3,3]],
+["PRMDTSAGS011","EL PARIAN","ISRAEL GALLO MUNOZ","BN2",[17,21,22,21,18],[7,9,10,9,8],[10,12,14,12,11],[8,10,9,10,9],[5,6,7,6,5]],
+["PRMDTSAGS006","FRANCISCO DE LOS ROMO","ISRAEL GALLO MUNOZ","BN2",[8,9,11,9,8],[4,4,5,4,4],[4,5,6,5,5],[7,8,9,8,7],[4,5,4,5,4]],
+["PRMDTSAGS007","LA ESTACION","ISRAEL GALLO MUNOZ","BN2",[7,9,10,9,8],[4,5,6,5,5],[4,5,6,5,5],[3,4,4,4,3],[2,3,3,3,2]],
+["PRMDTSAGS012","MADERO","ISRAEL GALLO MUNOZ","BN2",[8,10,10,10,9],[4,5,7,5,5],[7,8,9,8,7],[5,7,7,7,6],[4,5,6,5,5]],
+["PRMDTSAGS013","PLAZA LA LOMA 1","ISRAEL GALLO MUNOZ","BN2",[10,12,13,12,11],[4,5,6,5,5],[3,4,3,4,3],[6,8,9,8,7],[4,5,4,5,4]],
+["PRMDTSAGS014","PLAZA PALMAS I","ISRAEL GALLO MUNOZ","BN2",[9,11,13,11,10],[5,6,7,6,5],[4,5,6,5,5],[5,6,7,6,6],[4,5,6,5,4]],
+["PRMDTSAGS018","PLAZA UNIVERSIDAD AGUASCALIENTES","ISRAEL GALLO MUNOZ","BN2",[6,7,9,7,6],[2,3,3,3,2],[4,5,4,5,4],[2,2,1,2,2],[3,3,3,3,3]],
+["PRMDTSAGS017","VILLA ASUNCION AGS","ISRAEL GALLO MUNOZ","BN2",[18,22,22,22,19],[7,9,9,9,8],[7,8,10,8,7],[9,11,11,11,10],[4,5,5,5,4]],
+["PRMDTSQRO003","EL REFUGIO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[13,16,16,16,14],[9,11,10,11,9],[6,7,8,7,6],[7,8,9,8,7],[6,7,7,7,6]],
+["PRMDTSQRO020","HEB BERNARDO QUINTANA QRO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[9,12,12,12,10],[7,8,9,8,7],[9,11,13,11,10],[11,13,14,13,12],[10,12,12,12,11]],
+["PRMDTSQRO023","PASEO QUERETARO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[13,16,19,16,14],[9,11,11,11,9],[6,7,9,7,6],[8,9,11,9,8],[4,5,6,5,5]],
+["PRMDTSQRO014","PLAZA PORTAL QUERETARO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[27,34,36,34,30],[17,21,23,21,19],[16,19,21,19,17],[24,30,33,30,27],[5,6,7,6,6]],
+["PRMDTSQRO012","PLAZA UBIKA UNIVERSIDAD QRO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[10,12,12,12,10],[4,5,6,5,4],[4,5,6,5,4],[4,5,6,5,5],[3,4,4,4,4]],
+["PRMDTSQRO021","PLAZA ZIBATA QRO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[7,8,10,8,7],[4,5,5,5,4],[4,5,6,5,4],[5,6,5,6,5],[6,7,8,7,6]],
+["PRMDTSQRO002","QUERETARO SORIANA QUINTANA","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[12,15,15,15,13],[5,6,7,6,6],[4,5,5,5,4],[6,7,8,7,6],[4,4,5,4,4]],
+["PRMDTSQRO016","SORIANA PENUELAS QUERETARO","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[8,10,11,10,9],[5,6,5,6,5],[4,5,6,5,4],[6,8,7,8,7],[3,3,4,3,3]],
+["PRMDTSQRO017","URBAN CENTER JURIQUILLA","JOSE ANTONIO GONZALEZ SANTILLAN","BN2",[12,15,15,15,13],[7,9,9,9,8],[6,8,9,8,7],[9,11,13,11,10],[6,7,8,7,6]],
+["PRMDTSZAC009","ALSUPER 925","JOSE EDER CARRANZA CONCHA","BN2",[9,12,12,12,10],[5,6,7,6,6],[8,10,11,10,11],[7,8,9,8,7],[3,4,4,4,3]],
+["PRMDTSZAC004","FRESNILLO CENTRO","JOSE EDER CARRANZA CONCHA","BN2",[10,13,13,13,11],[5,6,6,6,5],[7,10,11,10,10],[2,3,3,3,2],[5,6,7,6,6]],
+["PRMDTSZAC002","PLAZA ALESSIA","JOSE EDER CARRANZA CONCHA","BN2",[12,15,15,15,13],[6,8,9,8,7],[8,10,11,10,10],[8,10,10,10,9],[4,5,6,5,4]],
+["PRMDTSZAC006","PLAZA TAHONA","JOSE EDER CARRANZA CONCHA","BN2",[9,12,12,12,10],[4,5,7,5,5],[7,10,10,9,10],[5,6,5,6,5],[3,4,3,4,3]],
+["PRMDTSZAC003","PORTALES ROSALES ZACATECAS","JOSE EDER CARRANZA CONCHA","BN2",[9,12,12,12,10],[5,6,7,6,6],[7,10,11,10,10],[4,5,5,5,4],[4,5,6,5,4]],
+["PRMDTSZAC007","SORIANA GAVILANES ZACATECAS","JOSE EDER CARRANZA CONCHA","BN2",[6,7,7,7,6],[4,4,5,4,4],[5,6,7,6,6],[4,5,5,5,4],[3,4,4,4,3]],
+["PRMDTSZAC001","ZACATECAS","JOSE EDER CARRANZA CONCHA","BN2",[19,24,25,24,21],[12,14,15,14,13],[20,25,25,25,25],[10,12,13,12,11],[9,11,10,11,9]],
+["PRMDTSZAC008","ZACATECAS PLAZA PORTAL FRESNIL","JOSE EDER CARRANZA CONCHA","BN2",[24,30,31,30,26],[17,21,22,21,18],[23,33,33,33,33],[14,18,19,18,16],[8,10,9,10,9]],
+["PRMDTSDGO002","ALSUPER MEZQUITAL","MARCIAL AARON GARCIA ROMERO","BN2",[10,13,13,13,11],[5,6,7,6,4],[6,8,9,8,7],[7,8,11,8,10],[5,5,8,5,7]],
+["PRMDTSDGO003","DURANGO I","MARCIAL AARON GARCIA ROMERO","BN2",[12,17,-48,17,14],[6,9,9,8,6],[8,10,12,10,9],[13,14,18,14,19],[6,7,9,7,9]],
+["PRMDTSDGO005","DURANGO LAZARO CARDENAS","MARCIAL AARON GARCIA ROMERO","BN2",[6,8,10,8,8],[3,3,3,3,4],[3,5,5,4,4],[6,7,9,7,9],[2,3,3,3,4]],
+["PRMDTSDGO004","DURANGO PLAZA PASEO","MARCIAL AARON GARCIA ROMERO","BN2",[13,17,17,17,14],[7,8,10,9,6],[9,10,12,10,9],[10,10,15,10,14],[6,7,9,7,9]],
+["PRMDTSDGO008","LOMAS DEL PARQUE DGO","MARCIAL AARON GARCIA ROMERO","BN2",[7,9,11,9,8],[5,5,7,5,7],[5,7,9,7,5],[9,10,13,10,13],[4,4,7,4,6]],
+["PRMDTSDGO001","PLAZA 450 DGO","MARCIAL AARON GARCIA ROMERO","BN2",[9,11,12,11,10],[4,5,7,5,5],[4,5,5,5,3],[7,7,9,7,10],[2,3,3,3,4]],
+["PRMDTSDGO006","PORTAL DURANGO","MARCIAL AARON GARCIA ROMERO","BN2",[9,11,12,12,10],[5,6,7,6,4],[5,6,7,6,5],[9,9,13,9,13],[6,6,8,6,8]],
+["PRMDTSJUA001","JUAREZ PLAZA GRAN PATIO ZARAGOZA","MARIO ALBERTO CHAVEZ RIVERA","BN2",[53,80,80,80,60],[30,39,39,40,30],[36,47,49,47,36],[35,50,50,50,25],[32,32,32,24,8]],
+["PRMDTSJUA002","JUAREZ PLAZA SENDERO","MARIO ALBERTO CHAVEZ RIVERA","BN2",[26,35,37,35,26],[18,24,24,24,18],[18,24,25,24,18],[19,27,28,26,20],[11,13,11,8,3]],
+["PRMDTSJUA003","JUAREZ SENDERO LAS TORRES","MARIO ALBERTO CHAVEZ RIVERA","BN2",[50,66,68,66,53],[25,34,35,34,25],[33,44,45,44,33],[23,30,31,30,23],[30,29,29,22,7]],
+["PRMDTSCHI012","MI PLAZA LIBRAMIENTO","MARIO ALBERTO CHAVEZ RIVERA","BN2",[17,22,23,22,18],[7,10,10,10,7],[11,14,15,14,11],[14,18,19,18,14],[9,10,8,7,2]],
+["PRMDTSJUA006","PLAZA ALAMEDA IGLESIAS CD JUAREZ","MARIO ALBERTO CHAVEZ RIVERA","BN2",[17,27,28,27,22],[9,13,13,12,9],[9,11,12,11,9],[15,20,21,21,15],[9,9,9,6,2]],
+["PRMDTSCHI027","PLAZA EL PORVENIR","MARIO ALBERTO CHAVEZ RIVERA","BN2",[21,36,37,36,25],[9,12,12,12,9],[9,15,15,15,11],[18,25,25,25,18],[15,15,14,11,4]],
+["PRMDTSCHI014","PLAZA RAZA AVENUE","MARIO ALBERTO CHAVEZ RIVERA","BN2",[5,9,10,9,6],[2,3,3,2,2],[3,4,4,4,3],[4,5,5,5,4],[4,4,3,2,1]],
+["PRMDTSCHI016","PLAZA RIO GRANDE CD JUAREZ","MARIO ALBERTO CHAVEZ RIVERA","BN2",[18,27,27,27,22],[11,13,15,14,11],[9,13,13,13,10],[13,18,19,18,13],[10,10,10,8,2]],
+["PRMDTSJUA007","PLAZA TRES TORRES","MARIO ALBERTO CHAVEZ RIVERA","BN2",[6,8,10,8,7],[2,3,3,3,2],[2,3,4,3,2],[2,4,3,4,2],[3,3,2,2,1]],
+["PRMDTSCHI028","PLAZA VICTORIA CD JUAREZ","MARIO ALBERTO CHAVEZ RIVERA","BN2",[7,13,13,13,9],[6,7,8,7,6],[5,7,8,7,5],[6,8,8,8,6],[5,5,5,4,1]],
+["PRMDTSCHI039","TALAMAS CD JUAREZ","MARIO ALBERTO CHAVEZ RIVERA","BN2",[22,29,29,29,21],[10,12,13,13,10],[17,23,23,23,17],[21,27,28,28,21],[13,13,13,9,3]],
+["PRMDTSLEN008","CENTRO SILAO","MAYTE BLANCARTE PALACIOS","BN2",[16,20,21,20,18],[6,8,8,8,7],[9,11,11,11,9],[8,10,11,10,9],[4,5,7,5,5]],
+["PRMDTSLEN017","LAZA MS SILAO","MAYTE BLANCARTE PALACIOS","BN2",[10,12,12,12,10],[5,6,7,6,6],[5,7,6,7,6],[4,4,5,4,4],[3,4,4,4,4]],
+["PRMDTSLEN012","PASEO MORELOS LEON","MAYTE BLANCARTE PALACIOS","BN2",[15,18,19,18,16],[8,10,10,10,9],[6,8,8,8,7],[5,6,7,6,6],[4,5,6,5,5]],
+["PRMDTSLEN003","PATIO GUANAJUATO","MAYTE BLANCARTE PALACIOS","BN2",[21,26,29,26,23],[16,19,21,19,17],[12,15,16,15,13],[12,15,17,15,13],[6,8,8,8,7]],
+["PRMDTSLEN011","PLAZA ALLENDE GTO","MAYTE BLANCARTE PALACIOS","BN2",[9,11,10,11,9],[5,6,7,6,6],[5,6,5,6,5],[4,5,6,5,4],[3,4,4,4,3]],
+["PRMDTSLEN023","PLAZA ARBIDE LEON","MAYTE BLANCARTE PALACIOS","BN2",[9,11,11,11,10],[6,7,9,7,6],[4,5,7,5,5],[2,3,3,3,3],[3,4,4,4,3]],
+["PRMDTSLEN016","PLAZA GALEREÑA","MAYTE BLANCARTE PALACIOS","BN2",[9,11,10,11,9],[4,5,6,5,5],[5,6,7,6,5],[4,5,6,5,5],[3,4,4,4,4]],
+["PRMDTSLEN027","PLAZA NOGAL LEON","MAYTE BLANCARTE PALACIOS","BN2",[8,10,11,10,9],[5,7,7,7,6],[5,6,6,6,5],[3,4,4,4,4],[3,4,4,4,3]],
+["PRMDTSLEN002","SILAO PLAZA LA JOYA","MAYTE BLANCARTE PALACIOS","BN2",[22,28,29,28,24],[11,13,14,13,11],[10,12,13,12,11],[6,7,8,7,6],[6,8,8,8,7]],
+["PRMDTSJUA004","JUAREZ II","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[14,19,24,19,24],[10,10,14,12,14],[12,13,19,13,18],[13,13,19,13,18],[8,9,13,9,12]],
+["PRMDTSJUA005","JUAREZ PLAZA TEC 1800","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[7,9,12,9,11],[3,3,5,3,5],[3,4,4,4,5],[3,3,3,3,4],[4,4,7,4,6]],
+["PRMDTSCHI008","PLAZA BONITA","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[9,11,14,11,13],[6,7,8,7,8],[5,5,7,5,7],[5,6,7,6,8],[5,6,8,6,8]],
+["PRMDTSCHI038","PLAZA CONCORDIA CD JUAREZ","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[8,9,11,9,11],[4,5,5,4,5],[4,4,6,4,5],[7,8,11,8,10],[5,6,7,6,8]],
+["PRMDTSCHI026","PLAZA GIRASOL","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[15,19,23,17,23],[7,8,10,7,10],[10,11,14,11,15],[12,13,18,13,17],[4,4,6,4,6]],
+["PRMDTSCHI042","PLAZA JUAREZ MALL CHIHUAHUA","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[7,10,12,9,10],[4,4,5,4,5],[4,4,6,4,5],[4,5,6,5,6],[3,3,4,3,4]],
+["PRMDTSCHI010","PLAZA PINOCELLI","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[11,16,18,14,18],[7,8,10,7,10],[7,8,10,8,10],[8,9,12,9,12],[3,3,5,3,5]],
+["PRMDTSCHI015","PLAZA PRADERA DORADA","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[15,20,22,20,24],[7,9,10,9,10],[6,7,9,7,9],[10,11,15,11,15],[10,11,16,11,15]],
+["PRMDTSCHI032","PLAZA TELURIO CD JUAREZ","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[12,15,18,14,18],[7,8,10,7,10],[9,10,12,10,13],[10,11,14,11,14],[8,8,11,8,11]],
+["PRMDTSCHI040","PLAZA VALENTINOS CD JUAREZ","SERGIO ALEJANDRO CHAPARRO HERRERA","BN2",[6,8,9,7,9],[4,4,5,4,5],[4,5,6,5,6],[6,6,8,6,8],[4,4,6,4,5]],
+["PRMDTSQRO013","CHEDRAUI CENTRO SUR","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[15,19,20,19,17],[8,9,11,9,8],[8,10,11,10,9],[13,16,16,16,14],[6,7,9,7,6]],
+["PRMDTSQRO022","ESFERA QUERETARO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[11,14,15,14,12],[6,7,7,7,6],[6,7,8,7,6],[10,12,12,12,10],[5,6,6,6,5]],
+["PRMDTSQRO008","FAHO ENSUEÑO QRO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[10,13,13,13,11],[6,8,7,8,7],[5,6,7,6,6],[6,7,7,7,6],[5,6,7,6,6]],
+["PRMDTSQRO004","LA VICTORIA QRO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[38,47,52,47,42],[21,26,30,26,23],[21,26,30,26,23],[22,27,30,27,24],[7,8,10,8,7]],
+["PRMDTSQRO006","PLAZA QUERETARO SAN JOSE","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[8,9,11,9,8],[6,7,7,7,6],[6,7,8,7,6],[5,6,7,6,5],[3,4,5,4,4]],
+["PRMDTSQRO005","QUERETARO MILENIUM","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[9,11,10,11,9],[6,7,7,7,6],[5,6,7,6,5],[6,8,7,8,7],[3,4,5,4,4]],
+["PRMDTSQRO001","QUERETARO SORIANA CIMATARIO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[15,19,20,19,17],[8,9,11,9,8],[8,10,10,10,9],[13,16,19,16,14],[5,6,7,6,5]],
+["PRMDTSQRO009","SAN JUAN DEL RIO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[15,19,20,19,17],[7,8,9,8,7],[8,10,9,10,9],[8,10,11,10,9],[4,5,7,5,5]],
+["PRMDTSQRO011","SAN JUAN DEL RIO II","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[34,42,46,42,37],[22,27,28,27,23],[17,21,21,21,18],[18,22,23,22,19],[7,8,10,8,7]],
+["PRMDTSQRO018","SORIANA HIPER SAN JUAN DEL RIO","YESSICA GUADALUPE MENDEZ ISLAS","BN2",[14,17,20,17,15],[7,8,9,8,7],[7,9,8,9,8],[9,11,13,11,10],[5,6,6,6,5]],
+["PRMDTSMEX024","CDMX TECAMACHALCO","ALEJANDRA ROJAS OCAMPO","CEN",[12,20,22,22,17],[10,14,13,15,11],[11,15,16,11,11],[8,9,13,12,9],[5,5,7,5,7]],
+["PRMDTSMEX018","METEPEC CENTRO","ALEJANDRA ROJAS OCAMPO","CEN",[8,11,13,10,9],[5,6,8,5,5],[5,7,6,5,5],[4,5,7,5,6],[4,6,8,8,5]],
+["PRMDTSTOL008","METEPEC PLAZA TOWN SQUARE","ALEJANDRA ROJAS OCAMPO","CEN",[15,21,19,20,16],[12,18,16,19,10],[12,17,17,12,12],[16,21,23,21,17],[5,6,8,7,5]],
+["PRMDTSMEX017","OUTLET LERMA","ALEJANDRA ROJAS OCAMPO","CEN",[14,21,21,22,16],[14,19,19,19,16],[13,16,17,17,17],[17,20,19,22,24],[5,6,9,6,6]],
+["PRMDTSMEX019","PASEO INTERLOMAS","ALEJANDRA ROJAS OCAMPO","CEN",[21,30,27,26,22],[17,23,24,22,17],[14,20,19,17,15],[18,27,23,19,19],[6,8,9,8,7]],
+["PRMDTSMEX007","PLAZA LERMA II","ALEJANDRA ROJAS OCAMPO","CEN",[8,10,12,11,9],[5,6,5,6,6],[5,7,8,6,5],[5,8,9,8,6],[2,3,3,4,3]],
+["PRMDTSMEX020","PLAZA PANORAMAS","ALEJANDRA ROJAS OCAMPO","CEN",[6,10,10,8,7],[4,6,6,5,4],[4,5,5,5,4],[3,4,4,4,5],[3,3,4,3,4]],
+["PRMDTSMEX021","PLAZA TK","ALEJANDRA ROJAS OCAMPO","CEN",[5,9,9,9,8],[4,5,7,5,4],[3,3,4,3,4],[2,2,2,2,2],[2,3,3,3,4]],
+["PRMDTSMEX027","SAN MATEO ATENCO I","ALEJANDRA ROJAS OCAMPO","CEN",[10,12,14,13,11],[4,6,7,6,4],[5,7,7,6,5],[7,9,10,9,5],[4,6,7,5,5]],
+["PRMDTSTOL001","TOLUCA","ALEJANDRA ROJAS OCAMPO","CEN",[8,14,14,15,14],[5,7,7,7,8],[5,8,10,8,10],[5,9,12,10,11],[3,4,4,3,4]],
+["PRMDTSTOL002","TOLUCA PLAZA LERMA","ALEJANDRA ROJAS OCAMPO","CEN",[11,21,21,21,18],[9,12,13,12,9],[10,13,12,12,12],[12,18,19,20,17],[5,7,7,7,5]],
+["PRMDTSMOR017","GRAN PLAZA LOS SOLES MICH","AMALIA YOLANDA MORALES DE ITA","CEN",[8,13,14,13,8],[3,6,7,6,6],[5,9,10,9,7],[8,8,13,8,11],[3,3,4,3,4]],
+["PRMDTSMEX042","PLAZA JUAREZ 70 TOLUCA MEX","AMALIA YOLANDA MORALES DE ITA","CEN",[8,14,14,14,10],[6,9,10,10,6],[5,10,10,10,7],[5,5,9,5,7],[3,3,5,3,4]],
+["PRMDTSMEX015","PLAZA ZINA","AMALIA YOLANDA MORALES DE ITA","CEN",[11,19,20,19,16],[8,12,13,12,7],[7,13,13,13,9],[10,11,15,11,15],[4,5,6,5,6]],
+["PRMDTSTOL009","RIVAPALACIO TOLUCA","AMALIA YOLANDA MORALES DE ITA","CEN",[8,15,15,15,12],[3,6,6,6,4],[6,11,11,11,8],[11,11,16,11,15],[4,5,7,5,6]],
+["PRMDTSMEX009","TOLUCA 5 DE MAYO","AMALIA YOLANDA MORALES DE ITA","CEN",[8,14,14,14,10],[5,8,9,8,5],[5,10,11,10,7],[7,7,10,7,10],[4,4,6,4,5]],
+["PRMDTSTOL007","TOLUCA AV INDEPENDENCIA","AMALIA YOLANDA MORALES DE ITA","CEN",[11,19,20,20,16],[9,13,14,13,7],[7,13,14,13,9],[13,14,21,14,19],[5,5,8,5,7]],
+["PRMDTSTOL006","TOLUCA CHEDRAUI","AMALIA YOLANDA MORALES DE ITA","CEN",[15,28,30,28,21],[13,22,22,22,16],[13,19,21,19,18],[15,16,22,16,22],[6,6,9,6,8]],
+["PRMDTSTOL005","TOLUCA WALMART","AMALIA YOLANDA MORALES DE ITA","CEN",[8,15,15,15,12],[8,12,12,12,6],[5,11,10,11,8],[7,7,11,7,10],[3,3,4,3,4]],
+["PRMDTSTOL004","TOLUCA ZINACANTEPEC","AMALIA YOLANDA MORALES DE ITA","CEN",[11,19,20,20,16],[9,13,13,13,7],[7,13,14,13,9],[9,9,13,9,12],[5,5,8,5,7]],
+["PRMDTSMEX028","VALLE DE BRAVO","AMALIA YOLANDA MORALES DE ITA","CEN",[10,18,19,18,15],[6,11,12,11,6],[6,12,13,12,8],[8,8,11,8,11],[4,4,5,4,5]],
+["PRMDTSCMX003","CDMX LUNA PARC","DIEGO DIAZ PAUL","CEN",[15,23,24,22,15],[14,18,21,18,13],[12,16,17,16,8],[13,16,17,16,12],[7,8,8,8,6]],
+["PRMDTSMEX006","CHEDRAUI COACALCO","DIEGO DIAZ PAUL","CEN",[11,17,19,17,10],[9,10,12,10,7],[11,13,14,12,9],[10,14,16,14,14],[4,6,7,6,4]],
+["PRMDTSMEX005","GALERIAS SAN VICENTE","DIEGO DIAZ PAUL","CEN",[13,20,21,20,13],[7,9,10,9,5],[8,11,12,11,8],[9,12,12,12,8],[5,6,7,6,5]],
+["PRMDTSMEX004","PATIO CUAUTITLAN","DIEGO DIAZ PAUL","CEN",[10,14,15,14,10],[7,9,11,9,6],[6,8,10,8,5],[7,9,10,9,6],[4,5,5,5,3]],
+["PRMDTSMEX035","PLAZA BELLA MEXIQUENSE MEX","DIEGO DIAZ PAUL","CEN",[12,16,18,16,11],[9,10,12,10,5],[9,12,12,12,11],[9,12,12,12,7],[4,6,6,6,3]],
+["PRMDTSMEX029","PLAZA GANTE ZUMPANGO","DIEGO DIAZ PAUL","CEN",[14,19,21,19,15],[6,7,9,8,4],[7,10,10,10,8],[11,14,15,14,12],[6,7,8,7,4]],
+["PRMDTSMEX041","PLAZA LAS HACIENDAS MEX","DIEGO DIAZ PAUL","CEN",[5,8,4,2,1],[6,6,4,1,1],[6,6,5,1,1],[3,4,3,1,1],[2,3,4,1,1]],
+["PRMDTSMEX038","PLAZA HUEHUETOCA EDOMEX","DIEGO DIAZ PAUL","CEN",[11,14,15,14,10],[6,7,10,7,6],[7,8,9,8,7],[8,9,9,9,6],[2,2,3,2,2]],
+["PRMDTSMEX026","PORTAL TULTITLAN","DIEGO DIAZ PAUL","CEN",[13,19,21,19,14],[12,15,17,15,9],[9,12,14,12,10],[9,12,12,12,8],[6,8,8,8,5]],
+["PRMDTSMEX010","SATELITE","DIEGO DIAZ PAUL","CEN",[10,15,17,15,11],[6,8,9,8,5],[7,10,10,10,9],[7,9,9,9,6],[4,5,7,4,5]],
+["PRMDTSMEX031","SORIANA VIA MORELOS ECATEPEC","DIEGO DIAZ PAUL","CEN",[9,12,14,12,8],[5,7,8,7,5],[5,7,7,7,5],[7,9,9,9,6],[3,4,4,3,3]],
+["PRMDTSMEX030","TEXCOCO CENTRO","DIEGO DIAZ PAUL","CEN",[23,28,30,28,13],[14,18,20,18,11],[13,17,20,18,10],[12,17,18,17,10],[7,10,10,10,6]],
+["PRMDTSCMX038","5 DE FEBRERO CDMX","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[10,14,15,14,10],[6,8,6,8,6],[7,9,9,9,7],[9,12,11,12,9],[8,10,11,10,8]],
+["PRMDTSCMX001","CDMX CENTRO","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[28,37,38,37,28],[14,19,21,19,14],[16,21,22,21,16],[17,23,22,23,17],[10,13,13,13,10]],
+["PRMDTSCMX012","CDMX CHEDRAUI EDUARDO MOLINA","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[9,12,14,12,9],[6,9,9,9,6],[8,10,10,10,8],[9,12,13,12,9],[3,4,5,4,3]],
+["PRMDTSCMX008","CDMX FLORENCIA","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[14,19,20,19,14],[10,13,13,13,10],[9,12,13,12,9],[7,9,10,9,7],[4,6,7,6,4]],
+["PRMDTSMEX033","COL DOCTORES CDMX","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[10,13,15,13,10],[6,8,10,8,6],[8,10,11,10,8],[7,9,9,9,7],[2,2,2,2,2]],
+["PRMDTSCMX040","INSURGENTES BAJIO","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[10,14,14,14,10],[6,8,9,8,6],[5,7,9,7,5],[7,9,8,9,7],[3,4,2,4,3]],
+["PRMDTSCMX030","INSURGENTES CENTRO","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[10,13,14,13,10],[5,6,7,6,5],[6,8,9,8,6],[5,6,7,6,5],[3,4,3,4,3]],
+["PRMDTSCMX024","PATIO SANTA FE","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[13,18,20,18,13],[13,18,20,18,13],[13,18,18,18,13],[12,17,17,17,12],[3,4,6,4,3]],
+["PRMDTSCMX028","PLAZA FRAY SERVANDO","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[11,14,15,14,11],[5,7,8,7,5],[7,10,9,10,7],[4,5,4,5,4],[3,4,4,4,3]],
+["PRMDTSMEX061","PLAZA TEPEYAC CDMX","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[10,14,14,14,10],[9,13,13,13,9],[8,11,10,11,8],[12,16,17,16,12],[2,3,2,3,2]],
+["PRMDTSCMX032","STA LUCIA CDMX","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[14,19,19,19,14],[12,16,18,16,12],[11,14,15,14,11],[5,7,6,7,5],[1,2,3,2,1]],
+["PRMDTSCMX019","ZOCALO CDMX","EDGAR ALEJANDRO CARDONA HERNANDEZ","CEN",[15,20,20,20,15],[7,10,10,10,7],[8,11,10,11,8],[7,9,10,9,7],[5,7,7,7,5]],
+["PRMDTSMEX023","CDMX CITY SHOPS VALLE DORADO","JOVANNY RAMSES MUNGUIA BELLO","CEN",[5,9,9,9,8],[4,6,6,6,4],[2,5,6,5,4],[6,7,8,7,9],[3,3,5,3,4]],
+["PRMDTSMEX003","CHEDRAUI MUNDO E","JOVANNY RAMSES MUNGUIA BELLO","CEN",[7,12,14,12,10],[5,9,9,9,7],[4,7,7,7,5],[3,3,3,3,4],[5,5,6,5,7]],
+["PRMDTSMEX016","MULTIPLAZA ARBOLEDAS","JOVANNY RAMSES MUNGUIA BELLO","CEN",[8,11,12,11,9],[6,9,9,9,7],[6,8,9,8,6],[4,5,6,5,6],[4,4,6,4,5]],
+["PRMDTSMEX012","MULTIPLAZA SAN MATEO","JOVANNY RAMSES MUNGUIA BELLO","CEN",[9,14,15,14,12],[7,10,11,10,8],[6,9,10,9,8],[9,10,13,10,13],[5,5,9,5,7]],
+["PRMDTSMEX011","MULTIPLAZA VALLE DORADO","JOVANNY RAMSES MUNGUIA BELLO","CEN",[11,18,19,18,14],[9,13,14,13,9],[9,12,13,12,8],[9,10,12,10,13],[4,4,6,4,6]],
+["PRMDTSMEX025","NAUCALPAN GREEN PLAZA","JOVANNY RAMSES MUNGUIA BELLO","CEN",[8,14,14,14,12],[6,7,8,7,5],[5,8,10,8,6],[6,7,8,7,9],[3,3,5,3,5]],
+["PRMDTSMEX036","PLAZA MILLENIUM TOLTECAS MX","JOVANNY RAMSES MUNGUIA BELLO","CEN",[9,15,16,15,10],[6,9,10,9,6],[6,10,11,10,6],[7,8,10,8,10],[5,6,8,6,8]],
+["PRMDTSMEX043","PLAZA VIVEROS MEX","JOVANNY RAMSES MUNGUIA BELLO","CEN",[6,10,11,10,6],[4,6,7,6,5],[4,6,7,6,5],[6,6,9,6,8],[4,4,5,4,5]],
+["PRMDTSMEX002","SAN ESTEBAN","JOVANNY RAMSES MUNGUIA BELLO","CEN",[24,35,36,35,32],[15,22,23,22,19],[16,22,23,22,18],[19,21,28,21,28],[6,6,9,6,8]],
+["PRMDTSMEX001","TERRAZA LOMAS VERDES","JOVANNY RAMSES MUNGUIA BELLO","CEN",[16,24,25,24,22],[13,21,21,21,18],[12,17,17,17,12],[19,20,28,20,27],[6,6,9,6,9]],
+["PRMDTSMEX022","CDMX AMERICAS ECATEPEC","JUAN CARLOS CARCAMO DURAN","CEN",[17,26,27,26,18],[15,24,25,24,14],[16,21,27,21,15],[27,28,39,28,38],[4,4,6,4,6]],
+["PRMDTSCMX004","CDMX PASEO VENTURA","JUAN CARLOS CARCAMO DURAN","CEN",[10,16,17,17,10],[8,13,14,13,8],[8,11,12,11,9],[9,10,14,10,13],[3,3,3,3,4]],
+["PRMDTSCMX045","CHEDRAUI NEZAHUALCOYOTL II","JUAN CARLOS CARCAMO DURAN","CEN",[7,12,13,13,10],[4,6,7,7,4],[6,9,9,9,7],[7,7,9,7,10],[3,3,5,3,5]],
+["PRMDTSMEX034","CHEDRAUI PALOMAS ECATEPEC","JUAN CARLOS CARCAMO DURAN","CEN",[13,17,19,19,12],[7,10,11,10,7],[9,11,11,11,9],[8,8,12,8,11],[6,6,9,6,8]],
+["PRMDTSHID004","GLORIETA G BONFIL PACHUCA","JUAN CARLOS CARCAMO DURAN","CEN",[4,7,8,8,6],[3,4,4,4,3],[3,3,4,3,3],[4,4,6,4,5],[3,3,3,3,4]],
+["PRMDTSMEX039","GLORIETA NEZA MEX","JUAN CARLOS CARCAMO DURAN","CEN",[15,25,27,26,19],[14,17,19,19,15],[10,18,19,19,13],[15,16,24,16,22],[3,3,3,3,4]],
+["PRMDTSMEX014","MULTIPLAZA VERGEL","JUAN CARLOS CARCAMO DURAN","CEN",[8,13,14,14,11],[5,7,8,7,5],[5,7,9,8,6],[7,7,11,7,10],[5,5,8,5,7]],
+["PRMDTSHID002","PITHAYAS PACHUCA","JUAN CARLOS CARCAMO DURAN","CEN",[5,9,10,9,7],[3,4,5,4,3],[3,4,5,4,4],[6,7,9,7,9],[3,3,3,3,4]],
+["PRMDTSMEX037","PLAZA PILARES IXTAPALUCA","JUAN CARLOS CARCAMO DURAN","CEN",[7,11,12,12,8],[5,7,8,8,5],[6,8,10,9,7],[2,2,4,2,3],[2,2,3,2,3]],
+["PRMDTSHID003","PLAZA PIRULES TIZAYUCA HGO","JUAN CARLOS CARCAMO DURAN","CEN",[4,12,12,13,9],[6,8,9,8,6],[6,8,9,9,6],[5,6,7,6,8],[3,3,3,3,4]],
+["PRMDTSHID001","PLAZA UNIVERSIDAD PACHUCA","JUAN CARLOS CARCAMO DURAN","CEN",[9,13,14,14,11],[6,7,8,7,5],[6,8,9,8,5],[8,8,12,8,11],[2,3,3,3,4]],
+["PRMDTSMEX044","SERVIPLAZA ARAGON MEX","JUAN CARLOS CARCAMO DURAN","CEN",[6,13,14,14,11],[5,8,9,8,6],[6,8,10,9,6],[6,7,9,7,9],[2,2,2,2,3]],
+["PRMDTSCMX013","CDMX CHEDRAUI AJUSCO","LUIS ANTONIO GUADARRAMA TORRES","CEN",[15,20,21,20,15],[10,14,16,14,10],[11,14,15,14,11],[7,10,10,10,7],[7,9,8,9,7]],
+["PRMDTSCMX022","CDMX PLAZA INN","LUIS ANTONIO GUADARRAMA TORRES","CEN",[10,13,14,13,10],[6,9,9,9,6],[6,8,9,8,6],[4,5,5,5,4],[4,5,5,5,4]],
+["PRMDTSCMX006","CDMX PLAZA VICTORIA I","LUIS ANTONIO GUADARRAMA TORRES","CEN",[7,9,8,9,7],[4,6,7,6,4],[3,5,5,5,3],[2,2,3,2,2],[1,2,3,2,1]],
+["PRMDTSCMX009","CDMX SAN FERNANDO","LUIS ANTONIO GUADARRAMA TORRES","CEN",[12,17,17,17,12],[9,12,14,12,9],[10,13,14,13,10],[7,9,8,9,7],[4,6,7,6,4]],
+["PRMDTSCMX036","COL DEL VALLE","LUIS ANTONIO GUADARRAMA TORRES","CEN",[9,12,14,12,9],[4,5,5,5,4],[4,5,4,5,4],[3,4,3,4,3],[3,5,5,5,3]],
+["PRMDTSMEX047","FRONTERA SAN ANGEL CDMX","LUIS ANTONIO GUADARRAMA TORRES","CEN",[7,9,10,9,7],[4,6,5,6,4],[4,6,5,6,4],[1,2,1,2,1],[3,4,2,4,3]],
+["PRMDTSMEX062","LA JOYA CDMX","LUIS ANTONIO GUADARRAMA TORRES","CEN",[9,12,13,12,9],[4,6,6,6,4],[4,6,6,6,4],[4,5,4,5,4],[5,7,6,7,5]],
+["PRMDTSCMX016","PLAZA ARROYO","LUIS ANTONIO GUADARRAMA TORRES","CEN",[7,10,11,10,7],[4,5,6,5,4],[4,6,5,6,4],[2,3,4,3,2],[3,4,5,4,3]],
+["PRMDTSCMX025","PROL DIVISION DEL NORTE XOCHIMILCO","LUIS ANTONIO GUADARRAMA TORRES","CEN",[11,15,16,15,11],[5,7,9,7,5],[5,7,8,7,5],[2,3,4,3,2],[3,4,3,4,3]],
+["PRMDTSMEX051","TAXQUEÑA COYOACAN CDMX","LUIS ANTONIO GUADARRAMA TORRES","CEN",[8,11,12,11,8],[6,8,8,8,6],[8,11,11,11,8],[6,8,8,8,6],[2,3,4,3,2]],
+["PRMDTSMEX060","TECOYOTITLA CDMX","LUIS ANTONIO GUADARRAMA TORRES","CEN",[8,10,10,10,8],[4,5,6,5,4],[4,6,5,6,4],[3,4,5,4,3],[4,5,6,5,4]],
+["PRMDTSCMX026","XOCHIMILCO CENTRO","LUIS ANTONIO GUADARRAMA TORRES","CEN",[17,23,23,23,17],[9,13,13,13,9],[11,14,15,14,11],[6,8,10,8,6],[3,4,3,4,3]],
+["PRMDTSMEX058","XOCHIMILCO CENTRO II CDMX","LUIS ANTONIO GUADARRAMA TORRES","CEN",[9,12,11,12,9],[5,6,6,6,5],[5,6,6,6,5],[1,1,0,1,1],[6,8,7,8,6]],
+["PRMDTSACA003","ACAPULCO AV COSTERA","MARCO ANTONIO LIMA YANEZ","CEN",[12,16,15,16,12],[6,8,9,8,6],[7,9,10,9,7],[5,6,6,6,5],[3,4,3,4,3]],
+["PRMDTSACA001","ACAPULCO II","MARCO ANTONIO LIMA YANEZ","CEN",[12,16,15,16,12],[5,6,6,6,5],[6,8,7,8,6],[5,6,6,6,5],[4,5,6,5,4]],
+["PRMDTSACA009","ACAPULCO LAS PALMAS","MARCO ANTONIO LIMA YANEZ","CEN",[12,16,15,16,12],[7,10,11,10,7],[7,10,11,10,7],[4,5,4,5,4],[4,5,6,5,4]],
+["PRMDTSACA002","ACAPULCO PLAZA UNIVERSIDAD","MARCO ANTONIO LIMA YANEZ","CEN",[13,18,20,18,13],[6,8,8,8,6],[7,10,11,10,7],[7,10,9,10,7],[3,4,4,4,3]],
+["PRMDTSACA010","BLVD NACIONES AEROPUERTO","MARCO ANTONIO LIMA YANEZ","CEN",[8,11,10,11,8],[3,4,5,4,3],[5,7,6,7,5],[5,7,7,7,5],[3,4,2,4,3]],
+["PRMDTSACA008","CHILPANCINGO ACA","MARCO ANTONIO LIMA YANEZ","CEN",[8,11,13,11,8],[4,6,6,6,4],[5,6,6,6,5],[7,10,11,10,7],[4,6,5,6,4]],
+["PRMDTSCVA007","CUAUTLA LOS ATRIOS","MARCO ANTONIO LIMA YANEZ","CEN",[11,15,14,15,11],[7,9,10,9,7],[7,9,10,9,7],[7,10,9,10,7],[1,2,3,2,1]],
+["PRMDTSCVA006","CUAUTLA PLAZA CINEMUNDO II","MARCO ANTONIO LIMA YANEZ","CEN",[10,13,14,13,10],[5,7,6,7,5],[7,9,9,9,7],[8,10,11,10,8],[2,3,5,3,2]],
+["PRMDTSCVA010","CUERNAVACA CENTRO","MARCO ANTONIO LIMA YANEZ","CEN",[8,11,12,11,8],[3,5,5,5,3],[4,5,6,5,4],[5,7,7,7,5],[4,5,6,5,4]],
+["PRMDTSCVA002","CUERNAVACA PLAZA NORTE","MARCO ANTONIO LIMA YANEZ","CEN",[8,10,11,10,8],[6,8,10,8,6],[5,7,9,7,5],[2,2,2,2,2],[5,7,8,7,5]],
+["PRMDTSACA006","HOTEL OVIEDO ACAPULCO","MARCO ANTONIO LIMA YANEZ","CEN",[8,11,12,11,8],[4,6,7,6,4],[5,7,7,7,5],[6,8,8,8,6],[3,4,5,4,3]],
+["PRMDTSACA005","IGUALA CENTRO","MARCO ANTONIO LIMA YANEZ","CEN",[11,14,15,14,11],[5,7,7,7,5],[7,9,8,9,7],[5,7,9,7,5],[3,4,5,4,3]],
+["PRMDTSCVA009","LAS PLAZAS CUERNAVACA","MARCO ANTONIO LIMA YANEZ","CEN",[11,14,15,14,11],[6,8,10,8,6],[8,10,10,10,8],[11,14,15,14,11],[1,2,3,2,1]],
+["PRMDTSACA007","PATIO ACAPULCO","MARCO ANTONIO LIMA YANEZ","CEN",[13,18,18,18,13],[8,10,11,10,8],[8,11,12,11,8],[8,10,10,10,8],[6,8,8,8,6]],
+["PRMDTSCVA008","PLAZA MARGOL CUERNAVACA","MARCO ANTONIO LIMA YANEZ","CEN",[7,9,8,9,7],[4,6,6,6,4],[5,6,6,6,5],[2,3,5,3,2],[5,7,6,7,5]],
+["PRMDTSCVA005","PLAZA PALMAS","MARCO ANTONIO LIMA YANEZ","CEN",[6,8,8,8,6],[4,6,5,6,4],[4,6,6,6,4],[7,10,11,10,7],[3,4,6,4,3]],
+["PRMDTSTAX001","TAXCO BENITO JUAREZ","MARCO ANTONIO LIMA YANEZ","CEN",[11,14,15,14,11],[5,7,9,7,5],[6,8,9,8,6],[3,4,4,4,3],[4,5,6,5,4]],
+["PRMDTSCVA004","VISTAHERMOSA","MARCO ANTONIO LIMA YANEZ","CEN",[6,8,10,8,6],[3,4,3,4,3],[4,5,4,5,4],[1,2,3,2,1],[3,5,5,5,3]],
+["PRMDTSCVA011","VIVEROS CVA","MARCO ANTONIO LIMA YANEZ","CEN",[14,18,19,18,14],[11,14,15,14,11],[10,13,14,13,10],[6,9,9,9,6],[7,9,8,9,7]],
+["PRMDTSMEX050","CAFETALES COYOACAN CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[9,11,12,11,9],[5,7,9,7,5],[5,7,8,7,5],[6,9,9,9,6],[2,2,3,2,2]],
+["PRMDTSCMX021","CDMX CUAJIMALPA","OSCAR GENARO MERCADO PIMENTEL","CEN",[22,30,31,30,22],[13,18,19,18,13],[19,25,25,25,19],[11,15,18,15,11],[3,4,3,4,3]],
+["PRMDTSMEX055","COAPA CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[9,12,13,12,9],[7,9,9,9,7],[8,10,10,10,8],[6,8,6,8,6],[6,8,6,8,6]],
+["PRMDTSCMX031","IZTAPALAPA LAS TORRES","OSCAR GENARO MERCADO PIMENTEL","CEN",[11,15,17,15,11],[7,9,10,9,7],[7,10,10,10,7],[9,12,12,12,9],[6,8,9,8,6]],
+["PRMDTSCMX029","MALINTZIN COYOACAN","OSCAR GENARO MERCADO PIMENTEL","CEN",[10,13,14,13,10],[5,7,9,7,5],[5,6,7,6,5],[3,4,6,4,3],[3,4,6,4,3]],
+["PRMDTSMEX053","MIGUEL ANGEL DE QUEVEDO CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[9,12,12,12,9],[7,9,10,9,7],[7,10,9,10,7],[4,6,5,6,4],[10,14,14,14,10]],
+["PRMDTSMEX052","MIRAMONTES CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[7,9,8,9,7],[4,6,5,6,4],[3,5,5,5,3],[4,6,7,6,4],[9,13,13,13,9]],
+["PRMDTSCMX042","PLAZA DEL MONTE CUAJIMALPA","OSCAR GENARO MERCADO PIMENTEL","CEN",[7,9,9,9,7],[4,6,5,6,4],[4,6,6,6,4],[7,9,10,9,7],[7,9,8,9,7]],
+["PRMDTSCMX043","PLAZA LA VIGA","OSCAR GENARO MERCADO PIMENTEL","CEN",[11,15,18,15,11],[8,11,12,11,8],[9,12,13,12,9],[9,12,12,12,9],[6,9,9,9,6]],
+["PRMDTSCMX037","PLAZA ZAPAMUNDI COAPA","OSCAR GENARO MERCADO PIMENTEL","CEN",[10,13,14,13,10],[6,8,10,8,6],[7,10,10,10,7],[4,5,6,5,4],[3,4,3,4,3]],
+["PRMDTSMEX056","PLAZA ZARAGOZA CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[7,10,11,10,7],[4,5,5,5,4],[5,6,6,6,5],[6,8,8,8,6],[4,6,7,6,4]],
+["PRMDTSMEX057","SERVIPLAZA IZTAPALAPA CDMX","OSCAR GENARO MERCADO PIMENTEL","CEN",[11,15,18,15,11],[7,10,9,10,7],[10,14,14,14,10],[7,9,10,9,7],[4,6,5,6,4]],
+["PRMDTSMEX049","SORIANA ROJO GOMEZ","OSCAR GENARO MERCADO PIMENTEL","CEN",[7,10,11,10,7],[5,6,7,6,5],[5,7,7,7,5],[4,5,4,5,4],[4,6,6,6,4]],
+["PRMDTSCMX039","VASCO DE QUIROGA","OSCAR GENARO MERCADO PIMENTEL","CEN",[9,12,14,12,9],[6,8,6,8,6],[6,8,7,8,6],[6,8,7,8,6],[5,7,6,7,5]],
+["PRMDTSCMX011","CDMX CHEDRAUI POLANCO","SONIA FLORES HERNANDEZ","CEN",[9,12,13,12,9],[5,7,9,7,5],[5,7,8,7,5],[4,6,7,6,4],[4,5,4,5,4]],
+["PRMDTSCMX007","CDMX FUENTE DE CIBELES ROMA","SONIA FLORES HERNANDEZ","CEN",[30,40,40,40,30],[16,22,23,22,16],[25,34,35,34,25],[16,22,23,22,16],[4,6,5,6,4]],
+["PRMDTSCMX010","CDMX PLAZA DESTINO AZCAPOTZALCO","SONIA FLORES HERNANDEZ","CEN",[16,22,24,22,16],[13,17,19,17,13],[10,13,15,13,10],[13,17,19,17,13],[4,6,5,6,4]],
+["PRMDTSCMX023","CDMX REFORMA","SONIA FLORES HERNANDEZ","CEN",[19,26,26,26,19],[9,12,14,12,9],[11,15,14,15,11],[10,14,14,14,10],[7,9,8,9,7]],
+["PRMDTSMEX059","MOLINOS MIXCOAC CDMX","SONIA FLORES HERNANDEZ","CEN",[9,11,12,11,9],[5,7,9,7,5],[6,8,8,8,6],[3,4,5,4,3],[5,7,6,7,5]],
+["PRMDTSCMX035","MONUMENTO REVOLUCION CDMX","SONIA FLORES HERNANDEZ","CEN",[10,13,12,13,10],[5,7,6,7,5],[5,6,7,6,5],[6,8,9,8,6],[2,3,3,3,2]],
+["PRMDTSMEX048","OBRERO MUNDIAL CDMX","SONIA FLORES HERNANDEZ","CEN",[10,14,14,14,10],[7,10,9,10,7],[8,11,10,11,8],[6,8,9,8,6],[6,9,9,9,6]],
+["PRMDTSCMX015","PARQUES POLANCO","SONIA FLORES HERNANDEZ","CEN",[12,16,16,16,12],[8,11,11,11,8],[7,10,11,10,7],[5,7,7,7,5],[9,12,14,12,9]],
+["PRMDTSCMX027","PASAJE FERRERIA","SONIA FLORES HERNANDEZ","CEN",[11,15,15,15,11],[6,8,8,8,6],[6,8,10,8,6],[8,10,11,10,8],[5,6,7,6,5]],
+["PRMDTSMEX054","PESTALOZZI DEL VALLE CDMX","SONIA FLORES HERNANDEZ","CEN",[9,12,11,12,9],[5,7,9,7,5],[5,6,6,6,5],[5,6,6,6,5],[3,5,5,5,3]],
+["PRMDTSCMX044","PLAZA SOTELO TOREO","SONIA FLORES HERNANDEZ","CEN",[11,14,15,14,11],[6,8,6,8,6],[8,11,12,11,8],[4,6,5,6,4],[5,6,7,6,5]],
+["PRMDTSCMX017","PORTAL VALLEJO","SONIA FLORES HERNANDEZ","CEN",[13,17,18,17,13],[10,13,12,13,10],[8,10,11,10,8],[14,19,19,19,14],[4,6,5,6,4]],
+["PRMDTSCMX033","REVOLUCION 67","SONIA FLORES HERNANDEZ","CEN",[12,17,17,17,12],[8,11,10,11,8],[8,10,10,10,8],[5,7,7,7,5],[3,4,5,4,3]],
+["PRMDTSSON021","CD OBREGON","ALEJANDRO TORRES VELAZQUEZ","NOR",[15,21,23,21,10],[8,8,11,8,11],[7,8,10,8,10],[7,8,11,8,11],[6,6,8,6,8]],
+["PRMDTSSON011","FORD OBREGON","ALEJANDRO TORRES VELAZQUEZ","NOR",[10,14,15,14,7],[3,4,5,4,4],[3,3,4,3,4],[3,4,5,4,5],[4,4,6,4,6]],
+["PRMDTSSON020","GUAYMAS PLAZA PATIO","ALEJANDRO TORRES VELAZQUEZ","NOR",[18,29,29,28,18],[12,15,15,15,11],[12,12,17,12,17],[15,16,24,16,22],[6,7,8,7,9]],
+["PRMDTSSON022","GUAYMAS SERDAN","ALEJANDRO TORRES VELAZQUEZ","NOR",[12,15,15,13,5],[6,7,8,7,9],[6,6,8,6,8],[8,9,13,9,12],[7,8,11,8,10]],
+["PRMDTSSON017","NAVOJOA ALVARO OBREGON CENTRO","ALEJANDRO TORRES VELAZQUEZ","NOR",[12,19,20,18,11],[6,7,9,7,9],[7,8,11,8,10],[6,6,8,6,8],[5,6,7,6,8]],
+["PRMDTSSON015","NAVOJOA PLAZA MAYO","ALEJANDRO TORRES VELAZQUEZ","NOR",[8,14,15,13,6],[3,5,5,4,5],[7,7,9,7,10],[6,6,9,6,9],[4,4,6,4,5]],
+["PRMDTSSON019","OBREGON CENTRO","ALEJANDRO TORRES VELAZQUEZ","NOR",[10,14,14,13,6],[6,6,8,6,8],[7,7,10,7,10],[7,7,10,7,10],[5,6,7,6,8]],
+["PRMDTSON001","OBREGON GUERRERO","ALEJANDRO TORRES VELAZQUEZ","NOR",[12,20,21,16,6],[6,7,8,7,9],[6,7,10,7,9],[7,8,11,8,11],[6,6,9,6,8]],
+["PRMDTSON002","OBREGON SONORA PUERTA","ALEJANDRO TORRES VELAZQUEZ","NOR",[4,10,10,10,6],[3,3,5,3,4],[4,5,6,5,6],[2,2,5,2,3],[4,4,6,4,6]],
+["PRMDTSSON006","PATIO OBREGON","ALEJANDRO TORRES VELAZQUEZ","NOR",[7,12,13,10,3],[4,5,6,4,5],[3,3,5,3,4],[3,3,3,3,4],[4,4,6,4,5]],
+["PRMDTSSON024","PLAZA DE HIERRO NAVOJOA","ALEJANDRO TORRES VELAZQUEZ","NOR",[7,12,13,11,5],[4,4,7,4,6],[5,6,7,6,8],[4,5,7,5,6],[4,4,6,4,6]],
+["PRMDTSSON010","PLAZA NAVIA OBREGON","ALEJANDRO TORRES VELAZQUEZ","NOR",[12,20,20,18,9],[8,10,11,10,7],[6,8,9,8,4],[6,7,10,7,9],[6,6,8,6,8]],
+["PRMDTSSON028","PLAZA TUTULI CD OBREGON SON","ALEJANDRO TORRES VELAZQUEZ","NOR",[6,11,12,8,3],[3,5,5,3,4],[3,3,3,3,4],[3,3,5,3,4],[4,4,5,4,5]],
+["PRMDTSSON003","SENDERO OBREGON","ALEJANDRO TORRES VELAZQUEZ","NOR",[12,19,21,18,11],[7,7,10,7,10],[6,7,10,7,9],[9,10,13,10,13],[5,6,8,6,8]],
+["PRMDTSLPA005","ALAMEDA LA PAZ","ANGELICA ENID REYES MONTELONGO","NOR",[9,11,12,11,10],[3,4,5,4,5],[7,9,9,8,7],[11,15,15,14,9],[7,8,9,8,8]],
+["PRMDTSBCS002","CABO SAN LUCAS PLAZA PUERTO PA","ANGELICA ENID REYES MONTELONGO","NOR",[9,12,12,12,10],[5,7,7,7,5],[5,7,8,7,6],[8,11,12,11,9],[5,5,9,5,7]],
+["PRMDTSLPA003","GALERIAS LA PAZ","ANGELICA ENID REYES MONTELONGO","NOR",[8,10,11,11,9],[4,6,6,6,5],[4,6,6,6,5],[8,11,11,10,9],[6,7,8,8,6]],
+["PRMDTSLPA002","LA PAZ PLAZA NAUTICA","ANGELICA ENID REYES MONTELONGO","NOR",[6,8,9,9,7],[4,5,5,5,5],[4,4,6,4,6],[4,5,6,5,5],[6,8,8,8,6]],
+["PRMDTSLPA001","LA PAZ PLAZA PASEO LA PAZ","ANGELICA ENID REYES MONTELONGO","NOR",[17,20,24,20,24],[8,9,9,8,7],[8,11,11,11,10],[14,19,20,19,9],[6,8,8,8,5]],
+["PRMDTSBCS001","LOS CABOS PLAZA SENDERO","ANGELICA ENID REYES MONTELONGO","NOR",[11,18,18,18,11],[7,10,11,10,8],[9,11,12,11,9],[11,15,15,15,11],[6,7,8,7,9]],
+["PRMDTSBCS003","MI PLAZA CABO SAN LUCAS","ANGELICA ENID REYES MONTELONGO","NOR",[9,15,15,15,11],[5,7,7,6,5],[6,7,8,7,6],[5,5,6,5,4],[5,6,6,6,5]],
+["PRMDTSBCS004","PLAZA KABS BCS","ANGELICA ENID REYES MONTELONGO","NOR",[9,14,14,14,9],[5,7,7,7,4],[6,8,8,8,5],[5,7,7,7,6],[5,4,6,4,4]],
+["PRMDTSLPA004","PRM SORIANA FORJADORES","ANGELICA ENID REYES MONTELONGO","NOR",[11,17,18,18,16],[6,9,10,9,7],[7,10,10,10,7],[15,20,21,19,17],[6,8,8,8,7]],
+["PRMDTSTIJ011","CALIMAX LOMA BONITA","DANIEL ROBLES QUINTOR","NOR",[7,14,15,14,7],[5,8,10,8,5],[7,11,12,12,7],[6,9,10,10,6],[4,7,7,7,4]],
+["PRMDTSTIJ012","FAHO CHAPULTEPEC","DANIEL ROBLES QUINTOR","NOR",[12,22,23,22,11],[7,12,13,12,6],[7,12,12,12,7],[9,14,16,15,9],[5,8,9,8,5]],
+["PRMDTSTIJ018","LANDMARK TIJUANA","DANIEL ROBLES QUINTOR","NOR",[8,14,14,14,8],[3,6,7,6,3],[4,6,7,7,4],[5,8,9,8,5],[3,5,5,5,2]],
+["PRMDTSTIJ008","PLAZA ALAMEDA OTAY","DANIEL ROBLES QUINTOR","NOR",[12,21,22,21,12],[7,12,13,13,7],[6,9,10,9,6],[7,10,12,10,7],[6,9,9,9,6]],
+["PRMDTSTIJ013","PLAZA MISION SOLER","DANIEL ROBLES QUINTOR","NOR",[8,15,16,15,8],[5,8,8,8,4],[5,6,6,6,4],[7,11,11,11,7],[4,7,7,7,4]],
+["PRMDTSTIJ017","TIJUANA PLAYAS","DANIEL ROBLES QUINTOR","NOR",[5,10,10,10,5],[2,3,3,3,4],[2,4,4,4,2],[3,6,7,6,3],[2,4,4,4,2]],
+["PRMDTSTIJ005","TIJUANA PLAZA LAS BRISAS","DANIEL ROBLES QUINTOR","NOR",[28,45,47,45,27],[13,24,25,25,13],[15,25,28,25,15],[15,23,25,23,15],[7,10,11,11,7]],
+["PRMDTSTIJ006","TIJUANA PLAZA PACIFICO","DANIEL ROBLES QUINTOR","NOR",[15,24,25,24,14],[11,11,16,11,15],[7,11,14,11,7],[8,12,14,12,7],[6,9,9,9,6]],
+["PRMDTSTIJ014","TIJUANA PLAZA PAJARITA","DANIEL ROBLES QUINTOR","NOR",[12,21,22,21,12],[6,10,12,10,5],[7,11,13,11,7],[9,14,17,15,9],[5,9,9,9,5]],
+["PRMDTSTIJ019","TIJUANA PLAZA RIO","DANIEL ROBLES QUINTOR","NOR",[10,20,21,20,10],[7,10,12,10,6],[5,9,10,10,5],[6,10,10,10,6],[5,9,10,10,5]],
+["PRMDTSTIJ022","VILLAFLORESTA TIJUANA BC","DANIEL ROBLES QUINTOR","NOR",[7,12,13,13,7],[3,6,7,6,3],[4,8,9,8,4],[5,10,10,10,5],[2,5,6,6,2]],
+["PRMDTSTIJ009","PLAZA 2000 TIJ","EFRAIN RAMIREZ QUINTANA","NOR",[22,32,33,27,16],[14,21,22,21,12],[14,17,21,17,15],[18,24,26,23,15],[8,11,13,11,8]],
+["PRMDTSTIJ023","PLAZA CEDROS TIJUANA BC","EFRAIN RAMIREZ QUINTANA","NOR",[7,11,12,10,6],[4,7,7,6,4],[4,5,6,5,3],[5,9,10,8,6],[4,6,7,6,4]],
+["PRMDTSTIJ020","PUNTO TIJUANA MISIONES","EFRAIN RAMIREZ QUINTANA","NOR",[9,13,13,11,6],[5,9,9,7,5],[5,7,9,6,4],[5,9,10,9,5],[4,5,7,5,4]],
+["PRMDTSTIJ010","SENDERO TIJ","EFRAIN RAMIREZ QUINTANA","NOR",[24,36,38,34,18],[12,21,22,19,9],[14,18,20,17,15],[16,24,24,19,15],[9,12,14,12,9]],
+["PRMDTSTIJ016","TIJUANA LA ESTACION","EFRAIN RAMIREZ QUINTANA","NOR",[8,12,13,11,6],[4,6,7,6,3],[5,8,9,8,5],[4,6,6,6,4],[3,5,5,4,4]],
+["PRMDTSTIJ002","TIJUANA PENINSULA","EFRAIN RAMIREZ QUINTANA","NOR",[23,38,41,35,25],[22,35,35,32,16],[15,23,24,22,16],[16,25,25,23,17],[5,6,8,6,5]],
+["PRMDTSTIJ007","TIJUANA PLAZA CALIMAX FIESTA","EFRAIN RAMIREZ QUINTANA","NOR",[10,17,18,15,10],[8,14,15,12,5],[12,16,18,15,11],[9,14,15,14,10],[5,6,8,6,5]],
+["PRMDTSTIJ003","TIJUANA PLAZA CARRUSEL","EFRAIN RAMIREZ QUINTANA","NOR",[18,29,33,28,17],[11,17,18,15,10],[14,19,22,17,13],[14,19,21,17,12],[9,12,12,10,8]],
+["PRMDTSTIJ004","TIJUANA PLAZA CUAH","EFRAIN RAMIREZ QUINTANA","NOR",[15,24,25,20,10],[11,18,19,15,10],[14,19,22,17,13],[12,16,17,15,12],[8,10,12,10,7]],
+["PRMDTSTIJ015","TIJUANA PLAZA MONARCA","EFRAIN RAMIREZ QUINTANA","NOR",[10,16,18,15,9],[8,11,12,11,5],[6,9,10,9,6],[10,13,15,12,9],[6,7,8,7,5]],
+["PRMDTSENS006","ENSENADA","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[26,27,38,27,37],[17,25,25,24,23],[15,16,22,16,21],[21,22,31,22,30],[9,9,13,9,12]],
+["PRMDTSENS001","ENSENADA MISION","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[24,26,34,26,35],[15,16,24,16,22],[12,13,18,13,18],[17,18,24,18,24],[9,9,13,9,12]],
+["PRMDTSENS002","ENSENADA PLAZA CALAFIA","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[11,12,18,12,16],[10,11,14,11,14],[8,8,13,8,11],[12,13,18,13,17],[6,6,9,6,8]],
+["PRMDTSENS005","ENSENADA PLAZA MARE","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[10,10,15,10,14],[5,6,8,6,8],[6,6,9,6,8],[7,8,11,8,10],[5,5,8,5,7]],
+["PRMDTSTIJ021","MANEADERO ENSENADA BC","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[12,13,17,13,17],[4,4,7,4,6],[5,6,7,6,8],[9,9,13,9,12],[6,6,9,6,8]],
+["PRMDTSTIJ026","MULTIPLAZA SANTA FE BC","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[8,8,11,8,11],[3,3,4,3,4],[3,3,4,3,4],[3,3,5,3,5],[2,2,2,2,3]],
+["PRMDTSENS004","PLAZA BLANCARTE","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[13,14,20,14,19],[8,8,11,8,11],[7,8,11,8,11],[12,13,19,13,18],[6,7,9,7,9]],
+["PRMDTSTIJ0267","PLAZA GIRAMAR ROSARITO BC","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[8,8,12,8,11],[4,4,6,4,5],[4,4,6,4,5],[4,4,6,4,6],[6,6,9,6,8]],
+["PRMDTSENS003","PORTICO ENSENADA","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[13,14,19,14,19],[8,8,12,8,11],[8,8,11,8,11],[11,12,16,12,16],[5,5,8,5,7]],
+["PRMDTSTIJ001","ROSARITO ROSARITO","JORGE ALBERTO JUAREZ HERNANDEZ","NOR",[12,12,17,12,17],[7,8,10,8,10],[6,7,8,7,9],[7,8,10,8,10],[6,6,8,6,8]],
+["PRMDTSMXL009","MACROPLAZA DEL VALLE MEXICALI","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[13,19,20,19,11],[7,9,10,9,6],[5,8,10,10,6],[8,13,14,13,10],[6,7,9,8,5]],
+["PRMDTSMXL001","MEXICALI PLAZA LA GRAN VIA","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[7,13,13,12,10],[5,8,9,8,7],[4,8,9,8,6],[3,6,8,6,5],[3,4,6,5,3]],
+["PRMDTSMXL002","MEXICALI PLAZA RESIDENCIAS","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[11,18,19,18,12],[7,12,13,12,8],[5,8,10,10,6],[5,11,12,12,9],[4,5,7,5,6]],
+["PRMDTSMXL003","MEXICALI VILLAFONTANA","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[20,30,32,32,24],[13,21,22,21,15],[12,16,18,16,12],[16,22,24,22,15],[9,10,12,12,10]],
+["PRMDTSMXL005","PLAZA CACHANILLAS","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[12,20,20,19,8],[7,12,14,12,7],[6,12,12,10,7],[12,16,18,16,13],[4,6,7,6,4]],
+["PRMDTSMXL008","PLAZA NOVENA MEXICALI BC","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[7,13,14,13,9],[3,5,6,6,4],[5,8,9,8,5],[6,8,8,8,5],[3,5,5,5,3]],
+["PRMDTSMXL007","PLAZA NUEVO MEXICALI","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[14,23,24,23,16],[8,12,12,11,5],[11,15,16,15,7],[9,14,16,14,10],[4,8,9,8,6]],
+["PRMDTSMXL006","PUNTA ANAHUAC","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[8,13,13,13,8],[7,10,12,10,6],[7,11,11,11,5],[9,10,14,10,13],[3,4,5,5,3]],
+["PRMDTSMXL004","SENDERO MEXICALI","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[9,17,17,16,9],[8,11,12,11,7],[10,14,14,14,8],[12,13,18,13,18],[4,6,7,6,5]],
+["PRMDTSBCN001","TECATE PLAZA ENCINOS","NESTOR EDUARDO LOPEZ PICHARDO","NOR",[13,21,21,21,12],[7,10,12,10,7],[7,10,10,10,6],[9,12,13,12,9],[4,6,7,6,5]],
+["PRMDTSSON005","CITY CENTER PITIC","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[14,19,21,17,11],[6,6,9,8,6],[7,7,10,10,7],[6,7,10,7,9],[5,5,8,5,7]],
+["PRMDTSSON008","HERMOSILLO CENTRO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[13,21,22,18,16],[6,6,9,8,6],[7,7,9,10,7],[8,9,13,9,12],[5,6,8,6,8]],
+["PRMDTSSON018","HERMOSILLO PLAZA CATALUNYA","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[7,16,17,16,11],[7,7,10,10,7],[7,7,11,10,7],[5,5,7,5,7],[3,4,4,4,5]],
+["PRMDTSHER001","HERMOSILLO PLAZA EL PATIO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[17,25,26,24,18],[10,11,14,14,11],[16,17,22,22,17],[17,18,25,18,24],[5,5,7,5,7]],
+["PRMDTSHER002","HERMOSILLO PLAZA TERSA","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[10,16,18,16,10],[7,7,9,10,7],[6,6,9,8,6],[10,10,14,10,14],[4,4,7,4,6]],
+["PRMDTSHER003","HERMOSILLO SENDERO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[17,25,26,24,18],[10,10,15,14,10],[10,11,15,15,11],[17,18,23,18,24],[6,7,9,7,9]],
+["PRMDTSSON009","METROCENTRO HERMOSILLO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[10,17,19,16,13],[4,5,7,6,5],[4,5,6,6,5],[3,4,5,4,5],[3,3,4,3,4]],
+["PRMDTSSON023","NOGALES","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[12,20,22,18,10],[10,10,15,14,10],[13,14,18,18,14],[11,12,18,12,16],[7,8,10,8,10]],
+["PRMDTSSON016","NOGALES PLAZA NOGALES","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[17,28,29,28,18],[15,16,17,16,16],[12,13,18,18,13],[17,18,23,18,24],[7,7,9,7,10]],
+["PRMDTSSON014","PABELLON REFORMA HERMOSILLO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[14,21,22,20,14],[7,7,10,10,7],[11,11,17,15,11],[15,16,20,16,21],[3,3,5,3,4]],
+["PRMDTSSON012","PLAZA BELMART HERMOSILLO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[8,11,13,8,8],[5,5,6,7,5],[11,11,17,15,11],[8,8,13,8,11],[4,4,6,4,6]],
+["PRMDTSSON027","PLAZA KALITEA NOGALES","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[8,14,14,14,10],[5,5,9,7,5],[7,8,11,10,8],[12,13,16,13,17],[4,4,6,4,5]],
+["PRMDTSSON025","PLAZA MONTECARLO NOGALES","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[9,14,14,13,10],[7,7,9,10,7],[8,9,12,12,9],[5,6,7,6,8],[5,5,7,5,7]],
+["PRMDTSSON007","PLAZA MONTEVERDE","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[7,14,14,14,11],[4,4,7,6,4],[5,5,7,7,5],[8,8,13,8,11],[3,3,5,3,5]],
+["PRMDTSSON004","SORIANA HIPER ENCINAS","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[13,19,19,18,14],[4,5,6,6,5],[10,11,15,15,11],[15,16,23,16,22],[4,4,6,4,5]],
+["PRMDTSSON026","SUN MALL HERMOSILLO","OSCAR RENE ENRIQUEZ CORCHADO","NOR",[18,25,26,24,17],[7,8,11,10,8],[11,12,17,16,12],[16,17,23,17,23],[4,4,6,4,6]],
+["PRMDTSMTY009","HEB LA PUERTA","DENY HERNANDEZ TORRES","NT1",[9,10,13,11,8],[3,6,6,6,4],[3,6,7,5,4],[4,6,7,5,5],[3,4,4,4,5]],
+["PRMDTSNLN005","HUMBERTO LOBO MTY","DENY HERNANDEZ TORRES","NT1",[14,20,21,20,12],[8,13,13,13,8],[6,9,11,10,6],[6,7,8,7,6],[3,3,3,3,4]],
+["PRMDTSNLN001","MONTEMORELOS PASEO FUNDADORES","DENY HERNANDEZ TORRES","NT1",[10,11,14,12,9],[3,4,5,5,2],[4,4,6,4,6],[7,8,11,11,8],[2,3,3,3,4]],
+["PRMDTSMTY001","MONTERREY ALLENDE","DENY HERNANDEZ TORRES","NT1",[7,12,12,13,6],[6,8,9,9,5],[5,5,6,5,7],[8,12,12,12,6],[2,2,3,2,3]],
+["PRMDTSMTY003","MONTERREY MADERO NORTE","DENY HERNANDEZ TORRES","NT1",[9,13,14,13,8],[5,7,6,6,4],[5,5,6,5,7],[9,11,12,11,9],[3,4,4,4,5]],
+["PRMDTSMTY042","MONTERREY PLAZA CLOUTHIER","DENY HERNANDEZ TORRES","NT1",[10,16,17,16,9],[7,10,11,10,6],[6,7,8,7,9],[5,7,7,7,4],[3,3,3,3,4]],
+["PRMDTSMTY036","MONTERREY SORIANA LA PUERTA","DENY HERNANDEZ TORRES","NT1",[10,15,16,16,9],[4,7,8,7,4],[5,5,9,5,7],[4,7,8,7,4],[4,4,5,4,5]],
+["PRMDTSMTY049","PASEO SANTA CATARINA","DENY HERNANDEZ TORRES","NT1",[13,19,20,20,14],[7,10,10,10,6],[7,8,11,8,11],[10,13,14,14,10],[3,3,5,3,5]],
+["PRMDTSMTY023","SENDERO SANTA CATARINA","DENY HERNANDEZ TORRES","NT1",[13,10,13,11,9],[4,7,9,7,4],[5,5,8,5,7],[4,6,7,7,3],[4,4,5,4,5]],
+["PRMDTSMTY034","SORIANA HIPER SAN PEDRO","DENY HERNANDEZ TORRES","NT1",[5,8,9,8,5],[3,3,5,5,2],[2,2,3,2,3],[2,2,3,3,2],[3,3,4,3,4]],
+["PRMDTSSAL005","HEB SAN PATRICIO","ERENDIDA CALDERON SIERRA","NT1",[7,7,9,7,10],[4,4,7,4,6],[5,5,8,5,7],[6,7,8,7,9],[2,2,4,2,3]],
+["PRMDTSSAL006","MIRASIERRA SALTILLO","ERENDIDA CALDERON SIERRA","NT1",[28,30,42,30,40],[15,16,24,16,22],[15,16,20,16,21],[19,20,28,20,27],[11,12,18,12,16]],
+["PRMDTSCOA007","PLAZA BELLA RAMOS ARIZPE","ERENDIDA CALDERON SIERRA","NT1",[12,12,17,12,17],[3,3,5,3,5],[5,6,8,6,8],[10,11,14,11,14],[7,7,10,7,10]],
+["PRMDTSSAL008","SALTILLO PLAZA CASA GRANDE","ERENDIDA CALDERON SIERRA","NT1",[8,8,11,8,11],[4,5,6,5,6],[5,5,9,5,7],[8,9,12,9,12],[3,3,4,3,4]],
+["PRMDTSSAL009","SALTILLO PLAZA NOVVA","ERENDIDA CALDERON SIERRA","NT1",[7,7,9,7,10],[5,6,7,6,8],[5,6,7,6,8],[5,6,8,6,8],[3,3,3,3,4]],
+["PRMDTSSAL002","SALTILLO PLAZA PATIO","ERENDIDA CALDERON SIERRA","NT1",[22,24,33,24,32],[14,15,21,15,20],[15,16,22,16,22],[18,19,27,19,26],[13,13,19,13,18]],
+["PRMDTSSAL007","SALTILLO SORIANA RAMOS ARIZPE","ERENDIDA CALDERON SIERRA","NT1",[11,11,17,11,15],[4,4,5,4,5],[5,6,7,6,8],[7,7,11,7,10],[3,3,5,3,4]],
+["PRMDTSSAL003","SATILLO DISTRITO V","ERENDIDA CALDERON SIERRA","NT1",[19,20,29,20,27],[11,11,17,11,15],[13,14,21,14,19],[16,17,23,17,23],[4,5,7,5,6]],
+["PRMDTSSAL004","SORIANA ECHEVERRIA","ERENDIDA CALDERON SIERRA","NT1",[10,11,15,11,15],[5,6,8,6,8],[5,5,8,5,7],[8,9,11,9,12],[5,5,7,5,7]],
+["PRMDTSSAL010","SORIANA LOURDES SALTILLO","ERENDIDA CALDERON SIERRA","NT1",[15,16,20,16,21],[7,8,10,8,10],[7,8,11,8,11],[9,9,13,9,13],[5,5,6,5,7]],
+["PRMDTSMTY028","APODACA","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[9,11,12,11,12],[4,5,6,5,6],[8,9,13,9,12],[6,7,9,7,9],[3,4,4,4,5]],
+["PRMDTSMTY045","CADEREYTA CENTRO","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[8,9,12,9,12],[4,4,6,4,6],[6,6,9,6,8],[5,5,9,5,7],[3,3,5,3,4]],
+["PRMDTSMTY017","FAHO APODACA","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[9,11,13,11,13],[6,7,8,7,9],[13,16,16,16,16],[10,11,14,11,15],[5,5,7,5,7]],
+["PRMDTSMTY030","HEB CIUDADELA","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[7,9,10,9,10],[4,4,5,4,5],[6,6,9,6,9],[4,4,6,4,6],[3,3,5,3,5]],
+["PRMDTSMTY031","HEB GUADALUPE LIVAS NL","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[7,7,10,7,9],[4,5,6,5,6],[9,11,11,11,10],[4,4,5,4,5],[2,2,2,2,2]],
+["PRMDTSMTY040","MONTERREY PLAZA ALTEA HUINALA","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[8,9,12,9,12],[5,6,8,6,8],[5,5,6,5,7],[9,9,13,9,13],[5,5,6,5,7]],
+["PRMDTSMTY008","MONTERREY SUN MALL VIP","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[33,35,47,35,47],[18,22,23,22,23],[25,30,32,30,33],[23,24,33,24,32],[9,10,14,10,13]],
+["PRMDTSMTY035","MONTERREY VALLE ORIENTE","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[6,8,9,8,9],[4,5,6,5,6],[2,2,5,2,3],[3,4,4,4,5],[3,4,4,4,5]],
+["PRMDTSNLN002","PLAZA 1500 GUADALUPE NL","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[8,9,12,9,12],[4,5,6,5,6],[4,4,6,4,6],[5,5,8,5,7],[2,2,2,2,2]],
+["PRMDTSMTY015","SENDERO LA FE D22 MYA","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[22,28,31,28,31],[13,16,16,16,16],[12,15,16,15,16],[14,15,22,15,21],[7,8,11,8,10]],
+["PRMDTSMTY022","SENDERO SAN ROQUE","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[12,14,17,14,17],[6,8,10,8,10],[9,9,13,9,13],[7,7,11,7,10],[3,4,5,4,5]],
+["PRMDTSMTY016","SUN MALL MTY","GILBERTO AGUSTIN ORTIZ ORNELAS","NT1",[19,22,24,22,25],[14,17,18,17,18],[10,13,13,13,13],[12,13,17,13,17],[8,8,11,8,11]],
+["PRMDTSMTY020","CITADINA CONCORDIA","LIZZIE GABRIELA FUENTES PREN","NT1",[11,18,18,18,15],[8,11,11,11,9],[8,10,10,10,8],[9,11,12,11,9],[5,5,6,5,5]],
+["PRMDTSMTY047","CITADINA ESCOBEDO","LIZZIE GABRIELA FUENTES PREN","NT1",[7,10,10,10,8],[3,6,6,6,4],[5,5,5,5,4],[5,6,6,6,4],[3,3,3,3,3]],
+["PRMDTSMTY029","HEB CERRADAS DE ANAHUAC","LIZZIE GABRIELA FUENTES PREN","NT1",[6,10,10,10,7],[3,6,6,6,4],[5,7,8,7,6],[4,5,5,5,4],[3,3,3,3,3]],
+["PRMDTSMTY011","HEB LAS PUENTES","LIZZIE GABRIELA FUENTES PREN","NT1",[7,11,11,11,8],[4,7,7,7,5],[6,8,8,8,6],[6,7,7,6,6],[3,3,3,3,3]],
+["PRMDTSMTY043","MONTERREY MI PLAZA ESCOBEDO II","LIZZIE GABRIELA FUENTES PREN","NT1",[12,19,19,19,16],[9,12,13,12,9],[9,10,10,10,8],[10,12,13,12,10],[5,5,6,5,5]],
+["PRMDTSMTY004","MONTERREY PASEO LA FE","LIZZIE GABRIELA FUENTES PREN","NT1",[42,68,68,68,53],[30,41,41,41,29],[27,35,35,35,28],[27,30,31,30,27],[8,10,10,10,8]],
+["PRMDTSMTY006","MONTERREY PLAZA FIESTA ANAHUAC I","LIZZIE GABRIELA FUENTES PREN","NT1",[15,26,26,26,20],[12,18,19,18,16],[11,15,15,15,10],[13,15,15,15,13],[6,7,8,7,6]],
+["PRMDTSMTY038","MONTERREY PLAZA LA JOYA DE LA ANAHUAC","LIZZIE GABRIELA FUENTES PREN","NT1",[6,10,10,10,8],[4,6,6,6,4],[4,4,5,4,4],[4,5,5,5,4],[3,3,3,3,3]],
+["PRMDTSMTY026","PASEO ALMENARES MTY","LIZZIE GABRIELA FUENTES PREN","NT1",[7,11,12,11,9],[4,6,7,6,5],[5,7,7,7,5],[4,6,6,6,5],[3,3,3,3,3]],
+["PRMDTSMTY024","PLAZA ANIMOL","LIZZIE GABRIELA FUENTES PREN","NT1",[11,18,18,18,15],[8,11,11,11,9],[8,10,10,10,7],[10,12,13,12,10],[5,5,6,5,5]],
+["PRMDTSNLN004","PLAZA AVIANA ESCOBEDO NL","LIZZIE GABRIELA FUENTES PREN","NT1",[8,11,11,11,9],[4,6,7,6,4],[4,6,6,6,4],[6,7,7,6,6],[3,3,3,3,3]],
+["PRMDTSTAM012","MATAMOROS PLAZA PATIO","MIGUEL ANGEL FACUNDO PEREZ","NT1",[13,14,20,14,19],[7,8,10,8,10],[5,5,7,5,7],[1,1,0,1,1],[5,6,7,6,8]],
+["PRMDTSTAM006","PLAZA GARZA FLORES","MIGUEL ANGEL FACUNDO PEREZ","NT1",[7,7,9,7,10],[5,5,6,5,7],[5,5,9,5,7],[3,3,5,3,5],[2,2,4,2,3]],
+["PRMDTSTAM021","PUERTA GRANDE I TAM","MIGUEL ANGEL FACUNDO PEREZ","NT1",[9,10,13,10,13],[4,5,6,5,6],[5,6,7,6,8],[9,10,14,10,13],[3,3,3,3,4]],
+["PRMDTSREY005","REYNOSA AV MORELOS","MIGUEL ANGEL FACUNDO PEREZ","NT1",[7,7,9,7,10],[2,2,5,2,3],[2,3,3,3,4],[3,3,5,3,5],[1,1,2,1,1]],
+["PRMDTSREY001","REYNOSA PLAZA CITADINA","MIGUEL ANGEL FACUNDO PEREZ","NT1",[13,14,21,14,19],[4,4,6,4,5],[5,6,8,6,8],[4,4,6,4,5],[6,7,9,7,9]],
+["PRMDTSREY002","REYNOSA PLAZA PERIFERICO","MIGUEL ANGEL FACUNDO PEREZ","NT1",[29,30,42,30,41],[8,9,13,9,12],[9,10,13,10,13],[21,22,31,22,30],[4,4,7,4,6]],
+["PRMDTSREY004","REYNOSA PLAZA REAL","MIGUEL ANGEL FACUNDO PEREZ","NT1",[12,13,17,13,17],[5,5,8,5,7],[5,6,7,6,8],[8,9,11,9,12],[3,4,5,4,5]],
+["PRMDTSREY003","REYNOSA REYNOSA PARIS","MIGUEL ANGEL FACUNDO PEREZ","NT1",[7,8,11,8,11],[4,4,7,4,6],[4,4,7,4,6],[3,3,4,3,4],[4,5,7,5,6]],
+["PRMDTSMTY027","ABRAHAM LINCON","OMAR CASTILLO HERRERA","NT1",[9,14,14,14,11],[8,11,11,11,9],[8,8,9,8,7],[8,10,13,10,10],[4,4,5,4,5]],
+["PRMDTSTAM007","AV GUERRERO NUEVO LAREDO","OMAR CASTILLO HERRERA","NT1",[11,18,18,18,15],[11,14,14,14,10],[10,11,14,11,11],[10,12,14,12,13],[7,7,7,7,6]],
+["PRMDTSMTY019","FAHO SOLIDARIDAD","OMAR CASTILLO HERRERA","NT1",[8,13,13,13,8],[7,9,9,9,6],[5,7,7,7,6],[7,8,11,8,8],[3,4,5,4,4]],
+["PRMDTSMTY039","MONTERREY PLAZA ALTEA LINCOLN","OMAR CASTILLO HERRERA","NT1",[9,14,14,14,9],[9,11,11,10,9],[6,8,8,8,7],[6,8,10,8,7],[5,6,6,5,6]],
+["PRMDTSMTY005","MONTERREY PLAZA CUMBRES","OMAR CASTILLO HERRERA","NT1",[11,17,17,17,10],[9,12,12,12,9],[7,7,8,7,6],[8,9,11,9,9],[3,3,3,3,3]],
+["PRMDTSMTY037","MONTERREY PLAZA VILLAS LINCOLN","OMAR CASTILLO HERRERA","NT1",[10,15,15,15,10],[5,7,7,6,5],[5,6,8,6,5],[4,5,7,5,6],[6,6,8,6,8]],
+["PRMDTSMTY041","MONTERREY SENDERO LINCOLN","OMAR CASTILLO HERRERA","NT1",[23,39,39,39,30],[14,19,19,19,16],[15,18,20,18,17],[9,11,12,11,11],[13,14,14,14,14]],
+["PRMDTSNUE002","NUEVO LAREDO NARCISO MENDOZA","OMAR CASTILLO HERRERA","NT1",[8,13,13,13,8],[6,7,8,7,6],[8,8,10,8,7],[6,8,9,8,7],[2,3,4,3,3]],
+["PRMDTSNLN003","PASEO SAN PATRICIO","OMAR CASTILLO HERRERA","NT1",[8,13,13,13,8],[4,6,6,6,5],[7,8,10,8,6],[10,12,14,12,13],[5,6,7,6,6]],
+["PRMDTSMTY013","CENTRO CUAUHTEMOC","OMAR VELAZQUEZ AYON","NT1",[13,11,16,11,12],[7,6,7,6,6],[6,5,9,5,6],[8,7,8,7,7],[7,6,8,6,6]],
+["PRMDTSMTY048","HEB LOS MORALES SAN NICOLAS","OMAR VELAZQUEZ AYON","NT1",[15,13,16,13,14],[10,8,12,8,9],[6,5,9,5,6],[8,7,9,7,7],[7,6,8,6,6]],
+["PRMDTSMTY033","INTERPLAZA MTY","OMAR VELAZQUEZ AYON","NT1",[8,9,12,9,12],[4,3,5,3,4],[3,3,5,3,4],[4,3,5,3,4],[7,6,7,6,6]],
+["PRMDTSMTY007","MONTERREY PLAZA HERRADURA","OMAR VELAZQUEZ AYON","NT1",[9,8,11,8,9],[8,6,9,6,7],[6,5,8,5,6],[9,7,9,7,8],[3,3,4,3,3]],
+["PRMDTSMTY018","MULTIPLAZA LINDAVISTA","OMAR VELAZQUEZ AYON","NT1",[17,15,21,15,17],[11,10,14,10,11],[9,8,11,8,8],[15,12,17,12,14],[7,5,9,5,5]],
+["PRMDTSMTY050","NUEVO SUR MTY","OMAR VELAZQUEZ AYON","NT1",[11,10,12,10,11],[7,7,10,7,8],[6,5,8,5,6],[4,4,6,4,5],[7,6,8,6,6]],
+["PRMDTSMTY021","PLAZA ARCADIA","OMAR VELAZQUEZ AYON","NT1",[11,10,14,10,11],[9,8,11,8,8],[8,6,9,6,7],[6,6,9,6,9],[4,4,5,4,4]],
+["PRMDTSMTY044","PLAZA CHAPULTEPEC MTY","OMAR VELAZQUEZ AYON","NT1",[7,7,9,7,10],[2,2,4,2,3],[2,2,2,2,3],[1,1,3,1,2],[3,3,3,3,3]],
+["PRMDTSMTY014","PLAZA CITICEL","OMAR VELAZQUEZ AYON","NT1",[22,19,28,19,22],[11,10,14,10,11],[13,11,14,11,12],[11,9,13,9,11],[9,7,9,7,8]],
+["PRMDTSMTY051","PLAZA V-1818 MTY","OMAR VELAZQUEZ AYON","NT1",[7,6,9,6,7],[2,2,4,2,3],[2,2,5,2,3],[0,1,0,1,1],[2,3,3,3,4]],
+["PRMDTSMTY046","REVOLUCION MTY","OMAR VELAZQUEZ AYON","NT1",[10,9,12,9,10],[6,5,6,5,6],[3,3,5,3,4],[4,4,6,4,5],[7,5,8,5,5]],
+["PRMDTSTAM014","CD VICTORIA PLAZA PASEO AVENTA","ORALIA DEYANIRA PINA GARCIA","NT1",[8,14,15,14,11],[6,7,8,7,6],[4,4,7,4,6],[8,9,11,9,12],[4,5,7,5,6]],
+["PRMDTSTAM018","CENTRO HISTORICO CD MADERO","ORALIA DEYANIRA PINA GARCIA","NT1",[8,11,12,11,8],[3,4,5,4,3],[4,4,5,4,5],[4,4,6,4,6],[3,3,3,3,4]],
+["PRMDTSTAM019","CENTRO TAMPICO","ORALIA DEYANIRA PINA GARCIA","NT1",[9,13,13,12,10],[4,6,7,6,4],[4,5,7,5,6],[3,4,5,4,5],[3,4,5,4,5]],
+["PRMDTSTAM002","FAHO TAMPICO","ORALIA DEYANIRA PINA GARCIA","NT1",[9,13,14,13,8],[5,6,7,6,5],[4,4,6,4,6],[6,5,6,4,4],[2,3,3,3,4]],
+["PRMDTSTAM004","GRAN D LA ESTACION","ORALIA DEYANIRA PINA GARCIA","NT1",[9,14,14,13,10],[3,4,5,4,3],[5,6,7,6,8],[6,7,8,7,9],[3,3,5,3,5]],
+["PRMDTSTAM001","MULTIPLAZA CD MADERO","ORALIA DEYANIRA PINA GARCIA","NT1",[12,19,20,19,15],[9,12,13,12,10],[9,9,13,9,12],[16,17,22,17,22],[6,6,9,6,9]],
+["PRMDTSTAM003","MULTIPLAZA REAL TAMPICO","ORALIA DEYANIRA PINA GARCIA","NT1",[8,14,14,13,10],[4,7,6,7,5],[4,4,6,4,5],[6,7,10,7,9],[3,3,3,3,4]],
+["PRMDTSTAM005","PLAZA LAS PALMAS TAMPICO","ORALIA DEYANIRA PINA GARCIA","NT1",[10,18,19,18,14],[6,8,9,8,6],[6,6,9,6,8],[11,13,14,13,14],[4,4,7,4,6]],
+["PRMDTSTAM016","TAMPICO ALTAMIRA","ORALIA DEYANIRA PINA GARCIA","NT1",[11,19,20,19,14],[5,7,8,7,5],[7,7,11,7,10],[14,15,22,15,21],[5,5,6,5,7]],
+["PRMDTSTAM009","TAMPICO HEB MADERO","ORALIA DEYANIRA PINA GARCIA","NT1",[10,16,17,16,10],[6,9,10,9,9],[6,6,9,6,8],[10,11,14,11,15],[2,3,3,3,4]],
+["PRMDTSTAM008","TAMPICO II","ORALIA DEYANIRA PINA GARCIA","NT1",[0,1,1,1,1],[0,1,1,1,1],[2,2,4,2,3],[1,1,2,1,1],[1,1,2,1,1]],
+["PRMDTSTAM010","TAMPICO PLAZA LA HERRADURA","ORALIA DEYANIRA PINA GARCIA","NT1",[8,11,12,11,8],[5,6,7,6,4],[3,4,5,4,5],[4,5,5,4,3],[2,3,3,3,4]],
+["PRMDTSTAM017","TAMPICO PLAZA RONDINELLA","ORALIA DEYANIRA PINA GARCIA","NT1",[5,8,9,8,5],[3,3,4,3,3],[3,4,5,4,5],[4,4,6,4,5],[2,2,2,2,3]],
+["PRMDTSCOA003","CD ACUNA PLAZA ALASKA","SAULO ISAI PENA ALEMAN","NT1",[10,14,14,14,10],[4,5,6,6,4],[4,6,7,6,4],[5,7,7,7,5],[4,5,5,4,4]],
+["PRMDTSMON002","MONCLOVA","SAULO ISAI PENA ALEMAN","NT1",[8,11,12,11,8],[3,4,5,4,3],[4,5,6,4,4],[7,8,8,8,6],[3,5,5,5,3]],
+["PRMDTSMON003","MONCLOVA HAROLD PAPE","SAULO ISAI PENA ALEMAN","NT1",[11,16,16,16,12],[5,7,6,6,5],[5,6,6,6,5],[4,4,5,5,4],[3,5,4,5,3]],
+["PRMDTSMON001","PASEO MONCLOVA","SAULO ISAI PENA ALEMAN","NT1",[30,42,42,42,30],[15,20,20,20,15],[20,25,25,25,20],[16,22,22,22,16],[9,13,14,12,9]],
+["PRMDTSCOA001","PIEDRAS NEGRAS","SAULO ISAI PENA ALEMAN","NT1",[13,18,18,18,13],[7,9,10,9,7],[7,9,9,8,7],[7,10,9,10,7],[6,7,9,7,6]],
+["PRMDTSCOA002","PIEDRAS NEGRAS PLAZA INOVA","SAULO ISAI PENA ALEMAN","NT1",[20,27,28,28,22],[9,12,12,12,8],[9,12,13,12,9],[11,15,15,15,11],[6,8,8,9,7]],
+["PRMDTSCOA008","PLAZA MUZQUIZ","SAULO ISAI PENA ALEMAN","NT1",[12,16,17,16,13],[3,4,4,3,2],[6,7,8,7,6],[6,7,9,7,6],[3,4,5,4,3]],
+["PRMDTSCOA009","PRESIDENTE CARRANZA COAH","SAULO ISAI PENA ALEMAN","NT1",[21,29,29,29,20],[9,12,13,13,9],[12,15,16,15,12],[18,23,23,24,18],[6,6,7,6,6]],
+["PRMDTSCOA005","SABINAS COAHUILA","SAULO ISAI PENA ALEMAN","NT1",[14,19,19,19,14],[4,6,6,6,4],[6,8,9,8,6],[8,11,13,11,8],[5,6,7,6,5]],
+["PRMDTSCOA004","VIA PLAZA PEREZ TREVIÑO","SAULO ISAI PENA ALEMAN","NT1",[8,11,12,11,8],[5,6,6,6,5],[5,6,9,6,5],[7,9,10,10,7],[4,5,5,5,4]],
+["PRMDTSSIN003","ANTONIO ROSALES GUAMUCHIL","DAVID DE JESUS GARCIA CERDE","PAC",[13,17,18,17,13],[6,8,9,8,6],[6,8,8,8,6],[7,10,10,10,7],[5,7,8,7,5]],
+["PRMDTSCUL002","CULIACAN PASEO SAN ISIDRO","DAVID DE JESUS GARCIA CERDE","PAC",[7,10,11,10,7],[4,5,4,5,4],[5,6,6,6,5],[4,6,6,6,4],[4,5,5,5,4]],
+["PRMDTSCUL004","EXPLANADA CULIACAN","DAVID DE JESUS GARCIA CERDE","PAC",[7,10,11,10,7],[3,5,5,5,3],[5,6,7,6,5],[6,8,7,8,6],[5,7,6,7,5]],
+["PRMDTSCUL012","MI PLAZA BARRANCOS","DAVID DE JESUS GARCIA CERDE","PAC",[10,13,14,13,10],[5,6,7,6,5],[7,10,11,10,7],[9,13,13,13,9],[6,8,9,8,6]],
+["PRMDTSCUL005","PLAZA HUMAYA","DAVID DE JESUS GARCIA CERDE","PAC",[9,12,13,12,9],[4,6,6,6,4],[5,7,6,7,5],[5,7,8,7,5],[4,6,6,6,4]],
+["PRMDTSSIN006","PLAZA MIVIA LOLA CULIACAN","DAVID DE JESUS GARCIA CERDE","PAC",[6,8,7,8,6],[2,3,3,3,2],[3,4,2,4,3],[3,4,6,4,3],[2,3,3,3,2]],
+["PRMDTSCUL003","SENDERO CULIACAN","DAVID DE JESUS GARCIA CERDE","PAC",[9,11,12,11,9],[4,6,7,6,4],[5,6,6,6,5],[6,8,9,8,6],[5,7,9,7,5]],
+["PRMDTSCUL013","4 RIOS CULIACAN","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[8,11,13,11,8],[2,3,4,3,2],[4,5,4,5,4],[5,6,7,6,5],[3,4,4,4,3]],
+["PRMDTSCUL001","CULIACAN","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[24,32,33,32,24],[12,16,18,16,12],[16,22,23,22,16],[21,29,30,29,21],[9,12,13,12,9]],
+["PRMDTSCUL009","CULIACAN CENTRO","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[7,9,8,9,7],[3,4,5,4,3],[5,6,7,6,5],[3,4,2,4,3],[4,6,7,6,4]],
+["PRMDTSCUL011","CULIACAN PLAZA VERONA","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[6,8,7,8,6],[2,3,5,3,2],[3,4,3,4,3],[4,6,6,6,4],[3,4,4,4,3]],
+["PRMDTSCUL014","FORUM CULIACAN","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[10,14,15,14,10],[6,8,8,8,6],[6,8,7,8,6],[11,15,17,15,11],[5,7,7,7,5]],
+["PRMDTSCUL006","PLAZA LA LOMITA","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[6,8,10,8,6],[3,4,2,4,3],[4,5,5,5,4],[5,6,7,6,5],[5,7,6,7,5]],
+["PRMDTSSIN005","PLAZA PABELLON CULIACAN","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[7,9,8,9,7],[2,3,2,3,2],[3,4,5,4,3],[4,6,7,6,4],[4,6,5,6,4]],
+["PRMDTSCUL007","SORIANA ABASTOS CULIACAN","GILBERTO GUADALUPE CALDERON HERNANDEZ","PAC",[9,12,13,12,9],[3,4,4,4,3],[3,4,4,4,3],[5,6,7,6,5],[6,8,6,8,6]],
+["PRMDTSGLA015","AJIJIC","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[7,10,11,10,7],[3,5,5,5,3],[3,4,2,4,3],[4,5,5,5,4],[2,3,3,3,2]],
+["PRMDTSGLA037","CD GUZMAN JALISCO","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[9,12,13,12,9],[5,6,7,6,5],[4,5,5,5,4],[9,11,12,11,9],[3,4,6,4,3]],
+["PRMDTSCOL005","COLIMA AV MADERO","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[16,22,24,22,16],[10,13,12,13,10],[10,14,16,14,10],[14,19,18,19,14],[5,7,8,7,5]],
+["PRMDTSCOL008","COLIMA FILOMENO MEDINA","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[12,16,15,16,12],[7,9,9,9,7],[6,8,7,8,6],[8,11,11,11,8],[5,6,6,6,5]],
+["PRMDTSCOL001","MANZANILLO CENTRO","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[12,16,18,16,12],[6,8,7,8,6],[6,8,7,8,6],[11,15,17,15,11],[4,6,7,6,4]],
+["PRMDTSCOL004","MANZANILLO MIGUEL DE LA MADRID","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[12,16,18,16,12],[9,12,11,12,9],[7,9,9,9,7],[9,13,13,13,9],[6,8,7,8,6]],
+["PRMDTSGLA033","PLAZA CENTRO SUR TLAQUEPAQUE","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[15,20,20,20,15],[10,13,14,13,10],[10,13,15,13,10],[13,17,19,17,13],[3,5,5,5,3]],
+["PRMDTSCOL007","PLAZA SAN FERNANDO","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[10,13,12,13,10],[6,8,9,8,6],[7,9,9,9,7],[10,13,15,13,10],[5,6,6,6,5]],
+["PRMDTSCOL002","SORIANA VILLA ALVAREZ","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[13,18,20,18,13],[6,8,8,8,6],[6,8,8,8,6],[9,13,13,13,9],[4,5,6,5,4]],
+["PRMDTSCOL006","TECNOLOGICO COLIMA","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[9,12,13,12,9],[4,6,7,6,4],[4,5,5,5,4],[4,5,5,5,4],[2,3,4,3,2]],
+["PRMDTSCOL009","TECOMAN COLIMA 18 DE JULIO","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[18,25,26,25,18],[8,11,12,11,8],[10,13,15,13,10],[10,13,13,13,10],[5,7,8,7,5]],
+["PRMDTSGLA007","URBAN CENTER GUADALAJARA","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[7,10,11,10,7],[4,6,6,6,4],[4,6,6,6,4],[7,9,8,9,7],[2,3,5,3,2]],
+["PRMDTSCOL003","ZENTRALIA COLIMA","GUSTAVO ALBERTO FABIAN HERNANDEZ","PAC",[11,14,15,14,11],[6,9,9,9,6],[5,7,6,7,5],[10,13,12,13,10],[3,4,5,4,3]],
+["PRMDTSGLA042","ARANDAS JALISCO","JOSE LUIS CARDENAS EUSEBIO","PAC",[9,11,12,11,9],[3,4,6,4,3],[3,4,5,4,3],[3,4,5,4,3],[2,3,2,3,2]],
+["PRMDTSMOR010","GALERIAS METROPOLITAN LA PIEDAD","JOSE LUIS CARDENAS EUSEBIO","PAC",[11,14,15,14,11],[6,8,9,8,6],[5,7,6,7,5],[8,10,11,10,8],[3,4,6,4,3]],
+["PRMDTSGLA039","HOTEL SARA ZAPOTLANEJO","JOSE LUIS CARDENAS EUSEBIO","PAC",[10,13,12,13,10],[5,6,6,6,5],[5,6,7,6,5],[8,11,13,11,8],[3,5,5,5,3]],
+["PRMDTSGLA020","LA BARCA","JOSE LUIS CARDENAS EUSEBIO","PAC",[9,13,13,13,9],[5,6,7,6,5],[5,7,6,7,5],[2,3,3,3,2],[3,4,2,4,3]],
+["PRMDTSZMA001","LA PIEDAD HERIBERTO JARA","JOSE LUIS CARDENAS EUSEBIO","PAC",[14,19,18,19,14],[8,10,10,10,8],[7,9,8,9,7],[9,12,12,12,9],[6,8,7,8,6]],
+["PRMDTSMOR016","PASEO AKIA MICHOACAN","JOSE LUIS CARDENAS EUSEBIO","PAC",[7,10,11,10,7],[2,3,3,3,2],[3,4,6,4,3],[5,7,9,7,5],[1,2,1,2,1]],
+["PRMDTSMOR005","PLAZA SENTURA","JOSE LUIS CARDENAS EUSEBIO","PAC",[8,11,12,11,8],[5,6,7,6,5],[5,7,7,7,5],[7,9,10,9,7],[3,5,5,5,3]],
+["PRMDTSUPN001","URUAPAN","JOSE LUIS CARDENAS EUSEBIO","PAC",[19,25,26,25,19],[11,14,15,14,11],[8,11,10,11,8],[11,15,15,15,11],[4,6,6,6,4]],
+["PRMDTSMOR006","URUAPAN CENTRO","JOSE LUIS CARDENAS EUSEBIO","PAC",[10,13,14,13,10],[5,7,9,7,5],[4,6,7,6,4],[6,9,9,9,6],[5,6,6,6,5]],
+["PRMDTSUPN002","URUAPAN URUAPAN","JOSE LUIS CARDENAS EUSEBIO","PAC",[19,25,26,25,19],[11,15,14,15,11],[9,12,11,12,9],[7,10,10,10,7],[8,10,10,10,8]],
+["PRMDTSMOR009","ZAMORA CENTRO","JOSE LUIS CARDENAS EUSEBIO","PAC",[9,11,12,11,9],[5,6,7,6,5],[5,7,8,7,5],[6,8,10,8,6],[3,4,4,4,3]],
+["PRMDTSMOR011","GARCIA DE LEON MORELIA","JUAN MANUEL BARAJAS JIMENEZ","PAC",[7,10,11,10,7],[4,5,4,5,4],[3,4,6,4,3],[6,8,6,8,6],[2,3,5,3,2]],
+["PRMDTSMOR004","LAS AMERICAS MORELIA","JUAN MANUEL BARAJAS JIMENEZ","PAC",[17,23,26,23,17],[11,15,15,15,11],[12,17,17,17,12],[18,24,26,24,18],[6,8,6,8,6]],
+["PRMDTSMOR014","MACROPLAZA MORELIA","JUAN MANUEL BARAJAS JIMENEZ","PAC",[11,15,15,15,11],[7,10,9,10,7],[6,8,7,8,6],[13,17,17,17,13],[5,7,9,7,5]],
+["PRMDTSMOR007","MADERO CENTRO","JUAN MANUEL BARAJAS JIMENEZ","PAC",[11,15,14,15,11],[6,8,9,8,6],[5,7,8,7,5],[9,11,12,11,9],[5,6,7,6,5]],
+["PRMDTSMOR002","MORELIA PLAZA ANDADOR","JUAN MANUEL BARAJAS JIMENEZ","PAC",[11,15,18,15,11],[8,11,10,11,8],[7,9,10,9,7],[4,6,6,6,4],[5,7,8,7,5]],
+["PRMDTSMOR013","MORELIA RIO","JUAN MANUEL BARAJAS JIMENEZ","PAC",[7,9,8,9,7],[3,4,6,4,3],[3,4,6,4,3],[3,4,6,4,3],[3,4,2,4,3]],
+["PRMDTSMOR001","MORELIAMI PLAZA","JUAN MANUEL BARAJAS JIMENEZ","PAC",[10,13,14,13,10],[6,8,7,8,6],[6,8,7,8,6],[8,11,13,11,8],[3,4,3,4,3]],
+["PRMDTSMOR003","PASEO ALTOZANO","JUAN MANUEL BARAJAS JIMENEZ","PAC",[9,12,13,12,9],[5,6,7,6,5],[3,5,5,5,3],[6,8,7,8,6],[3,4,6,4,3]],
+["PRMDTSMOR015","PLAZA PUNTO PONIENTE MCH","JUAN MANUEL BARAJAS JIMENEZ","PAC",[7,10,9,10,7],[3,4,5,4,3],[4,6,7,6,4],[7,9,8,9,7],[2,3,2,3,2]],
+["PRMDTSMOR012","PRADOS CAMELINAS","JUAN MANUEL BARAJAS JIMENEZ","PAC",[7,10,11,10,7],[4,6,6,6,4],[7,9,8,9,7],[6,8,7,8,6],[3,4,2,4,3]],
+["PRMDTSMZT003","EJERCITO MEXICANO","LEONARDO DANIEL CRESPO MORENO","PAC",[11,15,18,15,11],[4,5,6,5,4],[8,10,11,10,8],[9,12,13,12,9],[5,6,7,6,5]],
+["PRMDTSMZT005","MAZATLAN","LEONARDO DANIEL CRESPO MORENO","PAC",[16,21,21,21,16],[12,16,16,16,12],[8,11,13,11,8],[10,13,13,13,10],[6,8,10,8,6]],
+["PRMDTSLMO009","MAZATLAN BICENTENARIO SIN","LEONARDO DANIEL CRESPO MORENO","PAC",[7,9,8,9,7],[3,4,4,4,3],[3,5,5,5,3],[8,10,10,10,8],[4,5,4,5,4]],
+["PRMDTSMZT008","MAZATLAN CENTRO 2","LEONARDO DANIEL CRESPO MORENO","PAC",[10,13,13,13,10],[3,4,4,4,3],[6,8,6,8,6],[8,10,11,10,8],[4,6,6,6,4]],
+["PRMDTSMZT001","MAZATLAN GALERIAS","LEONARDO DANIEL CRESPO MORENO","PAC",[9,13,13,13,9],[4,6,5,6,4],[10,13,15,13,10],[7,10,11,10,7],[4,6,6,6,4]],
+["PRMDTSMZT002","MAZATLAN GRAN PLAZA","LEONARDO DANIEL CRESPO MORENO","PAC",[12,17,17,17,12],[9,11,12,11,9],[7,10,11,10,7],[11,15,16,15,11],[6,8,8,8,6]],
+["PRMDTSMZT006","PATIO COLOSIO MAZATLAN","LEONARDO DANIEL CRESPO MORENO","PAC",[9,12,13,12,9],[5,6,6,6,5],[7,10,11,10,7],[9,11,12,11,9],[5,7,6,7,5]],
+["PRMDTSMZT004","PLAZA ACAYA","LEONARDO DANIEL CRESPO MORENO","PAC",[9,11,12,11,9],[4,5,4,5,4],[6,8,7,8,6],[7,10,9,10,7],[4,6,7,6,4]],
+["PRMDTSMZT007","PRM PLAZA SANTA ROSA MAZATLAN","LEONARDO DANIEL CRESPO MORENO","PAC",[10,13,14,13,10],[5,6,7,6,5],[7,9,8,9,7],[8,11,12,11,8],[5,7,6,7,5]],
+["PRMDTSGLA044","CHEDRAHUI TLAJOMULCO JAL","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[17,23,25,23,17],[11,15,14,15,11],[11,15,15,15,11],[10,13,13,13,10],[5,7,9,7,5]],
+["PRMDTSGLA032","GLORIETA CHAPALITA","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[6,8,7,8,6],[3,4,4,4,3],[2,2,2,2,2],[1,2,2,2,1],[3,4,2,4,3]],
+["PRMDTSGLA019","GRAN PATIO PATRIA","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[9,12,12,12,9],[5,7,9,7,5],[5,6,7,6,5],[4,6,6,6,4],[3,5,5,5,3]],
+["PRMDTSGLA001","GUADALAJARA CIRCUNVALACION","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[11,15,18,15,11],[6,8,10,8,6],[4,6,7,6,4],[2,2,3,2,2],[3,5,5,5,3]],
+["PRMDTSGLA029","GUADALAJARA COUNTRY","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[13,17,18,17,13],[9,12,11,12,9],[7,10,11,10,7],[11,15,16,15,11],[5,6,7,6,5]],
+["PRMDTSGLA006","GUADALAJARA LA GRAN PLAZA GUAD","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[19,25,26,25,19],[15,20,21,20,15],[10,14,15,14,10],[10,13,15,13,10],[6,8,8,8,6]],
+["PRMDTSGLA005","GUADALAJARA PLAZA BELENES","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[20,28,29,28,20],[12,16,16,16,12],[10,14,15,14,10],[13,17,18,17,13],[7,9,9,9,7]],
+["PRMDTSGLA047","HIPER CORDILLERAS JALISCO","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[8,11,12,11,8],[5,7,8,7,5],[5,7,8,7,5],[4,6,6,6,4],[2,3,4,3,2]],
+["PRMDTSGLA021","LA CIMA GLA","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[10,14,15,14,10],[6,9,9,9,6],[4,6,7,6,4],[6,8,8,8,6],[3,4,6,4,3]],
+["PRMDTSGLA034","MULTICENTER EL SALTO","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0],[0,0,0,0,0]],
+["PRMDTSGLA026","PLAZA TESISTAN","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[11,14,15,14,11],[6,8,8,8,6],[5,7,6,7,5],[5,7,6,7,5],[4,5,5,5,4]],
+["PRMDTSGLA035","PLAZA TESISTAN II","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[14,18,19,18,14],[9,12,14,12,9],[8,11,11,11,8],[13,18,18,18,13],[4,6,7,6,4]],
+["PRMDTSGLA009","PLAZA UBIKA PACIFICO","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[9,11,12,11,9],[6,8,6,8,6],[6,8,6,8,6],[7,10,11,10,7],[3,5,5,5,3]],
+["PRMDTSGLA045","PLAZA URBAN VILLAGE JAL","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[8,11,12,11,8],[6,8,10,8,6],[5,6,6,6,5],[6,9,9,9,6],[3,5,5,5,3]],
+["PRMDTSGLA038","UBIKA MARIANO OTERO ZAPOPAN","MIRIAM ELIZABETH LOPEZ PEREZ","PAC",[10,13,13,13,10],[6,8,10,8,6],[5,7,8,7,5],[9,12,13,12,9],[4,5,4,5,4]],
+["PRMDTSGLA016","AMECA","RAFAEL JIMENEZ MACIAS","PAC",[11,15,16,15,11],[6,8,6,8,6],[6,8,7,8,6],[8,10,11,10,8],[4,5,4,5,4]],
+["PRMDTSGLA017","CHAPULTEPEC SUR","RAFAEL JIMENEZ MACIAS","PAC",[12,17,17,17,12],[7,10,11,10,7],[5,6,7,6,5],[4,6,6,6,4],[4,6,5,6,4]],
+["PRMDTSGLA040","FRANCISCO I MADERO TONALA","RAFAEL JIMENEZ MACIAS","PAC",[14,19,19,19,14],[7,9,9,9,7],[10,13,13,13,10],[15,20,21,20,15],[5,7,9,7,5]],
+["PRMDTSGLA018","GLORIETA JARDINES DEL BOSQUE","RAFAEL JIMENEZ MACIAS","PAC",[6,8,7,8,6],[3,4,6,4,3],[2,3,5,3,2],[3,4,4,4,3],[3,4,2,4,3]],
+["PRMDTSGLA012","GUADALAJARA CENTRO","RAFAEL JIMENEZ MACIAS","PAC",[13,18,18,18,13],[7,10,9,10,7],[5,7,7,7,5],[7,10,11,10,7],[5,7,9,7,5]],
+["PRMDTSGLA030","GUADALAJARA CHAPULTEPEC II","RAFAEL JIMENEZ MACIAS","PAC",[12,17,17,17,12],[9,12,14,12,9],[6,8,9,8,6],[11,14,15,14,11],[4,6,5,6,4]],
+["PRMDTSGLA003","GUADALAJARA FAHO PABLO CASALS","RAFAEL JIMENEZ MACIAS","PAC",[11,14,15,14,11],[7,10,11,10,7],[8,10,10,10,8],[7,10,10,10,7],[4,5,4,5,4]],
+["PRMDTSGLA013","GUADALAJARA MEDRANO","RAFAEL JIMENEZ MACIAS","PAC",[10,13,14,13,10],[5,7,6,7,5],[3,5,5,5,3],[6,8,10,8,6],[3,5,5,5,3]],
+["PRMDTSGLA048","NICOLAS COPERNICO JAL","RAFAEL JIMENEZ MACIAS","PAC",[13,17,17,17,13],[8,11,12,11,8],[7,10,9,10,7],[13,17,17,17,13],[3,4,6,4,3]],
+["PRMDTSGLA046","PLAZA INDEPENDENCIA JAL","RAFAEL JIMENEZ MACIAS","PAC",[9,12,13,12,9],[4,6,7,6,4],[5,7,6,7,5],[7,10,11,10,7],[4,5,4,5,4]],
+["PRMDTSGLA025","PLAZA LA REINA","RAFAEL JIMENEZ MACIAS","PAC",[11,14,15,14,11],[6,8,9,8,6],[8,11,10,11,8],[13,17,17,17,13],[5,7,7,7,5]],
+["PRMDTSGLA041","PROVIDENCIA GDL","RAFAEL JIMENEZ MACIAS","PAC",[9,11,12,11,9],[4,6,6,6,4],[3,4,2,4,3],[3,4,3,4,3],[3,4,5,4,3]],
+["PRMDTSGLA028","SANTA TERE","RAFAEL JIMENEZ MACIAS","PAC",[7,10,11,10,7],[5,6,6,6,5],[3,5,5,5,3],[5,7,8,7,5],[3,4,6,4,3]],
+["PRMDTSGLA008","TEPATITLAN CENTRO","RAFAEL JIMENEZ MACIAS","PAC",[16,22,23,22,16],[10,13,15,13,10],[10,13,13,13,10],[13,17,19,17,13],[4,6,7,6,4]],
+["PRMDTSGLA049","UBIKA INDEPENDENCIA JAL","RAFAEL JIMENEZ MACIAS","PAC",[3,4,6,4,3],[1,2,2,2,1],[1,1,1,1,1],[1,1,2,1,1],[1,1,0,1,1]],
+["PRMDTSGLA043","FRANCISCO MEDINA PTO VALLARTA","RUBEN FRANCISCO REVELES HERRERA","PAC",[10,14,16,14,10],[6,8,6,8,6],[8,11,10,11,8],[8,11,10,11,8],[5,6,7,6,5]],
+["PRMDTSTEP005","LA CANTERA TEPIC","RUBEN FRANCISCO REVELES HERRERA","PAC",[9,11,12,11,9],[4,5,4,5,4],[4,5,4,5,4],[1,2,2,2,1],[3,4,5,4,3]],
+["PRMDTSGLA022","MACRO PLAZA VALLARTA","RUBEN FRANCISCO REVELES HERRERA","PAC",[14,19,19,19,14],[9,11,12,11,9],[8,10,10,10,8],[7,10,9,10,7],[7,9,10,9,7]],
+["PRMDTSTEP003","MEGA BUCERIAS NAYARIT","RUBEN FRANCISCO REVELES HERRERA","PAC",[11,15,18,15,11],[6,8,8,8,6],[6,8,10,8,6],[10,14,16,14,10],[4,5,4,5,4]],
+["PRMDTSGLA024","PAROTA CENTER","RUBEN FRANCISCO REVELES HERRERA","PAC",[8,11,12,11,8],[5,6,7,6,5],[6,9,9,9,6],[6,8,8,8,6],[2,3,5,3,2]],
+["PRMDTSGLA050","PTO VALLARTA CENTRO JAL","RUBEN FRANCISCO REVELES HERRERA","PAC",[3,4,6,4,3],[1,2,2,2,1],[1,1,1,1,1],[1,1,1,1,1],[1,1,0,1,1]],
+["PRMDTSPOV001","PTO VALLARTA DORADO","RUBEN FRANCISCO REVELES HERRERA","PAC",[23,31,32,31,23],[15,20,21,20,15],[12,17,18,17,12],[14,19,22,19,14],[9,12,12,12,9]],
+["PRMDTSTEP002","TEPIC CENTRO","RUBEN FRANCISCO REVELES HERRERA","PAC",[10,13,14,13,10],[5,6,6,6,5],[4,5,6,5,4],[6,8,6,8,6],[5,7,6,7,5]],
+["PRMDTSTEP001","TEPIC PLAZA FORUM","RUBEN FRANCISCO REVELES HERRERA","PAC",[18,24,26,24,18],[10,14,14,14,10],[8,11,11,11,8],[14,19,19,19,14],[8,11,10,11,8]],
+["PRMDTSSIN004","AV OBREGON GUASAVE","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[11,14,15,14,11],[5,6,6,6,5],[10,14,16,14,10],[8,11,13,11,8],[5,7,8,7,5]],
+["PRMDTSCUL010","CENTRO LOS MOCHIS I","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[11,14,15,14,11],[5,7,7,7,5],[8,10,10,10,8],[10,13,14,13,10],[4,6,7,6,4]],
+["PRMDTSGUA002","GUASAVE","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[18,25,26,25,18],[10,14,15,14,10],[13,18,19,18,13],[18,24,26,24,18],[7,9,8,9,7]],
+["PRMDTSLMO007","LOS MOCHIS","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[14,19,19,19,14],[7,10,9,10,7],[11,15,14,15,11],[14,18,19,18,14],[5,7,7,7,5]],
+["PRMDTSLMO006","LOS MOCHIS PLAZA DECO","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[7,10,11,10,7],[3,5,5,5,3],[5,7,9,7,5],[8,10,11,10,8],[3,4,4,4,3]],
+["PRMDTSLMO003","LOS MOCHIS PLAZA PANAMA","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[15,20,20,20,15],[8,11,13,11,8],[8,11,12,11,8],[15,20,21,20,15],[5,7,8,7,5]],
+["PRMDTSLMO005","LOS MOCHIS PLAZA PASEO","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[16,21,21,21,16],[10,13,12,13,10],[12,16,16,16,12],[14,19,21,19,14],[6,8,7,8,6]],
+["PRMDTSLMO004","LOS MOCHIS PLAZA SENDERO","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[14,19,19,19,14],[8,10,10,10,8],[9,13,13,13,9],[14,19,22,19,14],[5,7,8,7,5]],
+["PRMDTSLMO002","PLAZA FIESTA LAS PALMAS","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[1,1,0,1,1],[1,1,1,1,1],[0,0,2,0,0],[0,0,0,0,0],[1,1,1,1,1]],
+["PRMDTSGUA001","PLAZA NIO GUASAVE","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[11,15,18,15,11],[6,8,6,8,6],[7,9,10,9,7],[9,12,11,12,9],[5,6,7,6,5]],
+["PRMDTSLMO008","PLAZA SORIANA LOS MOCHIS","YOSHIO URIEL PORTILLO RODRIGUEZ","PAC",[10,14,15,14,10],[6,8,9,8,6],[9,12,12,12,9],[10,14,15,14,10],[6,8,7,8,6]],
+["PRMDTSOAX003","20 DE NOVIEMBRE","ADRIANA HUERTA ROJAS","SUR",[11,11,17,11,15],[7,8,10,8,10],[7,7,11,7,10],[8,9,13,9,12],[4,4,6,4,6]],
+["PRMDTSOAX004","MACROPLAZA OAXACA","ADRIANA HUERTA ROJAS","SUR",[12,13,17,13,17],[8,8,11,8,11],[10,11,14,11,14],[9,10,13,10,13],[6,6,9,6,8]],
+["PRMDTSOAX001","OAXACA","ADRIANA HUERTA ROJAS","SUR",[12,13,17,13,17],[7,7,9,7,10],[5,6,8,6,8],[5,5,8,5,7],[4,4,7,4,6]],
+["PRMDTSOAX002","OAXACA PABELLON VIOLETAS","ADRIANA HUERTA ROJAS","SUR",[7,8,11,8,10],[4,4,6,4,6],[4,4,5,4,5],[5,6,7,6,8],[3,3,5,3,4]],
+["PRMDTSOAX005","SORIANA JUCHITAN","ADRIANA HUERTA ROJAS","SUR",[7,8,11,8,10],[3,3,4,3,4],[4,4,5,4,5],[6,6,9,6,8],[2,2,5,2,3]],
+["PRMDTSPUE015","TECAMACHALCO PUEBLA","ADRIANA HUERTA ROJAS","SUR",[7,8,11,8,11],[3,3,4,3,4],[3,4,4,4,5],[5,5,9,5,7],[4,4,6,4,6]],
+["PRMDTSPUE013","TEHUACAN","ADRIANA HUERTA ROJAS","SUR",[19,24,24,24,24],[14,16,18,16,18],[14,15,22,15,21],[19,21,27,21,28],[6,6,9,6,9]],
+["PRMDTSPUE010","TEHUACAN PLAZA PASEO","ADRIANA HUERTA ROJAS","SUR",[19,24,24,24,24],[13,17,17,17,17],[12,12,17,12,17],[18,19,26,19,25],[6,7,10,7,9]],
+["PRMDTSTCN001","TEHUACAN PORTALES PUEBLA","ADRIANA HUERTA ROJAS","SUR",[16,17,25,17,20],[9,12,13,12,10],[10,11,16,11,15],[15,16,23,16,22],[5,5,9,5,7]],
+["PRMDTSOAX007","TEHUANTEPEC AV JUAREZ OAX","ADRIANA HUERTA ROJAS","SUR",[8,9,12,9,12],[3,3,4,3,4],[4,4,6,4,5],[5,6,7,6,8],[2,2,2,2,3]],
+["PRMDTSCMP003","CD DEL CARMEN PLAZA REAL","CLAUDIA OSORIO RIOS","SUR",[7,10,11,10,7],[4,5,6,5,3],[5,5,8,5,7],[4,4,7,4,6],[4,5,6,5,6]],
+["PRMDTSTAB006","EUROPLAZA VILLAHERMOSA","CLAUDIA OSORIO RIOS","SUR",[10,15,16,15,11],[7,9,10,9,6],[8,9,12,9,12],[12,13,18,13,17],[3,4,5,4,5]],
+["PRMDTSTAB004","PLAZA CRYSTAL","CLAUDIA OSORIO RIOS","SUR",[9,14,15,14,10],[7,9,10,9,7],[8,8,13,8,11],[9,10,13,10,13],[3,4,4,4,5]],
+["PRMDTSTAB008","SENDERO VILLAHERMOSA","CLAUDIA OSORIO RIOS","SUR",[17,23,26,23,16],[9,13,13,13,6],[13,14,20,14,19],[11,11,17,11,15],[7,7,9,7,10]],
+["PRMDTSCMP006","SORIANA CD DEL CARMEN","CLAUDIA OSORIO RIOS","SUR",[12,18,19,18,15],[9,12,13,12,9],[10,11,15,11,15],[10,11,14,11,15],[6,7,10,7,9]],
+["PRMDTSTAB007","SORIANA SAN JOAQUIN","CLAUDIA OSORIO RIOS","SUR",[6,12,14,13,9],[4,5,6,5,4],[4,4,6,4,6],[5,5,8,5,7],[5,5,8,5,7]],
+["PRMDTSTAB003","VILLAHERMOSA AMERICAS","CLAUDIA OSORIO RIOS","SUR",[12,17,19,17,11],[9,12,13,12,7],[10,11,16,11,15],[10,10,14,10,14],[6,7,9,7,9]],
+["PRMDTSTAB011","VILLAHERMOSA CENTRO TABASCO","CLAUDIA OSORIO RIOS","SUR",[11,14,17,14,10],[5,6,7,6,4],[8,8,12,8,11],[10,10,14,10,14],[5,5,9,5,7]],
+["PRMDTSTAB009","VILLAHERMOSA DEPORTIVA","CLAUDIA OSORIO RIOS","SUR",[15,21,23,21,15],[9,11,13,12,7],[11,12,18,12,16],[12,13,16,13,17],[6,6,8,6,8]],
+["PRMDTSTAB010","VILLAHERMOSA SORIANA","CLAUDIA OSORIO RIOS","SUR",[10,12,14,12,10],[4,6,7,6,4],[7,7,11,7,10],[7,7,11,7,10],[5,5,7,5,7]],
+["PRMDTSTUX003","CALZADA LAS AMERICAS SAN CRISTOBAL","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[7,9,9,9,9],[4,5,5,5,5],[5,6,8,6,7],[10,11,10,11,12],[4,4,5,4,5]],
+["PRMDTSVER013","CRYSTAL COATZACOALCOS","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[7,11,13,11,12],[6,7,8,7,8],[6,8,9,8,8],[7,8,7,8,9],[5,5,6,5,7]],
+["PRMDTSVER021","MINATITLAN SORIANA","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[14,16,18,17,17],[8,10,11,8,11],[10,12,13,12,13],[11,12,11,12,13],[6,7,8,6,8]],
+["PRMDTSTUX002","MOCTEZUMA TUXTLA","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[7,9,10,9,10],[4,5,5,5,5],[4,5,6,5,6],[9,11,9,10,11],[4,5,6,5,6]],
+["PRMDTSTUX004","PLAZA CARMEL TUXTLA","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[6,9,11,9,9],[4,5,5,5,5],[6,6,9,6,7],[8,9,8,8,10],[3,4,5,4,5]],
+["PRMDTSVER012","PLAZA CRISTAL MINATITLAN","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[12,17,18,16,17],[9,10,12,10,13],[11,13,14,13,14],[11,13,11,13,14],[6,8,9,7,9]],
+["PRMDTSTUX001","TUXTLA CENTRO","GABINO ALBERTO GONZALEZ DEL ANGEL","SUR",[8,10,11,10,11],[4,5,5,5,5],[5,5,6,5,7],[7,8,7,8,9],[5,5,7,5,7]],
+["PRMDTSTLA001","APIZACO TLAXCALA","JORGE LUIS LOPEZ TOLA","SUR",[13,15,18,15,18],[9,9,13,9,13],[10,10,14,10,14],[10,10,14,10,14],[3,4,5,4,5]],
+["PRMDTSVER023","CHEDRAUI TUXPAN VER","JORGE LUIS LOPEZ TOLA","SUR",[10,14,16,14,17],[7,7,9,7,10],[5,6,8,6,8],[5,6,7,6,8],[3,3,5,3,5]],
+["PRMTDSTLA001","HUAMANTLA PLAZA TLAX","JORGE LUIS LOPEZ TOLA","SUR",[13,15,18,15,19],[9,9,13,9,12],[8,8,12,8,11],[12,13,17,13,17],[4,4,7,4,6]],
+["PRMDTSVER019","M DE LA TORRE VERACRUZ IGNACIO","JORGE LUIS LOPEZ TOLA","SUR",[14,16,17,16,19],[8,8,11,8,11],[9,10,14,10,13],[12,13,17,13,17],[4,5,7,5,6]],
+["PRMDTSVER020","POZA RICA","JORGE LUIS LOPEZ TOLA","SUR",[14,15,18,16,19],[9,9,13,9,12],[6,7,9,7,9],[4,4,7,4,6],[2,2,4,2,3]],
+["PRMDTSPUE012","SAN MARTIN TEXMELUCAN PLAZA CR","JORGE LUIS LOPEZ TOLA","SUR",[16,23,24,23,24],[11,13,15,13,16],[10,11,14,11,15],[15,16,23,16,22],[5,6,8,6,8]],
+["PRMDTSPUE011","TEZIUTLAN PUEBLA","JORGE LUIS LOPEZ TOLA","SUR",[14,17,17,17,20],[8,9,12,9,12],[10,10,15,10,14],[14,15,18,15,20],[4,4,6,4,6]],
+["PRMDTSTLA002","TLAXCALA AV BENITO JUAREZ","JORGE LUIS LOPEZ TOLA","SUR",[10,16,18,17,17],[8,8,11,8,11],[8,10,10,10,10],[11,11,16,11,15],[3,4,4,4,5]],
+["PRMDTSVER011","CHEDRAUI TEJERIA","JUAN CARLOS SANTIAGO GARCIA","SUR",[16,18,21,18,22],[11,11,13,11,13],[8,9,11,9,11],[8,9,11,9,11],[8,9,10,9,11]],
+["PRMDTSCOR001","CORDOBA PLAZA ONCE","JUAN CARLOS SANTIAGO GARCIA","SUR",[17,18,21,19,20],[7,8,9,8,10],[7,8,11,8,10],[8,9,11,9,12],[5,6,8,6,8]],
+["PRMDTSVER010","CRYSTAL CORDOBA","JUAN CARLOS SANTIAGO GARCIA","SUR",[10,12,13,12,13],[5,6,8,6,8],[5,5,9,5,7],[5,6,7,6,7],[6,7,8,7,9]],
+["PRMDTSVER015","ORIZABA I","JUAN CARLOS SANTIAGO GARCIA","SUR",[11,12,15,12,15],[7,8,9,8,10],[7,9,9,9,11],[9,11,12,11,12],[7,7,9,7,10]],
+["PRMDTSVER016","ORIZABA PLAZA VALLE ORIZABA","JUAN CARLOS SANTIAGO GARCIA","SUR",[20,25,25,25,25],[11,13,17,13,15],[13,13,15,13,16],[16,19,22,19,22],[7,8,9,8,10]],
+["PRMDTSVER018","ORIZABA PONIENTE 3","JUAN CARLOS SANTIAGO GARCIA","SUR",[11,12,15,12,15],[6,7,8,7,9],[7,8,11,8,11],[8,9,12,9,12],[5,5,9,5,7]],
+["PRMDTSVER007","PLAZA JARDIN COR","JUAN CARLOS SANTIAGO GARCIA","SUR",[11,12,14,13,15],[6,7,8,7,9],[7,8,11,8,10],[11,13,15,13,16],[4,4,6,4,5]],
+["PRMDTSVER001","VERACRUZ ANDAMAR","JUAN CARLOS SANTIAGO GARCIA","SUR",[18,20,24,20,24],[11,12,14,12,14],[9,9,13,9,12],[9,11,12,11,13],[3,3,5,3,4]],
+["PRMDTSVER017","VERACRUZ PLAZA CUAUHTEMOC","JUAN CARLOS SANTIAGO GARCIA","SUR",[16,20,20,20,22],[10,11,12,11,13],[12,12,14,12,15],[10,12,14,12,15],[5,5,6,5,7]],
+["PRMDTSPUE016","5 DE MAYO HUEXOTITLA","NAHIM CONTRERAS REYES","SUR",[14,19,20,19,15],[9,12,13,12,10],[10,13,14,13,12],[15,18,19,18,16],[7,9,10,10,9]],
+["PRMDTSPUE017","AV JUAREZ PUE","NAHIM CONTRERAS REYES","SUR",[8,11,12,11,8],[5,6,7,7,6],[5,5,6,6,6],[5,6,6,6,5],[6,7,8,8,7]],
+["PRMDTSPUE006","CALLE 31 SUR","NAHIM CONTRERAS REYES","SUR",[7,10,10,10,8],[3,4,5,5,4],[5,6,6,6,5],[7,9,9,9,8],[3,4,5,4,3]],
+["PRMDTSPUE018","FAHO MISIONES ESTACION PUE","NAHIM CONTRERAS REYES","SUR",[10,12,13,13,12],[5,6,6,6,5],[5,6,7,6,6],[6,7,8,8,8],[3,4,5,4,4]],
+["PRMDTSPUE014","LIBRAMIENTO PUEBLA","NAHIM CONTRERAS REYES","SUR",[9,12,12,12,10],[6,7,8,7,7],[5,6,7,6,6],[11,12,13,12,11],[4,5,6,5,5]],
+["PRMDTSPUE001","PUEBLA CAMINO REAL FRESCURA","NAHIM CONTRERAS REYES","SUR",[10,12,13,12,12],[7,10,10,9,9],[9,11,13,11,11],[9,11,12,11,11],[5,7,7,7,6]],
+["PRMDTSPUE002","PUEBLA JUAN PABLO II","NAHIM CONTRERAS REYES","SUR",[14,18,19,19,15],[9,11,11,11,10],[6,7,8,8,7],[10,12,13,12,11],[6,9,9,8,7]],
+["PRMDTSPUE003","PUEBLA SAN MANUEL","NAHIM CONTRERAS REYES","SUR",[10,13,14,13,11],[6,7,7,7,7],[4,4,6,4,6],[3,4,4,4,4],[4,5,5,5,5]],
+["PRMDTSPUE009","PUEBLA TEZIUTLAN SUR","NAHIM CONTRERAS REYES","SUR",[7,10,10,10,8],[4,4,4,4,4],[4,4,5,5,4],[4,5,6,6,5],[2,2,3,2,2]],
+["PRMDTSPUE007","VALSEQUILLO PUEBLA","NAHIM CONTRERAS REYES","SUR",[10,13,14,13,11],[6,8,8,8,7],[5,6,7,7,6],[6,8,9,8,8],[3,3,4,4,3]],
+["PRMDTSVER003","CANAL VERACRUZ","OLIVIA ANAID MORAN GUTIERREZ","SUR",[9,9,9,9,9],[5,5,5,4,4],[7,6,7,7,7],[6,6,7,6,7],[1,2,2,2,2]],
+["PRMDTSVER008","EL DORADO BOCA DEL RIO","OLIVIA ANAID MORAN GUTIERREZ","SUR",[15,15,15,15,17],[11,10,11,11,12],[9,8,9,9,9],[7,7,7,7,8],[4,4,4,3,3]],
+["PRMDTSVER006","PLAZA CRYSTAL XAL","OLIVIA ANAID MORAN GUTIERREZ","SUR",[12,11,12,11,13],[8,7,7,7,8],[6,6,7,7,7],[8,8,8,8,9],[8,8,8,8,9]],
+["PRMDTSVER009","PLAZA LAS AMERICAS XALAPA","OLIVIA ANAID MORAN GUTIERREZ","SUR",[21,20,22,20,22],[18,17,20,17,20],[18,16,17,17,18],[15,15,16,15,16],[7,7,7,6,9]],
+["PRMDTSVER022","PUERTO CAOBA VER","OLIVIA ANAID MORAN GUTIERREZ","SUR",[8,8,8,8,8],[6,5,6,5,5],[4,4,4,4,4],[8,8,9,9,9],[5,5,6,5,7]],
+["PRMDTSVER014","URBAN CENTER BOCA DEL RIO","OLIVIA ANAID MORAN GUTIERREZ","SUR",[10,9,10,10,11],[7,6,6,5,6],[8,7,8,8,8],[6,6,7,6,7],[3,4,4,4,5]],
+["PRMDTSVER002","VERACRUZ EL DORADO","OLIVIA ANAID MORAN GUTIERREZ","SUR",[17,17,17,17,20],[11,11,11,11,11],[13,11,14,12,14],[13,13,15,13,14],[2,3,3,3,4]],
+["PRMDTSXAL002","XALAPA LAS ANIMAS","OLIVIA ANAID MORAN GUTIERREZ","SUR",[20,19,22,20,21],[14,13,15,13,15],[10,11,14,11,14],[15,15,16,15,16],[10,10,10,10,13]],
+["PRMDTSXAL001","XALAPA URBANCENTER","OLIVIA ANAID MORAN GUTIERREZ","SUR",[13,12,14,13,13],[10,10,10,9,11],[12,11,12,11,12],[17,17,20,17,21],[2,3,3,3,4]]
+];
+const DIAS_HABILES={27:5,28:7,29:7,30:7,31:5}; // días de julio dentro de cada semana
+function rng(seed){let a=0;for(const c of seed)a=(a*31+c.charCodeAt(0))>>>0;return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+let TIENDAS_DATA=TIENDAS;
+function buildORG(){
+ const wkSum=a=>a.reduce((s,x)=>s+x,0);
+ const porRegion={};
+ for(const t of TIENDAS_DATA){
+   const [cve,nombre,ger,rid,pos,ren,acc,seg,pre]=t;
+   const reg=(porRegion[rid]??={gerentes:{}});
+   const g=(reg.gerentes[ger]??=[]);
+   g.push({id:cve, nombre, nivel:"tienda", hijos:[],
+     cuota:{pospago:pos,renov:ren,acces:acc,seguros:seg,prepago:pre},
+     cuotaJul:wkSum(pos)});
+ }
+ const dirs=REGIONES.map(r=>{
+   if(!r.tacticos) return {...r, nivel:"direccion", hijos:[]};
+   const gs=porRegion[r.id]?porRegion[r.id].gerentes:{};
+   const totalCuota=Object.values(gs).flat().reduce((s,t)=>s+t.cuotaJul,0)||1;
+   const hijos=Object.entries(gs).map(([ger,tiendas],i)=>{
+     tiendas.sort((a,b)=>b.cuotaJul-a.cuotaJul);
+     tiendas.forEach(t=>{t.hc=Math.max(4,Math.round(r.oper*(t.cuotaJul/totalCuota)))});
+     return {id:r.id+"-G"+String(i+1).padStart(2,"0"), nombre:ger, nivel:"gerente",
+       hc:tiendas.reduce((s,t)=>s+t.hc,0), hijos:tiendas};
+   }).sort((a,b)=>a.nombre.localeCompare(b.nombre));
+   return {...r, nivel:"direccion", hijos};
+ });
+ return {...NACIONAL, nivel:"vpgn", hijos:dirs};
+}
+let ORG=buildORG();
+/* ============================================================
+   DATOS CARGADOS EN VIVO (botón "Cargar datos")
+   VENTAS[wk][cve|RID][prod] = unidades reales
+   CAPTURA_SEM[wk] = tácticos región capturados en la cédula
+   ============================================================ */
+let VENTAS={}, CAPTURA_SEM={}, PENDING={v:{},t:{}};
+function resetCache(){_qc={};_vm={};_alc={}}
+/* agregado mixto: lo capturado manda; lo no capturado se rellena con demo
+   solo si DEMO está activo. Devuelve null si no hay NINGUNA captura real
+   en el subárbol (para caer al flujo demo puro). */
+let _vm={};
+function ventaMix(node,prod,wk){
+ const key=node.id+prod+wk+(DEMO?"D":"");
+ if(key in _vm)return _vm[key];
+ let res;
+ const dir=(VENTAS[wk]||{})[node.id];
+ if(dir&&dir[prod]!=null){ res={v:dir[prod],demo:false,caps:1} }
+ else if(node.hijos&&node.hijos.length){
+   let v=0,d=false,caps=0,alguna=false;
+   for(const hh of node.hijos){
+     const r=ventaMix(hh,prod,wk);
+     if(r){v+=r.v;d=d||r.demo;caps+=r.caps;alguna=true}
+   }
+   res=alguna?{v,demo:d,caps}:null;
+ } else if(DEMO&&node.nivel==="tienda"){
+   const q=cuota(node,prod,wk);
+   res=(q!=null&&q>0)?{v:Math.round(q*demoVal(prod,node,wk)),demo:true,caps:0}:null;
+ } else res=null;
+ return _vm[key]=res;
+}
+function nacTac(wk){
+ const S_=CAPTURA_SEM[wk]||{}; const rids=REGIONES.filter(x=>x.tacticos).map(x=>x.id);
+ const out={}; const peso=r=>{const R=REGIONES.find(x=>x.id===r); return ((S_[r]||{}).hcOper||R.oper||1)};
+ const fields=["asist","faltas","capac","entrada","salida","adtAp","adtCi","tko","reinc","google","revneg"];
+ for(const f of fields){
+   const rs=rids.filter(r=>S_[r]&&S_[r][f]!=null);
+   if(rs.length===rids.length){ // consolida solo cuando TODAS las direcciones capturaron
+     const tp=rs.reduce((s,r)=>s+peso(r),0);
+     out[f]=rs.reduce((s,r)=>s+S_[r][f]*peso(r),0)/tp;
+   }
+ }
+ for(const f of ["hcAut","hcOper","prospMeta","prospReal","leadsMeta","leadsReal"]){
+   const rs=rids.filter(r=>S_[r]&&S_[r][f]!=null);
+   if(rs.length===rids.length) out[f]=rs.reduce((s,r)=>s+S_[r][f],0);
+ }
+ return Object.keys(out).length?out:null;
+}
+
+/* cuota agregada de un nodo por producto y semana (suma de tiendas) */
+let _qc={};
+function cuota(node,prod,wk){
+ const key=node.id+prod+wk;
+ if(key in _qc)return _qc[key];
+ let v=null;
+ if(node.cuota){v=node.cuota[prod]?node.cuota[prod][wk-27]:null}
+ else if(node.hijos&&node.hijos.length){
+   v=0; for(const h of node.hijos){const x=cuota(h,prod,wk); if(x!=null)v+=x}
+   if(!node.hijos.some(h=>h.cuota||h.hijos.length))v=null;
+ }
+ return _qc[key]=v;
+}
+const NIVEL_LBL={vpgn:"VPGM · Nacional", direccion:"Dirección", gerente:"Gerente Regional", tienda:"Tienda"};
+
+/* ============================================================
+   MOTOR DE MEDICIÓN
+   - Cumplimiento ↑: Real/Meta · ↓: Meta/Real (regla oficial)
+   - Semáforo: 🟢 ≥100% · 🟡 80–99% · 🔴 <80% · ⚪ sin capturar
+   - Demo: rellena mediciones no capturadas (determinístico)
+   ============================================================ */
+let DEMO=false;
+try{DEMO=localStorage.getItem("cic_demo")==="1"}catch(e){}
+function demoVal(kid,node,wk){
+ const r=rng("d"+kid+node.id+wk);
+ const base={pospago:.93,renov:.9,acces:.97,seguros:.86,arpu:.99,dap:.95,vhc:.94,asist:.94,cobhc:.97,entsal:1.0,faltas:1.15,capac:.95,adt:.99,tko:1.1,reinc:.9,prepago:.97,prosp:1.02,leads:.96,google:.93,revneg:1.2}[kid]||.95;
+ const drift=(wk-27)*0.012, spread=(r()-.42)*.22;
+ return Math.max(.45,Math.min(1.38, base+drift+spread));
+}
+/* medición → {meta,real,cumpl,demo,extra} para un nodo/kpi/semana */
+function medir(kid,node,wk){
+ const k=K[kid]; const esNac=node.nivel==="vpgn"; const esDir=node.nivel==="direccion";
+ const capKey=esNac?"PRIME":node.id;
+ const sinTac=(node.tacticos===false)||((node.id||"").startsWith("COM"));
+ if(k.tipo==="TACTICO" && sinTac) return null;
+ let meta=null, real=null, extra=null, demo=false, abs=false;
+ const MODMAP={pospago:"pospago",renov:"renov",acces:"acces",seguros:"seguros",prepago:"prepago"};
+ if(MODMAP[kid]!==undefined){
+   const q=cuota(node,MODMAP[kid],wk);
+   if(q!=null){
+     if(q<=0){ // cuota de ajuste en la fuente: sin semáforo en este nivel
+       return {k,meta:q,real:null,cumpl:null,demo:false,extra:null,abs:true,ajuste:true};
+     }
+     meta=q; abs=true;
+     const vx=ventaMix(node,MODMAP[kid],wk);
+     if(vx){ real=vx.v; demo=vx.demo; }
+     else if(DEMO){ real=Math.round(q*demoVal(kid,node,wk)); demo=true; }
+   } else if(k.tipo==="NEGOCIO"){
+     meta = (kid in CAPTURA.negocioMeta) ? CAPTURA.negocioMeta[kid] : null; // p. ej. COMISIONISTAS
+   }
+ } else if(kid==="dap"||kid==="vhc"){
+   const q=cuota(node,"pospago",wk);
+   if(q!=null&&q>0){
+     const nT=numTiendas(node), dias=DIAS_HABILES[wk]||7;
+     let hcBase=null;
+     if(kid==="vhc"){
+       const rr=esDir?((CAPTURA_SEM[wk]||{})[capKey]||{}).hcOper:null;
+       const nn2=esNac?(nacTac(wk)||{}).hcOper:null;
+       hcBase=rr||nn2||(DEMO?(node.hc||node.oper):null);
+       if(!hcBase)return {k,meta:null,real:null,cumpl:null,demo:false,extra:null,abs:false};
+     }
+     meta = kid==="dap" ? q/dias/nT : q/hcBase;
+     extra={derivada:true};
+     const vx=ventaMix(node,"pospago",wk);
+     if(vx){ real = kid==="dap" ? vx.v/dias/nT : vx.v/hcBase; demo=vx.demo; }
+   }
+ } else if(k.tipo==="NEGOCIO"){
+   meta = (kid==="arpu"?1:null);
+ } else {
+   const c=CAPTURA.tactico[kid];
+   if(c){
+     meta = (typeof c.meta==="object"&&c.meta!==null) ? (c.meta[capKey]??c.meta.PRIME??null) : c.meta;
+   }
+   if(kid==="entsal")meta=meta??.95;
+   /* captura manual por región (módulo Captura) manda sobre la base */
+   const reg=esDir?(CAPTURA_SEM[wk]||{})[capKey]:null;
+   const nac=esNac?nacTac(wk):null;
+   const src=reg||nac;
+   if(src){
+     const f=src;
+     if(kid==="asist"&&f.asist!=null){real=f.asist;demo=false}
+     if(kid==="faltas"&&f.faltas!=null){real=f.faltas;demo=false}
+     if(kid==="capac"&&f.capac!=null){real=f.capac;demo=false}
+     if(kid==="entsal"&&f.entrada!=null&&f.salida!=null){extra={entrada:f.entrada,salida:f.salida};real=(f.entrada+f.salida)/2;meta=meta??.95;demo=false}
+     if(kid==="adt"&&f.adtAp!=null&&f.adtCi!=null){extra={ap:f.adtAp,ci:f.adtCi};real=(f.adtAp+f.adtCi)/2;demo=false}
+     if(kid==="tko"&&f.tko!=null){real=f.tko;demo=false}
+     if(kid==="reinc"&&f.reinc!=null){real=f.reinc;demo=false}
+     if(kid==="prosp"){if(f.prospMeta!=null)meta=f.prospMeta;if(f.prospReal!=null){real=f.prospReal;demo=false}}
+     if(kid==="leads"){if(f.leadsMeta!=null)meta=f.leadsMeta;if(f.leadsReal!=null){real=f.leadsReal;demo=false}}
+     if(kid==="google"&&f.google!=null){real=f.google;demo=false}
+     if(kid==="revneg"&&f.revneg!=null){real=f.revneg;demo=false}
+   }
+   if(kid==="cobhc"){
+     meta=meta??.97;
+     const f=reg||nac;
+     if(f&&f.hcAut&&f.hcOper){extra={hcAut:f.hcAut,oper:f.hcOper};real=f.hcOper/f.hcAut;demo=false}
+     else if(DEMO&&(node.hcAut||node.hc)){ /* simulación explícita */
+       const aut=node.hcAut||Math.round(node.hc*1.03), op=node.oper||node.hc;
+       extra={hcAut:aut,oper:op,demo:true};real=op/aut;demo=true;
+     }
+   }
+ }
+ /* metas demo para KPIs con meta "Definir por región" (solo en modo demo) */
+ if(meta==null && DEMO && k.dir!=="info"){
+   const share=(node.oper??node.hc??60)/3016;
+   meta={prosp:Math.max(20,Math.round(1200*share)),leads:Math.max(15,Math.round(800*share))}[kid]??1;
+   demo=true;
+ }
+ if(real==null && DEMO && k.dir!=="info"){
+   const m=meta??1;
+   const c=demoVal(kid,node,wk);
+   real = k.dir==="down" ? +(m/c) : +(m*c);
+   if(kid==="google"){real=Math.min(5,real)}
+   demo=true;
+   if(kid==="entsal"&&!extra){extra={entrada:real,salida:real,demo:true}}
+   if(kid==="adt"){extra={ap:Math.min(1,real*1.005),ci:Math.min(1,real*.995),demo:true}}
+ }
+ let cumpl=null;
+ if(meta!=null&&real!=null&&k.dir!=="info"){
+   cumpl = k.dir==="down" ? (real===0?1.5:meta/real) : (meta===0?null:real/meta);
+ }
+ return {k,meta,real,cumpl,demo,extra,abs};
+}
+function color(c){ if(c==null)return"gris"; if(c>=1)return"verde"; if(c>=.8)return"ambar"; return"rojo"; }
+const CVAR={verde:"var(--verde)",ambar:"var(--ambar)",rojo:"var(--rojo)",gris:"var(--gris)"};
+const CTAG={verde:"v",ambar:"a",rojo:"r",gris:"g"};
+function fmtPct(v){return v==null?"—":(v*100).toFixed(v*100>=100?0:1)+"%"}
+function fmtCumpl(c){return c==null?"—":c>2?"≥200%":fmtPct(c)}
+function numTiendas(node){ if(node.nivel==="tienda")return 1; return (node.hijos||[]).reduce((s,h)=>s+numTiendas(h),0)||1 }
+function fmtMR(m,v){ if(v==null)return"—"; if(m.abs)return Math.round(v).toLocaleString("es-MX")+" u"; if(m.k.id==="dap"||m.k.id==="vhc")return (Math.round(v*10)/10).toLocaleString("es-MX"); return fmtVal(m.k,v) }
+function fmtVal(k,v){ if(v==null)return"—"; if(k.fmt==="num1")return v.toFixed(2); if(k.fmt==="num")return Math.round(v).toLocaleString("es-MX"); return fmtPct(v); }
+
+/* ============================================================
+   ESTADO DE NAVEGACIÓN (SPA, sin recargas)
+   ============================================================ */
+function semanaHoy(){
+ const d=new Date(); if(d.getFullYear()!==2026)return 27;
+ const dia=d.getMonth()===6?d.getDate():(d.getMonth()<6?1:31);
+ return dia<=5?27:dia<=12?28:dia<=19?29:dia<=26?30:31;
+}
+function semanaInicial(){
+ try{const s=JSON.parse(localStorage.getItem("cic_wk")||"null");
+   if(s&&s.d===new Date().toDateString()&&s.w>=27&&s.w<=31)return s.w;}catch(e){}
+ return semanaHoy();
+}
+const S={view:"resumen", wk:semanaInicial(), path:[ORG]};   // path: [nacional, dirección?, gerente?, tienda?]
+const $=(q,el=document)=>el.querySelector(q);
+const $$=(q,el=document)=>[...el.querySelectorAll(q)];
+function nodo(){return S.path[S.path.length-1]}
+function irA(node){const i=S.path.indexOf(node); if(i>=0){S.path=S.path.slice(0,i+1)} else {S.path=[...S.path,node]} render()}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+/* agregación: mediciones de un nodo (usa hijos si existen para promediar en demo) */
+function medicionesNodo(node,wk,ids){ return ids.map(id=>medir(id,node,wk)).filter(Boolean); }
+function saludNodo(node,wk){
+ const ms=medicionesNodo(node,wk,[...RANK_IDS,...(node.tacticos===false?[]:TAC_IDS)]);
+ const con=ms.filter(m=>m.cumpl!=null);
+ const v=con.filter(m=>m.cumpl>=1).length, a=con.filter(m=>m.cumpl>=.8&&m.cumpl<1).length, r=con.filter(m=>m.cumpl<.8).length;
+ const sc=ms.length-con.length;
+ const salud=con.length?con.reduce((s,m)=>s+Math.min(m.cumpl,1.15),0)/con.length:null;
+ return {v,a,r,sc,tot:ms.length,salud};
+}
+function cumplProm(node,wk,ids){
+ const ms=medicionesNodo(node,wk,ids).filter(m=>m.cumpl!=null);
+ return ms.length?ms.reduce((s,m)=>s+m.cumpl,0)/ms.length:null;
+}
+/* proyección de cierre: tendencia lineal simple sobre semanas con datos */
+function tendenciaLineal(pts,x){ /* pts:[{w,c}] → valor proyectado en x */
+ if(!pts.length)return null;
+ if(pts.length===1)return pts[0].c;
+ const n=pts.length, sx=pts.reduce((s,p)=>s+p.w,0), sy=pts.reduce((s,p)=>s+p.c,0);
+ const sxy=pts.reduce((s,p)=>s+p.w*p.c,0), sxx=pts.reduce((s,p)=>s+p.w*p.w,0);
+ const m=(n*sxy-sx*sy)/(n*sxx-sx*sx||1), b=(sy-m*sx)/n;
+ return Math.max(0,m*x+b);
+}
+function proyeccion(node){
+ const pts=SEMANAS.map(w=>({w:w.n,c:cumplProm(node,w.n,RANK_IDS)})).filter(p=>p.c!=null);
+ const v=tendenciaLineal(pts,31);
+ return v==null?null:{v,base:pts.length};
+}
+
+/* ============================================================
+   MOTOR DE ALERTAS (reglas del diccionario, sin criterios nuevos)
+   Crítica: KPI de Negocio <80% · Alta: Negocio 80–99% o Táctico <80%
+   Media: Táctico 80–99% · Baja: medición sin capturar
+   ============================================================ */
+let _alc={};
+function alertas(wk){
+ const key=wk+"|"+(DEMO?1:0);
+ if(_alc[key])return _alc[key];
+ const out=[];
+ const scan=(node)=>{
+   const ids=[...NEG_IDS,...(node.tacticos===false?[]:TAC_IDS)];
+   for(const id of ids){
+     const m=medir(id,node,wk); if(!m||m.demo)continue; // el demo nunca genera alertas
+     const c=m.cumpl;
+     if(c==null){ if(node.nivel!=="tienda"&&node.nivel!=="gerente") out.push({sev:"baja",node,m,msg:"Medición sin capturar en la cédula"}); continue; }
+     if(m.k.tipo==="NEGOCIO"&&c<.8) out.push({sev:"critica",node,m,msg:"KPI de Negocio en rojo"});
+     else if(m.k.tipo==="NEGOCIO"&&c<1) out.push({sev:"alta",node,m,msg:"KPI de Negocio en ámbar"});
+     else if(m.k.tipo==="TACTICO"&&c<.8) out.push({sev:"alta",node,m,msg:"KPI táctico en rojo"});
+     else if(m.k.tipo==="TACTICO"&&c<1) out.push({sev:"media",node,m,msg:"KPI táctico en ámbar"});
+   }
+   (node.hijos||[]).forEach(h=>scan(h)); // incluye tiendas: solo capturas reales alertan
+ };
+ scan(ORG);
+ const rank={critica:0,alta:1,media:2,baja:3};
+ return _alc[key]=out.sort((x,y)=>rank[x.sev]-rank[y.sev]||(x.m.cumpl??9)-(y.m.cumpl??9));
+}
+
+/* ============================================================
+   COMPONENTES SVG
+   ============================================================ */
+function ringSVG(pct,col){
+ const R=54,C=2*Math.PI*R,off=C*(1-Math.min(pct??0,1));
+ return `<svg width="128" height="128" viewBox="0 0 128 128">
+  <circle cx="64" cy="64" r="${R}" fill="none" stroke="var(--gris-soft)" stroke-width="11"/>
+  <circle cx="64" cy="64" r="${R}" fill="none" stroke="${col}" stroke-width="11" stroke-linecap="round"
+    stroke-dasharray="${C}" stroke-dashoffset="${off}" style="transition:stroke-dashoffset .7s ease"/></svg>`;
+}
+function spark(vals,w=180,h=26){
+ const xy=(v,i)=>[i/(vals.length-1)*(w-6)+3, h-3-(Math.min(Math.max(v,.5),1.3)-.5)/.8*(h-8)];
+ let d="",prev=false,last=null,nPts=0;
+ vals.forEach((v,i)=>{ if(v==null){prev=false;return} const p=xy(v,i); d+=(prev?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)+" "; prev=true; last=p; nPts++; });
+ if(nPts<2)return `<svg width="${w}" height="${h}"></svg>`;
+ return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none">
+  <path d="${d}" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"/>
+  <line x1="3" x2="${w-3}" y1="${h-3-(.5)/.8*(h-8)}" y2="${h-3-(.5)/.8*(h-8)}" stroke="var(--line2)" stroke-dasharray="3 3" stroke-width="1"/>
+  <circle cx="${last[0]}" cy="${last[1]}" r="3" fill="var(--accent)"/></svg>`;
+}
+function celdaCumpl(m){
+ if(!m)return `<td>—</td>`;
+ if(m.k.dir==="info")return `<td><span class="tag info">Info</span></td>`;
+ const col=color(m.cumpl);
+ if(m.cumpl==null)return `<td><span class="cell"><span class="dotc" style="background:var(--gris)"></span><span style="color:var(--muted2)">s/c</span></span></td>`;
+ return `<td><span class="cell"><span class="barcell"><span class="bartrack"><i style="width:${Math.min(m.cumpl*100,100)}%;background:${CVAR[col]}"></i></span><b class="num" style="color:${CVAR[col]}">${fmtCumpl(m.cumpl)}</b></span>${m.demo?'<span class="demo-badge">demo</span>':""}</span></td>`;
+}
+
+/* ============================================================
+   VISTAS
+   ============================================================ */
+function vResumen(){
+ const n=nodo(), wk=S.wk, st=saludNodo(n,wk), pr=proyeccion(n);
+ const salud=st.salud, col=CVAR[color(salud)];
+ const trend=SEMANAS.map(w=>cumplProm(n,w.n,RANK_IDS));
+ const kcards=NEG_IDS.map(id=>kpiCard(medir(id,n,wk),n)).join("");
+ const hijos=n.hijos&&n.hijos.length?rankingTabla(n):(n.nivel==="tienda"?fichaTienda(n):"");
+ return `
+ <div class="hero">
+   <div class="ring">${ringSVG(salud,col)}<div class="val"><b class="num" style="color:${col}">${salud==null?"—":fmtPct(salud)}</b><span>Salud general</span></div></div>
+   <div>
+     <h1>${esc(n.nombre)} <span style="font-size:12px;color:var(--muted);font-weight:500">· ${NIVEL_LBL[n.nivel]}</span></h1>
+     <div class="sub">Semana ${wk} (${SEMANAS.find(w=>w.n===wk).rango} 2026) · ${st.tot} mediciones KPI evaluadas</div>
+     ${(()=>{const t=Math.max(st.tot,1);const seg=(n,c)=>n?`<i style="width:${(n/t*100).toFixed(1)}%;background:${c}"></i>`:"";
+       return `<div class="dist"><div class="distbar">${seg(st.v,"var(--verde)")}${seg(st.a,"var(--ambar)")}${seg(st.r,"var(--rojo)")}${seg(st.sc,"var(--line2)")}</div>
+       <div class="distleg"><span><span class="dld" style="background:var(--verde)"></span>En meta <b>${st.v}</b></span><span><span class="dld" style="background:var(--ambar)"></span>En riesgo <b>${st.a}</b></span><span><span class="dld" style="background:var(--rojo)"></span>Crítico <b>${st.r}</b></span><span><span class="dld" style="background:var(--line2)"></span>Sin capturar <b>${st.sc}</b></span></div></div>`})()}
+     <div style="margin-top:12px">${spark(trend,260,34)}<div style="font-size:10.5px;color:var(--muted2);margin-top:2px">Tendencia S27 → S31 · cumplimiento promedio de alcances + ARPU (línea punteada = 100%… escala 50–130%)</div></div>
+   </div>
+   <div class="proj">
+     <div class="lbl">Proyección de cierre · Julio</div>
+     <b class="num" style="color:${pr?CVAR[color(pr.v)]:"var(--muted2)"}">${pr?fmtPct(pr.v):"—"}</b>
+     <div class="det">${pr?`Tendencia lineal sobre ${pr.base} semana${pr.base>1?"s":""} con datos`:"Sin semanas capturadas"}</div>
+   </div>
+ </div>
+ <div class="grid-kpi">${kcards}</div>
+ ${hijos}`;
+}
+function kpiCard(m,n){
+ if(!m)return"";
+ const col=color(m.cumpl), sc=m.cumpl==null;
+ const trend=SEMANAS.map(w=>{const x=medir(m.k.id,n,w.n);return x?x.cumpl:null});
+ return `<div class="kcard ${sc?"sinc":""}">
+   <span class="bar" style="background:${CVAR[col]}"></span>
+   <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px">
+     <div class="name">${esc(m.k.kpi)}</div>
+     ${m.k.dir==="info"?'<span class="tag info">Info</span>':m.ajuste?'<span class="tag g">ajuste</span>':`<span class="tag ${CTAG[col]}">${sc?"s/c":col}</span>`}
+   </div>
+   <div class="big num">${m.ajuste?"Cuota de ajuste":sc?"Sin capturar":fmtCumpl(m.cumpl)}${m.demo?'<span class="demo-badge">demo</span>':""}</div>
+   <div class="mr"><span>${m.abs?"Cuota":"Meta"} <b class="num">${fmtMR(m,m.meta)}</b></span><span>Real <b class="num">${fmtMR(m,m.real)}</b></span></div>
+   <div class="spark">${spark(trend,178,26)}</div>
+ </div>`;
+}
+function rankingTabla(n){
+ const wk=S.wk;
+ const filas=n.hijos.map(h=>({h, c:cumplProm(h,wk,RANK_IDS), st:saludNodo(h,wk)}))
+   .sort((a,b)=>(b.c??-1)-(a.c??-1));
+ const lvlHijo=NIVEL_LBL[(n.hijos[0]||{}).nivel]||"";
+ const rows=filas.map((f,i)=>{
+   const mcells=NEG_IDS.map(id=>celdaCumpl(medir(id,f.h,wk))).join("");
+   return `<tr class="click" tabindex="0" role="button" aria-label="Abrir ${esc(f.h.nombre)}" data-go="${f.h.id}">
+     <td><span class="who"><span class="rk ${i===0?"top":""}">${i+1}</span>${esc(f.h.nombre)}${f.h.nivel!=="direccion"?'<span class="demo-badge">demo</span>':""}</span></td>
+     <td><b class="num" style="color:${CVAR[color(f.c)]}">${f.c==null?"—":fmtPct(f.c)}</b></td>
+     ${mcells}
+     <td class="num" style="color:var(--muted)">${f.st.r>0?`<span style="color:var(--rojo);font-weight:700">${f.st.r} 🔴</span>`:"0"}</td>
+   </tr>`;
+ }).join("");
+ return `<div class="sec"><div class="hd"><h2>Ranking · ${esc(lvlHijo)}s</h2><span class="sub">Promedio de alcances + ARPU · clic en cualquier fila para hacer drill down</span></div>
+ <div class="tblwrap"><table><thead><tr><th>${esc(lvlHijo)}</th><th>Prom. Negocio</th>${NEG_IDS.map(id=>`<th>${esc(K[id].kpi.replace(" (vs cuota)",""))}</th>`).join("")}<th>KPIs en rojo</th></tr></thead><tbody>${rows}</tbody></table></div>
+ ${n.nivel!=="vpgn"||true?`<div class="foot-note">🟢 ≥100% · 🟡 80–99% · 🔴 <80% · regla oficial del Diccionario. “s/c” = sin capturar en la cédula.</div>`:""}</div>`;
+}
+function fichaTienda(t){
+ return `<div class="sec"><div class="hd"><h2>Detalle de tienda</h2><span class="sub">HC operando: ${t.hc} · estructura demo hasta conectar la fuente operativa</span></div>
+ <div class="empty"><b>Nivel tienda</b>Los KPIs mostrados arriba corresponden a esta tienda. El histórico diario se habilita al conectar el feed operativo (SO / Checador / CRM).</div></div>`;
+}
+
+function vNegocio(){
+ const n=nodo(), wk=S.wk;
+ const cards=NEG_IDS.map(id=>kpiCard(medir(id,n,wk),n)).join("");
+ const comparativo = n.hijos&&n.hijos.length?rankingTabla(n):"";
+ const hist=`<div class="sec"><div class="hd"><h2>Comparativo histórico · Semanas 27–31</h2><span class="sub">${esc(n.nombre)}</span></div>
+ <div class="tblwrap"><table><thead><tr><th>KPI de Negocio</th>${SEMANAS.map(w=>`<th>S${w.n}</th>`).join("")}<th>Proyección S31</th></tr></thead><tbody>
+ ${NEG_IDS.map(id=>{
+   const cells=SEMANAS.map(w=>celdaCumpl(medir(id,n,w.n))).join("");
+   const pts=SEMANAS.map(w=>({w:w.n,c:(medir(id,n,w.n)||{}).cumpl})).filter(p=>p.c!=null);
+   let proj="—";
+   const pv=tendenciaLineal(pts,31);
+   if(pv!=null)proj=`<b class="num" style="color:${CVAR[color(pv)]}">${fmtCumpl(pv)}</b>`;
+   return `<tr><td style="font-weight:600">${esc(K[id].kpi)}</td>${cells}<td>${proj}</td></tr>`;
+ }).join("")}
+ </tbody></table></div></div>`;
+ return `<div class="grid-kpi">${cards}</div>${comparativo}${hist}`;
+}
+
+function vTacticos(){
+ const n=nodo(), wk=S.wk;
+ if(n.tacticos===false) return `<div class="sec"><div class="empty"><b>${esc(n.nombre)}</b>Este canal participa únicamente en KPIs de Negocio; la cédula no le asigna KPIs tácticos.</div></div>`;
+ const pilares=[...new Set(TAC_IDS.map(id=>K[id].pilar))];
+ const bloques=pilares.map(p=>{
+   const ids=TAC_IDS.filter(id=>K[id].pilar===p);
+   const cards=ids.map(id=>tacCard(medir(id,n,wk),n)).join("");
+   return `<div class="navlbl" style="padding:14px 4px 8px">${esc(p)}</div><div class="grid-kpi" style="margin-bottom:8px">${cards}</div>`;
+ }).join("");
+ const tabla = n.hijos&&n.hijos.length?tacTabla(n):"";
+ return bloques+tabla;
+}
+function tacCard(m,n){
+ if(!m)return"";
+ const col=color(m.cumpl), sc=m.cumpl==null;
+ let extra="";
+ if(m.k.id==="cobhc"&&m.extra)extra=`<div class="mr"><span>HC aut. <b class="num">${m.extra.hcAut.toLocaleString("es-MX")}</b></span><span>Operando <b class="num">${m.extra.oper.toLocaleString("es-MX")}</b></span></div>`;
+ else if(m.k.id==="entsal"&&m.extra)extra=`<div class="mr"><span>Entrada <b class="num">${fmtPct(m.extra.entrada)}</b></span><span>Salida <b class="num">${fmtPct(m.extra.salida)}</b></span></div>`;
+ else if(m.k.id==="adt"&&m.extra&&m.extra.ap!=null)extra=`<div class="mr"><span>Apertura <b class="num">${fmtPct(m.extra.ap)}</b></span><span>Cierre <b class="num">${fmtPct(m.extra.ci)}</b></span></div>`;
+ else extra=`<div class="mr"><span>${m.abs?"Cuota":"Meta"} <b class="num">${fmtMR(m,m.meta)}</b></span><span>Real <b class="num">${fmtMR(m,m.real)}</b></span></div>`;
+ return `<div class="kcard ${sc?"sinc":""}"><span class="bar" style="background:${CVAR[col]}"></span>
+  <div style="display:flex;justify-content:space-between;gap:8px"><div class="name">${esc(m.k.kpi)}</div><span class="tag ${CTAG[col]}">${sc?"s/c":(m.k.dir==="down"?"inv":"")||col}</span></div>
+  <div class="big num" style="font-size:25px">${sc?"Sin capturar":fmtCumpl(m.cumpl)}${m.demo?'<span class="demo-badge">demo</span>':""}</div>${extra}</div>`;
+}
+function tacTabla(n){
+ const wk=S.wk;
+ const hijos=n.hijos.filter(h=>h.tacticos!==false);
+ const lvl=NIVEL_LBL[(hijos[0]||{}).nivel]||"";
+ const rows=hijos.map(h=>{
+   const cells=TAC_IDS.map(id=>celdaCumpl(medir(id,h,wk))).join("");
+   const st=saludNodo(h,wk);
+   return `<tr class="click" tabindex="0" role="button" aria-label="Abrir ${esc(h.nombre)}" data-go="${h.id}"><td><span class="who">${esc(h.nombre)}</span></td>${cells}</tr>`;
+ }).join("");
+ return `<div class="sec" style="margin-top:16px"><div class="hd"><h2>Diagnóstico por ${esc(lvl)}</h2><span class="sub">KPIs tácticos = palancas; explican el “por qué” de un KPI de Negocio en rojo</span></div>
+ <div class="tblwrap"><table><thead><tr><th>${esc(lvl)}</th>${TAC_IDS.map(id=>`<th>${esc(K[id].kpi.split("(")[0].trim())}</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div></div>`;
+}
+
+function vAlertas(){
+ const items=alertas(S.wk);
+ const cnt={critica:0,alta:0,media:0,baja:0}; items.forEach(a=>cnt[a.sev]++);
+ const list=items.slice(0,120).map(a=>`
+  <div class="al"><span class="sev ${a.sev}">${a.sev}</span>
+   <div class="tx"><b>${esc(a.node.nombre)}</b> · ${esc(a.m.k.kpi)}
+    <div class="d">${a.msg} · cumplimiento <b class="num" style="color:${CVAR[color(a.m.cumpl)]}">${a.m.cumpl==null?"s/c":fmtCumpl(a.m.cumpl)}</b>${a.m.demo?' <span class="demo-badge">demo</span>':""} · ${a.m.abs?"Cuota":"Meta"} ${fmtMR(a.m,a.m.meta)} / Real ${fmtMR(a.m,a.m.real)}</div></div>
+   <button class="go" data-goal="${a.node.id}">Ir al nivel →</button></div>`).join("");
+ return `<div class="hero" style="grid-template-columns:1fr">
+   <div><h1>Alertas operativas · Semana ${S.wk}</h1><div class="sub">Detección automática con las reglas oficiales del semáforo · solo datos reales capturados (el modo demo nunca alerta)</div>
+   <div class="chips" style="margin-top:10px">
+    <span class="chip"><i style="background:var(--rojo)"></i>Críticas <b class="num">${cnt.critica}</b></span>
+    <span class="chip"><i style="background:var(--rojo);opacity:.55"></i>Altas <b class="num">${cnt.alta}</b></span>
+    <span class="chip"><i style="background:var(--ambar)"></i>Medias <b class="num">${cnt.media}</b></span>
+    <span class="chip"><i style="background:var(--gris)"></i>Bajas <b class="num">${cnt.baja}</b></span></div></div></div>
+ <div class="sec">${list||'<div class="empty"><b>Sin alertas</b>No hay desviaciones con la información disponible.</div>'}</div>`;
+}
+
+/* ===== Bitácora (Resumen de Acciones) ===== */
+let BITACORA=[];
+try{BITACORA=JSON.parse(localStorage.getItem("cic_bitacora")||"[]")}catch(e){}
+function saveBit(){try{localStorage.setItem("cic_bitacora",JSON.stringify(BITACORA))}catch(e){}}
+function vBitacora(){
+ const cand=alertas(S.wk).filter(a=>(a.sev==="critica"||a.sev==="alta")&&a.m.k.tipo==="NEGOCIO"&&a.node.nivel==="direccion").slice(0,10);
+ const regs=BITACORA.map((b,i)=>`<tr><td class="num">S${b.sem}</td><td style="text-align:left">${esc(b.region)}</td><td style="text-align:left">${esc(b.kpi)}</td><td class="num">${esc(b.rvm)}</td><td style="text-align:left;white-space:normal;max-width:220px">${esc(b.causa)}</td><td style="text-align:left;white-space:normal;max-width:220px">${esc(b.accion)}</td><td style="text-align:left">${esc(b.resp)}</td><td class="num">${esc(b.fecha)}</td><td><span class="est ${b.est==="En proceso"?"Proceso":b.est}">${esc(b.est)}</span></td><td><button class="go" data-del="${i}" style="color:var(--rojo)">✕</button></td></tr>`).join("");
+ const opciones=REGIONES.map(r=>`<option>${r.nombre}</option>`).join("")+"<option>PRIME</option>";
+ const okpi=NEG_IDS.concat(TAC_IDS).map(id=>`<option>${K[id].kpi}</option>`).join("");
+ return `<div class="hero" style="grid-template-columns:1fr"><div><h1>Bitácora de acciones · Cierre de hallazgos</h1>
+  <div class="sub">Regla de la cédula: todo KPI de Negocio que cierre la semana en 🟡 o 🔴 debe generar un registro con causa raíz, acción, responsable y fecha compromiso. Sin esto, el semáforo es diagnóstico, no gestión.</div>
+  ${cand.length?`<div class="chips" style="margin-top:10px"><span class="chip"><i style="background:var(--rojo)"></i>Pendientes de registrar esta semana <b class="num">${cand.length}</b></span></div>`:""}</div></div>
+ <div class="sec"><div class="hd"><h2>Nuevo registro · Semana ${S.wk}</h2><div class="sp"></div><button class="btn ghost" id="csvBtn">Exportar CSV</button></div>
+  <div class="bit-form">
+   <div><label>Región</label><select id="bRegion">${opciones}</select></div>
+   <div><label>KPI en rojo/ámbar</label><select id="bKpi">${okpi}</select></div>
+   <div><label>Real vs Meta</label><input id="bRvm" placeholder="p. ej. 72% vs 100%"></div>
+   <div><label>Fecha compromiso</label><input id="bFecha" type="date"></div>
+   <div class="full"><label>Causa raíz</label><input id="bCausa" placeholder="¿Por qué ocurrió?"></div>
+   <div class="full"><label>Acción</label><input id="bAccion" placeholder="Acción concreta de corrección"></div>
+   <div><label>Responsable</label><input id="bResp"></div>
+   <div><label>Estatus</label><select id="bEst"><option>Abierto</option><option>En proceso</option><option>Cerrado</option></select></div>
+   <div style="align-self:end"><button class="btn" id="bAdd">Registrar hallazgo</button></div>
+  </div>
+  <div class="tblwrap"><table><thead><tr><th>Semana</th><th style="text-align:left">Región</th><th style="text-align:left">KPI</th><th>Real vs Meta</th><th style="text-align:left">Causa raíz</th><th style="text-align:left">Acción</th><th style="text-align:left">Responsable</th><th>Compromiso</th><th>Estatus</th><th></th></tr></thead>
+  <tbody>${regs||'<tr><td colspan="10" class="empty" style="text-align:center">Sin registros aún — captura el primer hallazgo de la semana.</td></tr>'}</tbody></table></div></div>`;
+}
+
+/* ===== Captura de resultados (regionales y directores) ===== */
+let MI_ROL={dir:"",ger:""};
+try{MI_ROL=JSON.parse(localStorage.getItem("cic_rol")||'{"dir":"","ger":""}')}catch(e){}
+function saveDatos(){
+ try{localStorage.setItem("cic_datos",JSON.stringify({v:VENTAS,c:CAPTURA_SEM,p:PENDING}))}catch(e){}
+}
+function loadDatos(){
+ try{const d=JSON.parse(localStorage.getItem("cic_datos")||"null"); if(d){VENTAS=d.v||{};CAPTURA_SEM=d.c||{};PENDING=d.p||{v:{},t:{}}}}catch(e){}
+}
+const PRODS=[["pospago","Pospago"],["renov","Renovaciones"],["acces","Accesorios"],["seguros","Seguros"],["prepago","Prepago"]];
+function pctCapturaVentas(wk){
+ let cap=0,tot=0;
+ for(const t of TIENDAS_DATA){tot++; const v=(VENTAS[wk]||{})[t[0]]; if(v&&Object.values(v).some(x=>x!=null))cap++}
+ return {cap,tot};
+}
+function vCaptura(){
+ const wk=S.wk;
+ const bloqueado=USUARIO&&!USUARIO.admin;
+ const dirs=ORG.hijos.filter(d=>d.hijos.length&&(!bloqueado||d.id===USUARIO.rid));
+ const dirSel=dirs.find(d=>d.id===MI_ROL.dir)||null;
+ const gers=dirSel?dirSel.hijos.filter(g=>!bloqueado||!USUARIO.ger||g.id===USUARIO.ger):[];
+ const gerSel=gers.find(g=>g.id===MI_ROL.ger)||null;
+ const soloGer=bloqueado&&!!USUARIO.ger; /* gerente: no captura tácticos */
+ const pc=pctCapturaVentas(wk);
+ const reg=dirSel?((CAPTURA_SEM[wk]||{})[dirSel.id]||{}):{};
+ const gv=(f,mult)=>reg[f]!=null?String(+(reg[f]*(mult||1)).toFixed(2)):"";
+ /* grid de ventas por tienda del gerente */
+ let grid="";
+ if(gerSel){
+   const rows=gerSel.hijos.map(t=>{
+     const v=(VENTAS[wk]||{})[t.id]||{};
+     const cells=PRODS.map(([p])=>{
+       const q=t.cuota[p]?t.cuota[p][wk-27]:null;
+       return `<td><input type="number" min="0" step="1" class="vin num" data-cve="${t.id}" data-prod="${p}" value="${v[p]??""}" placeholder="${q==null?"—":"cuota "+q}" style="width:92px;text-align:right"></td>`;
+     }).join("");
+     return `<tr><td style="font-weight:600">${esc(t.nombre)}</td>${cells}</tr>`;
+   }).join("");
+   grid=`<div class="sec"><div class="hd"><h2>Ventas por tienda · ${esc(gerSel.nombre)} · Semana ${wk}</h2><div class="sp"></div><button class="btn" id="capVentasBtn">Guardar ventas</button></div>
+   <div class="tblwrap"><table><thead><tr><th>Tienda</th>${PRODS.map(([,n])=>`<th>${n} (u)</th>`).join("")}</tr></thead><tbody>${rows}</tbody></table></div>
+   <div class="foot-note">Captura unidades reales de la semana. El placeholder muestra la cuota oficial de esa tienda. Deja vacío lo no disponible; el % de alcance y el semáforo se calculan solos en todos los niveles.</div></div>`;
+ }
+ /* tácticos de la dirección */
+ const tacForm = (dirSel&&!soloGer)?`<div class="sec"><div class="hd"><h2>KPIs tácticos · ${esc(dirSel.nombre)} · Semana ${wk}</h2><div class="sp"></div><button class="btn" id="capTacBtn">Guardar tácticos</button></div>
+  <div class="bit-form" style="grid-template-columns:repeat(4,1fr)">
+   <div><label>% Asistencia (real)</label><input id="tAsist" type="number" step="0.1" min="0" max="100" value="${gv("asist",100)}" placeholder="%"></div>
+   <div><label>HC autorizado</label><input id="tHcAut" type="number" min="0" value="${reg.hcAut??""}" placeholder="plantilla autorizada"></div>
+   <div><label>HC operando</label><input id="tHcOper" type="number" min="0" value="${reg.hcOper??""}" placeholder="personal activo"></div>
+   <div><label>% Faltas (real)</label><input id="tFaltas" type="number" step="0.1" min="0" max="100" value="${gv("faltas",100)}" placeholder="%"></div>
+   <div><label>% Entrada a tiempo</label><input id="tEnt" type="number" step="0.1" min="0" max="100" value="${gv("entrada",100)}" placeholder="%"></div>
+   <div><label>% Salida a tiempo</label><input id="tSal" type="number" step="0.1" min="0" max="100" value="${gv("salida",100)}" placeholder="%"></div>
+   <div><label>% Avance capacitación</label><input id="tCapac" type="number" step="0.1" min="0" max="100" value="${gv("capac",100)}" placeholder="%"></div>
+   <div><label>% Apertura a tiempo</label><input id="tAp" type="number" step="0.1" min="0" max="100" value="${gv("adtAp",100)}" placeholder="%"></div>
+   <div><label>% Cierre a tiempo</label><input id="tCi" type="number" step="0.1" min="0" max="100" value="${gv("adtCi",100)}" placeholder="%"></div>
+   <div><label>% Tiendas KO</label><input id="tTko" type="number" step="0.1" min="0" max="100" value="${gv("tko",100)}" placeholder="%"></div>
+   <div><label>% Reincidentes</label><input id="tReinc" type="number" step="0.1" min="0" max="100" value="${gv("reinc",100)}" placeholder="%"></div>
+   <div><label>Calificación Google</label><input id="tGoogle" type="number" step="0.01" min="0" max="5" value="${reg.google??""}" placeholder="0–5"></div>
+   <div><label>% Reviews negativos</label><input id="tRevneg" type="number" step="0.1" min="0" max="100" value="${gv("revneg",100)}" placeholder="%"></div>
+   <div><label>Prospectos · meta</label><input id="tProspM" type="number" min="0" value="${reg.prospMeta??""}"></div>
+   <div><label>Prospectos · real</label><input id="tProspR" type="number" min="0" value="${reg.prospReal??""}"></div>
+   <div><label>Leads · meta</label><input id="tLeadsM" type="number" min="0" value="${reg.leadsMeta??""}"></div>
+   <div><label>Leads · real</label><input id="tLeadsR" type="number" min="0" value="${reg.leadsReal??""}"></div>
+  </div>
+  <div class="foot-note">Nivel dirección regional (así lo pide la cédula). Los porcentajes se capturan de 0 a 100. Al guardar, PRIME se consolida automáticamente cuando las 6 direcciones han capturado.</div></div>`:"";
+ return `<div class="hero" style="grid-template-columns:1fr">
+  <div><h1>Captura de resultados</h1>
+   <div class="sub">Cada gerente regional captura las ventas de sus tiendas; cada director captura los tácticos de su dirección. Todo alimenta el mismo semáforo oficial al instante.</div>
+   <div class="chips" style="margin-top:12px">
+    <span class="chip">Tiendas con venta capturada S${wk} <b class="num">${pc.cap}/${pc.tot}</b></span>
+    <span class="chip"><i style="background:${Object.keys(CAPTURA_SEM[wk]||{}).length?"var(--verde)":"var(--gris)"}"></i>Direcciones con tácticos S${wk} <b class="num">${Object.keys(CAPTURA_SEM[wk]||{}).filter(r=>REGIONES.some(x=>x.id===r)).length}/6</b></span>
+   </div></div></div>
+ <div class="sec"><div class="hd"><h2>¿Quién captura?</h2><span class="sub">La selección se recuerda en este equipo</span><div class="sp"></div>
+   <span class="chip"><i style="background:${SYNC.on?"var(--verde)":"var(--gris)"}"></i><span id="syncState">${syncStatusTxt()}</span></span></div>
+  <div class="bit-form" style="grid-template-columns:1fr 1fr">
+   <div><label>Dirección regional</label><select id="rolDir" ${bloqueado?"disabled":""}><option value="">— Selecciona —</option>${dirs.map(d=>`<option value="${d.id}" ${d.id===MI_ROL.dir?"selected":""}>${esc(d.nombre)}</option>`).join("")}</select></div>
+   <div><label>Gerente regional (para capturar ventas)</label><select id="rolGer" ${(dirSel&&!soloGer)?"":"disabled"}><option value="">— Toda la dirección / solo tácticos —</option>${gers.map(g=>`<option value="${g.id}" ${g.id===MI_ROL.ger?"selected":""}>${esc(g.nombre)}</option>`).join("")}</select></div>
+  </div></div>
+ ${grid}${tacForm}
+ <div class="sec"><div class="foot-note" style="border-top:none">Al presionar <b>Guardar</b>, la captura se sube automáticamente a la base central y todos los niveles la ven al instante desde cualquier dispositivo. Si no hay conexión central configurada, la captura se conserva localmente en este navegador y se indica arriba como "Modo local".</div></div>`;
+}
+/* ============================================================
+   RENDER + EVENTOS
+   ============================================================ */
+function findNode(id,node=ORG){ if(node.id===id)return node; for(const h of node.hijos||[]){const f=findNode(id,h); if(f)return f} return null }
+function pathTo(id){ const p=[]; const walk=(node,acc)=>{ const na=[...acc,node]; if(node.id===id){p.push(...na);return true} return (node.hijos||[]).some(h=>walk(h,na)) }; walk(ORG,[]); return p.length?p:[ORG]; }
+
+function renderCrumbs(){
+ const el=$("#crumbs");
+ el.innerHTML=S.path.map((n,i)=>{
+   const here=i===S.path.length-1;
+   return `${i?'<span class="crumb-sep"></span>':""}<button class="crumb ${here?"here":""}" data-crumb="${i}"><span class="lvl">${NIVEL_LBL[n.nivel].split(" ")[0]}</span>${esc(n.nombre)}</button>`;
+ }).join("");
+}
+function render(){
+ renderCrumbs();
+ $$(".navbtn").forEach(b=>b.classList.toggle("on",b.dataset.view===S.view));
+ const V={resumen:vResumen,negocio:vNegocio,tacticos:vTacticos,alertas:vAlertas,captura:vCaptura,bitacora:vBitacora};
+ $("#content").innerHTML=V[S.view]();
+ const nA=alertas(S.wk).filter(a=>a.sev==="critica").length;
+ const pill=$("#alertN"); pill.textContent=nA; pill.style.display=nA?"":"none";
+ $("#demoBtn").classList.toggle("on",DEMO);
+ window.scrollTo({top:0});
+}
+/* delegación de eventos */
+document.addEventListener("keydown",e=>{
+ if(e.key==="Enter"&&e.target.id==="lPass"){const b=$("#lGo");if(b)b.click();return}
+ if(e.key==="Enter"||e.key===" "){
+   const tr=e.target.closest&&e.target.closest("tr.click");
+   if(tr){e.preventDefault(); tr.click()}
+ }
+});
+document.addEventListener("change",e=>{
+ if(e.target.id==="rolDir"){MI_ROL.dir=e.target.value;MI_ROL.ger="";try{localStorage.setItem("cic_rol",JSON.stringify(MI_ROL))}catch(x){}render();return}
+ if(e.target.id==="rolGer"){MI_ROL.ger=e.target.value;try{localStorage.setItem("cic_rol",JSON.stringify(MI_ROL))}catch(x){}render();return}
+});
+document.addEventListener("click",e=>{
+ const nav=e.target.closest(".navbtn"); if(nav){S.view=nav.dataset.view; render(); closeSide(); return}
+ const cr=e.target.closest(".crumb"); if(cr){S.path=S.path.slice(0,+cr.dataset.crumb+1); render(); return}
+ const tr=e.target.closest("tr.click"); if(tr){const n=findNode(tr.dataset.go); if(n){S.path=pathTo(n.id); if(S.view==="alertas"||S.view==="bitacora")S.view="resumen"; render()} return}
+ const go=e.target.closest("[data-goal]"); if(go){S.path=pathTo(go.dataset.goal); S.view="resumen"; render(); return}
+ const del=e.target.closest("[data-del]"); if(del){const r=BITACORA[+del.dataset.del]; if(r&&r.id&&SYNC.on){pushBitDel(r.id)} else {BITACORA.splice(+del.dataset.del,1); saveBit()} render(); return}
+ if(e.target.closest("#bAdd")){
+   const b={sem:S.wk,region:$("#bRegion").value,kpi:$("#bKpi").value,rvm:$("#bRvm").value||"—",causa:$("#bCausa").value||"—",accion:$("#bAccion").value||"—",resp:$("#bResp").value||"—",fecha:$("#bFecha").value||"—",est:$("#bEst").value};
+   if(b.causa==="—"||b.accion==="—"){notifica("Causa raíz y acción son obligatorias para registrar el hallazgo","warn");return}
+   b.id=pushBitAdd(b)||("loc_"+Date.now());
+   if(!SYNC.on){BITACORA.unshift(b); saveBit();} /* con central, el snapshot la trae */
+   render(); return;
+ }
+ if(e.target.closest("#csvBtn")){
+   const head="Semana,Región,KPI,Real vs Meta,Causa raíz,Acción,Responsable,Fecha compromiso,Estatus";
+   const csv=[head,...BITACORA.map(b=>[b.sem,b.region,b.kpi,b.rvm,b.causa,b.accion,b.resp,b.fecha,b.est].map(x=>`"${String(x).replace(/"/g,'""')}"`).join(","))].join("\n");
+   const a=document.createElement("a"); a.href=URL.createObjectURL(new Blob(["\ufeff"+csv],{type:"text/csv"})); a.download="bitacora_acciones_julio26.csv"; a.click(); return;
+ }
+ if(e.target.closest("#capVentasBtn")){
+   const wk=S.wk; VENTAS[wk]=VENTAS[wk]||{};
+   const tocadas={}, sospechosas=[];
+   $$(".vin").forEach(inp=>{
+     const cve=inp.dataset.cve, p=inp.dataset.prod, raw=inp.value.trim();
+     VENTAS[wk][cve]=VENTAS[wk][cve]||{};
+     if(raw===""){delete VENTAS[wk][cve][p]}
+     else {
+       const n=Math.round(+raw);
+       if(!isNaN(n)&&n>=0){
+         VENTAS[wk][cve][p]=Math.min(n,99999);
+         const t=TIENDAS_DATA.find(x=>x[0]===cve);
+         const q=t?t[4+PRODS_KEYS.indexOf(p)][wk-27]:null;
+         if(q>0&&n>q*3)sospechosas.push((t?t[1]:cve)+" · "+p+" ("+n+" vs cuota "+q+")");
+       }
+     }
+     if(!Object.keys(VENTAS[wk][cve]).length)delete VENTAS[wk][cve];
+     tocadas[cve]=VENTAS[wk][cve]||null;
+   });
+   if(sospechosas.length)notifica("Revisa: venta mayor a 3× la cuota en "+sospechosas.slice(0,3).join("; ")+(sospechosas.length>3?" y más…":""),"warn");
+   pushVentas(wk,tocadas);
+   saveDatos();resetCache();render();return;
+ }
+ if(e.target.closest("#capTacBtn")){
+   const wk=S.wk, rid=MI_ROL.dir; if(!rid)return;
+   const P=id=>{const v=$("#"+id).value.trim(); if(v==="")return null; const n=+v; return isNaN(n)?null:Math.max(0,n)};
+   const pc=id=>{const v=P(id); return v==null?null:Math.min(v,100)/100};
+   const o={asist:pc("tAsist"),hcAut:P("tHcAut"),hcOper:P("tHcOper"),faltas:pc("tFaltas"),entrada:pc("tEnt"),salida:pc("tSal"),capac:pc("tCapac"),adtAp:pc("tAp"),adtCi:pc("tCi"),tko:pc("tTko"),reinc:pc("tReinc"),google:(()=>{const g=P("tGoogle");return g==null?null:Math.min(g,5)})(),revneg:pc("tRevneg"),prospMeta:P("tProspM"),prospReal:P("tProspR"),leadsMeta:P("tLeadsM"),leadsReal:P("tLeadsR")};
+   for(const k2 in o)if(o[k2]==null)delete o[k2];
+   CAPTURA_SEM[wk]=CAPTURA_SEM[wk]||{};
+   if(Object.keys(o).length)CAPTURA_SEM[wk][rid]=o; else delete CAPTURA_SEM[wk][rid];
+   pushTac(wk,rid,Object.keys(o).length?o:null);
+   saveDatos();resetCache();render();return;
+ }
+ if(e.target.closest("#lGo")){
+   const em=$("#lEmail").value.trim(), pw=$("#lPass").value;
+   if(!em||!pw){$("#lErr").textContent="Escribe correo y contraseña.";return}
+   $("#lErr").textContent="";
+   firebase.auth().signInWithEmailAndPassword(em,pw).catch(e=>{
+     $("#lErr").textContent=({"auth/invalid-credential":"Correo o contraseña incorrectos.","auth/user-not-found":"Correo o contraseña incorrectos.","auth/wrong-password":"Correo o contraseña incorrectos.","auth/too-many-requests":"Demasiados intentos. Espera unos minutos."})[e.code]||"No se pudo iniciar sesión.";
+   });
+   return;
+ }
+ if(e.target.closest("#suSalir")){ firebase.auth().signOut(); $("#sideUser").style.display="none"; return }
+ if(e.target.closest("#demoBtn")){DEMO=!DEMO; try{localStorage.setItem("cic_demo",DEMO?"1":"0")}catch(x){} resetCache(); render(); return}
+ if(e.target.closest("#themeBtn")){
+   const t=document.documentElement.dataset.theme==="dark"?"light":"dark";
+   document.documentElement.dataset.theme=t; try{localStorage.setItem("cic_theme",t)}catch(x){} return;
+ }
+ if(e.target.closest("#menuBtn")){$("#side").classList.add("open");$("#scrim").classList.add("on");return}
+ if(e.target.closest("#scrim")){closeSide();return}
+});
+function closeSide(){$("#side").classList.remove("open");$("#scrim").classList.remove("on")}
+
+/* selector de semana */
+(function(){
+ const el=$("#wksel");
+ el.innerHTML=SEMANAS.map(w=>`<button data-wk="${w.n}" title="${w.rango}">S${w.n}</button>`).join("");
+ el.addEventListener("click",e=>{const b=e.target.closest("[data-wk]"); if(b){S.wk=+b.dataset.wk; try{localStorage.setItem("cic_wk",JSON.stringify({w:S.wk,d:new Date().toDateString()}))}catch(x){} $$("#wksel button").forEach(x=>x.classList.toggle("on",x===b)); if(SYNC.on)syncSubscribe(S.wk); render()}});
+ el.querySelector('[data-wk="'+S.wk+'"]').classList.add("on");
+})();
+
+/* reloj + estado de sincronización en vivo */
+const T0=new Date();
+function tick(){
+ const now=new Date();
+ $("#clock").textContent=now.toLocaleTimeString("es-MX",{hour:"2-digit",minute:"2-digit",second:"2-digit"});
+ const mins=Math.floor((now-T0)/60000);
+ $("#lastSync").textContent=mins<1?"hace unos segundos":`hace ${mins} min`;
+}
+setInterval(tick,1000); tick();
+setInterval(()=>{const lb=$("#liveBadge"); if(lb){lb.innerHTML='<span class="dot"></span>'+(SYNC.on?"EN VIVO · CENTRAL":FIREBASE_CONFIG?"CONECTANDO…":"LOCAL"); lb.style.color=SYNC.on?"":"var(--muted)"; lb.style.background=SYNC.on?"":"var(--gris-soft)"; const d=lb.querySelector(".dot"); if(d&&!SYNC.on){d.style.background="var(--gris)";d.style.animation="none"}}},1500);
+
+/* Adaptador de datos en vivo: punto de conexión para WebSocket/API.
+   Al integrar el backend (NestJS + WS), basta con emitir:
+   window.DataAdapter.push({captura}) para refrescar sin recargar. */
+window.DataAdapter={
+ push(nuevaCaptura){ Object.assign(CAPTURA, nuevaCaptura||{}); T0.setTime(Date.now()); render(); },
+ estado:()=>({semana:S.wk, nivel:nodo().nivel, demo:DEMO})
+};
+
+/* ============================================================
+   SINCRONIZACIÓN CENTRAL
+   "Guardar" escribe directo a Firestore; todos los dispositivos
+   reciben los cambios al instante (onSnapshot). Sin conexión o
+   sin configurar, todo sigue funcionando local.
+   ============================================================ */
+const SYNC={on:false, db:null, subs:[], subBit:null, wk:null, err:null};
+const PRODS_KEYS=["pospago","renov","acces","seguros","prepago"];
+const TAC_FIELDS=["asist","hcAut","hcOper","faltas","entrada","salida","capac","adtAp","adtCi","tko","reinc","google","revneg","prospMeta","prospReal","leadsMeta","leadsReal"];
+function sanNum(x,max){const n=Number(x);return Number.isFinite(n)&&n>=0&&n<=(max??1e6)?n:null}
+function sanVentas(d){const o={};for(const p of PRODS_KEYS){const n=sanNum(d[p],1e5);if(n!=null)o[p]=n}return o}
+function sanTac(d){const o={};for(const f of TAC_FIELDS){const n=sanNum(d[f],f==="google"?5:1e6);if(n!=null)o[f]=n}return o}
+function sanBit(d){return {sem:sanNum(d.sem,99)??"—",region:String(d.region??"—").slice(0,60),kpi:String(d.kpi??"—").slice(0,80),rvm:String(d.rvm??"—").slice(0,60),causa:String(d.causa??"—").slice(0,600),accion:String(d.accion??"—").slice(0,600),resp:String(d.resp??"—").slice(0,80),fecha:String(d.fecha??"—").slice(0,20),est:["Abierto","En proceso","Cerrado"].includes(d.est)?d.est:"Abierto",ts:sanNum(d.ts)??0}}
+function syncStatusTxt(){ return SYNC.on?"Central conectada":FIREBASE_CONFIG?(SYNC.err?"Sin conexión con la central":"Conectando…"):"Modo local (sin central)" }
+function loadScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+async function syncInit(){
+ if(!FIREBASE_CONFIG)return;
+ setTimeout(()=>{if(!SYNC.on){SYNC.err=SYNC.err||new Error("timeout");tickSync()}},15000);
+ try{
+   const v="10.12.2";
+   await loadScript("https://www.gstatic.com/firebasejs/"+v+"/firebase-app-compat.js");
+   await loadScript("https://www.gstatic.com/firebasejs/"+v+"/firebase-auth-compat.js");
+   await loadScript("https://www.gstatic.com/firebasejs/"+v+"/firebase-firestore-compat.js");
+   firebase.initializeApp(FIREBASE_CONFIG);
+   SYNC.db=firebase.firestore();
+   if(REQUIERE_LOGIN){
+     firebase.auth().onAuthStateChanged(async u=>{
+       if(!u||u.isAnonymous){
+         USUARIO=null; SYNC.on=false;
+         SYNC.subs.forEach(fn=>fn()); SYNC.subs=[]; if(SYNC.subBit){SYNC.subBit();SYNC.subBit=null}
+         $("#login").classList.add("on"); tickSync(); return;
+       }
+       try{
+         const doc=await SYNC.db.collection("usuarios").doc(u.uid).get();
+         if(!doc.exists){ $("#lErr").textContent="Usuario sin rol asignado. Contacta al administrador."; await firebase.auth().signOut(); return; }
+         const d=doc.data();
+         USUARIO={nombre:String(d.nombre||u.email),rid:d.rid||null,ger:d.ger||null,admin:d.admin===true};
+         $("#login").classList.remove("on");
+         const su=$("#sideUser"); if(su){su.style.display="flex"; $("#suNombre").textContent=USUARIO.nombre}
+         SYNC.on=true; SYNC.err=null; aplicarRol();
+         flushPending(); syncSubscribe(S.wk); syncSubBitacora(); tickSync(); render();
+       }catch(e){ $("#lErr").textContent="No se pudo cargar tu perfil. Intenta de nuevo."; }
+     });
+   } else {
+     try{await firebase.auth().signInAnonymously()}catch(e){/* si Anonymous no está habilitado, intenta directo */}
+     SYNC.on=true; SYNC.err=null;
+     flushPending(); /* sube lo capturado sin conexión antes de suscribir */
+     syncSubscribe(S.wk); syncSubBitacora();
+     tickSync();
+   }
+ }catch(e){ SYNC.err=e; SYNC.on=false; tickSync(); }
+}
+let USUARIO=null; /* {nombre,rid,ger,admin} cuando REQUIERE_LOGIN */
+function aplicarRol(){
+ if(!USUARIO)return;
+ if(!USUARIO.admin){ MI_ROL.dir=USUARIO.rid||""; MI_ROL.ger=USUARIO.ger||""; try{localStorage.setItem("cic_rol",JSON.stringify(MI_ROL))}catch(e){} }
+}
+function syncSubscribe(wk){
+ if(!SYNC.on)return;
+ SYNC.subs.forEach(u=>u()); SYNC.subs=[]; SYNC.wk=wk;
+ const base=SYNC.db.collection(SYNC_ROOT).doc("s"+wk);
+ SYNC.subs.push(base.collection("ventas").onSnapshot(qs=>{
+   const w={}; qs.forEach(d=>{const v=sanVentas(d.data()); if(Object.keys(v).length)w[d.id]=v});
+   VENTAS[wk]=w; saveDatos(); resetCache(); T0.setTime(Date.now());
+   if(["resumen","negocio","tacticos","alertas"].includes(S.view))renderSoon(); else tickSync();
+ },e=>{SYNC.err=e}));
+ SYNC.subs.push(base.collection("tacticos").onSnapshot(qs=>{
+   const w={}; qs.forEach(d=>{const t=sanTac(d.data()); if(Object.keys(t).length)w[d.id]=t});
+   CAPTURA_SEM[wk]=w; saveDatos(); resetCache(); T0.setTime(Date.now());
+   if(["resumen","negocio","tacticos","alertas"].includes(S.view))renderSoon(); else tickSync();
+ },e=>{SYNC.err=e}));
+}
+function syncSubBitacora(){
+ if(!SYNC.on)return;
+ if(SYNC.subBit)SYNC.subBit();
+ SYNC.subBit=SYNC.db.collection(SYNC_ROOT).doc("meta").collection("bitacora").orderBy("ts","desc").onSnapshot(qs=>{
+   BITACORA=[]; qs.forEach(d=>BITACORA.push({id:d.id,...sanBit(d.data())}));
+   try{localStorage.setItem("cic_bitacora",JSON.stringify(BITACORA))}catch(e){}
+   if(S.view==="bitacora")renderSoon();
+ },e=>{});
+}
+function pushVentas(wk,cambios){ /* cambios: {cve: obj|null} */
+ if(!SYNC.on){
+   PENDING.v[wk]=PENDING.v[wk]||{}; for(const cve in cambios)PENDING.v[wk][cve]=1;
+   saveDatos(); notifica("Guardado local ✓ · se subirá al conectar la central","warn"); return;
+ }
+ const b=SYNC.db.batch(); const col=SYNC.db.collection(SYNC_ROOT).doc("s"+wk).collection("ventas");
+ for(const cve in cambios){ const v=cambios[cve]; v?b.set(col.doc(cve),v):b.delete(col.doc(cve)) }
+ b.commit().then(()=>{
+   if(PENDING.v[wk]){for(const cve in cambios)delete PENDING.v[wk][cve]; saveDatos()}
+   notifica("Sincronizado con la central ✓","ok");
+ }).catch(e=>{
+   SYNC.err=e; PENDING.v[wk]=PENDING.v[wk]||{}; for(const cve in cambios)PENDING.v[wk][cve]=1; saveDatos();
+   notifica("No se pudo subir a la central — guardado local, se reintenta al reconectar","err"); tickSync();
+ });
+}
+function pushTac(wk,rid,obj){
+ if(!SYNC.on){
+   PENDING.t[wk]=PENDING.t[wk]||{}; PENDING.t[wk][rid]=1;
+   saveDatos(); notifica("Guardado local ✓ · se subirá al conectar la central","warn"); return;
+ }
+ const ref=SYNC.db.collection(SYNC_ROOT).doc("s"+wk).collection("tacticos").doc(rid);
+ (obj?ref.set(obj):ref.delete()).then(()=>{
+   if(PENDING.t[wk])delete PENDING.t[wk][rid]; saveDatos();
+   notifica("Sincronizado con la central ✓","ok");
+ }).catch(e=>{
+   SYNC.err=e; PENDING.t[wk]=PENDING.t[wk]||{}; PENDING.t[wk][rid]=1; saveDatos();
+   notifica("No se pudo subir a la central — guardado local, se reintenta al reconectar","err"); tickSync();
+ });
+}
+function flushPending(){
+ for(const wk in PENDING.v){
+   const cves=Object.keys(PENDING.v[wk]); if(!cves.length)continue;
+   const cambios={}; cves.forEach(cve=>{cambios[cve]=(VENTAS[wk]||{})[cve]||null});
+   pushVentas(+wk,cambios);
+ }
+ for(const wk in PENDING.t){
+   for(const rid in PENDING.t[wk])pushTac(+wk,rid,((CAPTURA_SEM[wk]||{})[rid])||null);
+ }
+}
+function pushBitAdd(b){ if(!SYNC.on)return null; const ref=SYNC.db.collection(SYNC_ROOT).doc("meta").collection("bitacora").doc(); ref.set({...b,ts:Date.now()}).catch(()=>{}); return ref.id }
+function pushBitDel(id){ if(SYNC.on&&id)SYNC.db.collection(SYNC_ROOT).doc("meta").collection("bitacora").doc(id).delete().catch(()=>{}) }
+function notifica(msg,tipo){
+ const c=$("#toasts"); if(!c)return;
+ const t=document.createElement("div"); t.className="toast "+(tipo||""); t.textContent=msg;
+ c.appendChild(t); setTimeout(()=>{t.style.opacity="0";t.style.transition="opacity .3s";setTimeout(()=>t.remove(),320)},3800);
+}
+function editando(){const a=document.activeElement;return a&&["INPUT","SELECT","TEXTAREA"].includes(a.tagName)}
+let _rt=null;
+function renderSoon(){clearTimeout(_rt);_rt=setTimeout(()=>{if(!editando())render()},150)}
+function tickSync(){ const el2=$("#syncState"); if(el2){el2.textContent=syncStatusTxt(); el2.style.color=SYNC.on?"var(--verde)":FIREBASE_CONFIG?"var(--ambar)":"var(--muted)"} }
+
+/* datos capturados persistidos */
+loadDatos();
+syncInit();
+/* tema persistido */
+try{const t=localStorage.getItem("cic_theme"); if(t)document.documentElement.dataset.theme=t}catch(e){}
+render();
+</script>
+</body>
+</html>
